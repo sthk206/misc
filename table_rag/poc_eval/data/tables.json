@@ -1,0 +1,5499 @@
+[
+  {
+    "table_id": "p119_t0",
+    "pdf_page": 119,
+    "printed_page": 117,
+    "section": "wholesale_credit_exposure",
+    "title": "Total credit card loans increased compared to",
+    "header_context": [
+      "Credit card",
+      "Total credit card loans increased compared to"
+    ],
+    "rows": [
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          2024.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2024,"
+        ]
+      },
+      {
+        "label": "",
+        "values": [
+          2025.0,
+          30.0,
+          90.0,
+          2.16
+        ],
+        "raw_cells": [
+          "2025",
+          "30",
+          "90",
+          "2.16"
+        ]
+      },
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          2024.0,
+          30.0,
+          90.0
+        ],
+        "raw_cells": [
+          "31,",
+          "2024",
+          "30",
+          "90"
+        ]
+      },
+      {
+        "label": "rates of",
+        "values": [
+          2.17,
+          1.14,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "2.17",
+          "1.14"
+        ]
+      },
+      {
+        "label": "year ended December",
+        "values": [
+          31.0,
+          2025.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2025"
+        ]
+      }
+    ],
+    "n_rows": 5,
+    "n_value_cols": 4,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 |\n| --- | --- | --- | --- | --- |\n| December | 31 | 2024 |  |  |\n|  | 2025 | 30 | 90 | 2.16 |\n| December | 31 | 2024 | 30 | 90 |\n| rates of | 2.17 | 1.14 |  |  |\n| year ended December | 31 | 2025 |  |  |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p119_t1",
+    "pdf_page": 119,
+    "printed_page": 117,
+    "section": "wholesale_credit_exposure",
+    "title": "loans",
+    "header_context": [
+      "the estimated uncollectible portion of accrued and",
+      "billed interest and fee income.",
+      "Geographic and FICO composition of credit card",
+      "loans"
+    ],
+    "rows": [
+      {
+        "label": "At December",
+        "values": [
+          31.0,
+          2025.0,
+          116.3,
+          47.0
+        ],
+        "raw_cells": [
+          "31,",
+          "2025,",
+          "116.3",
+          "47"
+        ]
+      },
+      {
+        "label": "and Illinois, compared to",
+        "values": [
+          109.0,
+          47.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "109.0",
+          "47"
+        ]
+      },
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          2024.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2024"
+        ]
+      }
+    ],
+    "n_rows": 3,
+    "n_value_cols": 4,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 |\n| --- | --- | --- | --- | --- |\n| At December | 31 | 2025 | 116.3 | 47 |\n| and Illinois, compared to | 109 | 47 |  |  |\n| December | 31 | 2024 |  |  |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p120_t0",
+    "pdf_page": 120,
+    "printed_page": 118,
+    "section": "wholesale_credit_exposure",
+    "title": "clients and counterparties, as well as through various",
+    "header_context": [
+      "Credit exposure Nonperforming",
+      "market-making, and hedging activities with and for December 31,",
+      "(in millions) 2025 2024 2025 2024",
+      "clients and counterparties, as well as through various"
+    ],
+    "rows": [
+      {
+        "label": "operating services (such as cash management and Loans retained",
+        "values": [
+          792367.0,
+          690396.0,
+          4398.0,
+          3942.0
+        ],
+        "raw_cells": [
+          "792,367",
+          "690,396",
+          "4,398",
+          "3,942"
+        ]
+      },
+      {
+        "label": "clearing activities), securities financing activities and Loans held-for-sale",
+        "values": [
+          13506.0,
+          6103.0,
+          8.0,
+          5.0
+        ],
+        "raw_cells": [
+          "13,506",
+          "6,103",
+          "8",
+          "5"
+        ]
+      },
+      {
+        "label": "Loans at fair value",
+        "values": [
+          37501.0,
+          25819.0,
+          778.0,
+          964.0
+        ],
+        "raw_cells": [
+          "37,501",
+          "25,819",
+          "778",
+          "964"
+        ]
+      },
+      {
+        "label": "Loans",
+        "values": [
+          843374.0,
+          722318.0,
+          5184.0,
+          4911.0
+        ],
+        "raw_cells": [
+          "843,374",
+          "722,318",
+          "5,184",
+          "4,911"
+        ]
+      },
+      {
+        "label": "receivables",
+        "values": [
+          57777.0,
+          60967.0,
+          204.0,
+          145.0
+        ],
+        "raw_cells": [
+          "57,777",
+          "60,967",
+          "204",
+          "145"
+        ]
+      },
+      {
+        "label": "customers(a)",
+        "values": [
+          47336.0,
+          51929.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "47,336",
+          "51,929",
+          "—",
+          "—"
+        ]
+      }
+    ],
+    "n_rows": 6,
+    "n_value_cols": 4,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 |\n| --- | --- | --- | --- | --- |\n| operating services (such as cash management and Loans retained | 792367 | 690396 | 4398 | 3942 |\n| clearing activities), securities financing activities and Loans held-for-sale | 13506 | 6103 | 8 | 5 |\n| Loans at fair value | 37501 | 25819 | 778 | 964 |\n| Loans | 843374 | 722318 | 5184 | 4911 |\n| receivables | 57777 | 60967 | 204 | 145 |\n| customers(a) | 47336 | 51929 |  |  |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p120_t1",
+    "pdf_page": 120,
+    "printed_page": 118,
+    "section": "wholesale_credit_exposure",
+    "title": "of industry, product and client concentrations. Refer to loan satisfactions",
+    "header_context": [
+      "structure, inclusive of collateral where applicable, and",
+      "Assets acquired in",
+      "of industry, product and client concentrations. Refer to loan satisfactions"
+    ],
+    "rows": [
+      {
+        "label": "the industry discussion on pages",
+        "values": [
+          120.0,
+          123.0
+        ],
+        "raw_cells": [
+          "120",
+          "123"
+        ]
+      },
+      {
+        "label": "Real estate owned NA NA",
+        "values": [
+          164.0,
+          206.0
+        ],
+        "raw_cells": [
+          "164",
+          "206"
+        ]
+      }
+    ],
+    "n_rows": 2,
+    "n_value_cols": 2,
+    "markdown": "| row_label | c1 | c2 |\n| --- | --- | --- |\n| the industry discussion on pages | 120 | 123 |\n| Real estate owned NA NA | 164 | 206 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p120_t2",
+    "pdf_page": 120,
+    "printed_page": 118,
+    "section": "wholesale_credit_exposure",
+    "title": "The Firm’s wholesale credit portfolio includes acquired in loan",
+    "header_context": [
+      "information.",
+      "Total assets",
+      "The Firm’s wholesale credit portfolio includes acquired in loan"
+    ],
+    "rows": [
+      {
+        "label": "satisfactions NA NA",
+        "values": [
+          164.0,
+          206.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "164",
+          "206"
+        ]
+      },
+      {
+        "label": "commitments",
+        "values": [
+          595954.0,
+          531467.0,
+          925.0,
+          737.0
+        ],
+        "raw_cells": [
+          "595,954",
+          "531,467",
+          "925",
+          "737"
+        ]
+      }
+    ],
+    "n_rows": 2,
+    "n_value_cols": 4,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 |\n| --- | --- | --- | --- | --- |\n| satisfactions NA NA | 164 | 206 |  |  |\n| commitments | 595954 | 531467 | 925 | 737 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p120_t3",
+    "pdf_page": 120,
+    "printed_page": 118,
+    "section": "wholesale_credit_exposure",
+    "title": "allowance for loan losses.",
+    "header_context": [
+      "methodology is applied when determining the",
+      "Total wholesale",
+      "allowance for loan losses."
+    ],
+    "rows": [
+      {
+        "label": "credit portfolio",
+        "values": [
+          1544441.0,
+          1366681.0,
+          6477.0,
+          5999.0
+        ],
+        "raw_cells": [
+          "1,544,441",
+          "1,366,681",
+          "6,477",
+          "5,999"
+        ]
+      },
+      {
+        "label": "As of December",
+        "values": [
+          31.0,
+          2025.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2025,"
+        ]
+      }
+    ],
+    "n_rows": 2,
+    "n_value_cols": 4,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 |\n| --- | --- | --- | --- | --- |\n| credit portfolio | 1544441 | 1366681 | 6477 | 5999 |\n| As of December | 31 | 2025 |  |  |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p120_t4",
+    "pdf_page": 120,
+    "printed_page": 118,
+    "section": "wholesale_credit_exposure",
+    "title": "commitments in CIB, including held-for-sale collateral held",
+    "header_context": [
+      "demand. Lending-related commitments increased by",
+      "$64.5 billion, predominantly driven by higher Liquid securities and",
+      "other cash",
+      "commitments in CIB, including held-for-sale collateral held"
+    ],
+    "rows": [
+      {
+        "label": "commitments. against derivatives",
+        "values": [
+          -28891.0,
+          -28160.0
+        ],
+        "raw_cells": [
+          "(28,891)",
+          "(28,160)"
+        ]
+      },
+      {
+        "label": "As of December",
+        "values": [
+          31.0,
+          2025.0
+        ],
+        "raw_cells": [
+          "31,",
+          "2025,"
+        ]
+      }
+    ],
+    "n_rows": 2,
+    "n_value_cols": 2,
+    "markdown": "| row_label | c1 | c2 |\n| --- | --- | --- |\n| commitments. against derivatives | -28891 | -28160 |\n| As of December | 31 | 2025 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p121_t0",
+    "pdf_page": 121,
+    "printed_page": 119,
+    "section": "wholesale_credit_exposure",
+    "title": "After 1 year",
+    "header_context": [
+      "support when determining the internal risk rating for each credit facility. Refer to Note 12 for further information on",
+      "internal risk ratings.",
+      "Maturity profile(d) Ratings profile",
+      "After 1 year"
+    ],
+    "rows": [
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          2025.0,
+          1.0,
+          5.0,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2025",
+          "1",
+          "5"
+        ]
+      },
+      {
+        "label": "Loans retained",
+        "values": [
+          271648.0,
+          330900.0,
+          189819.0,
+          792367.0,
+          541364.0,
+          251003.0,
+          792367.0,
+          68.0
+        ],
+        "raw_cells": [
+          "271,648",
+          "330,900",
+          "189,819",
+          "792,367",
+          "541,364",
+          "251,003",
+          "792,367",
+          "68"
+        ]
+      },
+      {
+        "label": "Derivative receivables",
+        "values": [
+          57777.0,
+          57777.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "57,777",
+          "57,777"
+        ]
+      },
+      {
+        "label": "held against derivatives",
+        "values": [
+          -28891.0,
+          -28891.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "(28,891)",
+          "(28,891)"
+        ]
+      },
+      {
+        "label": "Total derivative receivables, net of collateral",
+        "values": [
+          7941.0,
+          6836.0,
+          14109.0,
+          28886.0,
+          19721.0,
+          9165.0,
+          28886.0,
+          68.0
+        ],
+        "raw_cells": [
+          "7,941",
+          "6,836",
+          "14,109",
+          "28,886",
+          "19,721",
+          "9,165",
+          "28,886",
+          "68"
+        ]
+      },
+      {
+        "label": "Lending-related commitments",
+        "values": [
+          155797.0,
+          412594.0,
+          27563.0,
+          595954.0,
+          383106.0,
+          212848.0,
+          595954.0,
+          64.0
+        ],
+        "raw_cells": [
+          "155,797",
+          "412,594",
+          "27,563",
+          "595,954",
+          "383,106",
+          "212,848",
+          "595,954",
+          "64"
+        ]
+      },
+      {
+        "label": "Subtotal",
+        "values": [
+          435386.0,
+          750330.0,
+          231491.0,
+          1417207.0,
+          944191.0,
+          473016.0,
+          1417207.0,
+          67.0
+        ],
+        "raw_cells": [
+          "435,386",
+          "750,330",
+          "231,491",
+          "1,417,207",
+          "944,191",
+          "473,016",
+          "1,417,207",
+          "67"
+        ]
+      },
+      {
+        "label": "Loans held-for-sale and loans at fair value(a)",
+        "values": [
+          51007.0,
+          51007.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "51,007",
+          "51,007"
+        ]
+      },
+      {
+        "label": "Receivables from customers",
+        "values": [
+          47336.0,
+          47336.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "47,336",
+          "47,336"
+        ]
+      },
+      {
+        "label": "other cash collateral held against derivatives",
+        "values": [
+          1515550.0,
+          1515550.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "1,515,550",
+          "1,515,550"
+        ]
+      },
+      {
+        "label": "in credit portfolio management activities(b)(c)",
+        "values": [
+          -5356.0,
+          -17424.0,
+          -1118.0,
+          -23898.0,
+          -17831.0,
+          -6067.0,
+          -23898.0,
+          75.0
+        ],
+        "raw_cells": [
+          "(5,356)",
+          "(17,424)",
+          "(1,118)",
+          "(23,898)",
+          "(17,831)",
+          "(6,067)",
+          "(23,898)",
+          "75"
+        ]
+      },
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          2024.0,
+          1.0,
+          5.0,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2024",
+          "1",
+          "5"
+        ]
+      },
+      {
+        "label": "Loans retained",
+        "values": [
+          225982.0,
+          289199.0,
+          175215.0,
+          690396.0,
+          471670.0,
+          218726.0,
+          690396.0,
+          68.0
+        ],
+        "raw_cells": [
+          "225,982",
+          "289,199",
+          "175,215",
+          "690,396",
+          "471,670",
+          "218,726",
+          "690,396",
+          "68"
+        ]
+      },
+      {
+        "label": "Derivative receivables",
+        "values": [
+          60967.0,
+          60967.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "60,967",
+          "60,967"
+        ]
+      },
+      {
+        "label": "held against derivatives",
+        "values": [
+          -28160.0,
+          -28160.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "(28,160)",
+          "(28,160)"
+        ]
+      },
+      {
+        "label": "Total derivative receivables, net of collateral",
+        "values": [
+          11515.0,
+          7418.0,
+          13874.0,
+          32807.0,
+          24707.0,
+          8100.0,
+          32807.0,
+          75.0
+        ],
+        "raw_cells": [
+          "11,515",
+          "7,418",
+          "13,874",
+          "32,807",
+          "24,707",
+          "8,100",
+          "32,807",
+          "75"
+        ]
+      },
+      {
+        "label": "Lending-related commitments",
+        "values": [
+          121283.0,
+          384529.0,
+          25655.0,
+          531467.0,
+          352082.0,
+          179385.0,
+          531467.0,
+          66.0
+        ],
+        "raw_cells": [
+          "121,283",
+          "384,529",
+          "25,655",
+          "531,467",
+          "352,082",
+          "179,385",
+          "531,467",
+          "66"
+        ]
+      },
+      {
+        "label": "Subtotal",
+        "values": [
+          358780.0,
+          681146.0,
+          214744.0,
+          1254670.0,
+          848459.0,
+          406211.0,
+          1254670.0,
+          68.0
+        ],
+        "raw_cells": [
+          "358,780",
+          "681,146",
+          "214,744",
+          "1,254,670",
+          "848,459",
+          "406,211",
+          "1,254,670",
+          "68"
+        ]
+      },
+      {
+        "label": "Loans held-for-sale and loans at fair value(a)",
+        "values": [
+          31922.0,
+          31922.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,922",
+          "31,922"
+        ]
+      },
+      {
+        "label": "Receivables from customers",
+        "values": [
+          51929.0,
+          51929.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "51,929",
+          "51,929"
+        ]
+      },
+      {
+        "label": "other cash collateral held against derivatives",
+        "values": [
+          1338521.0,
+          1338521.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "1,338,521",
+          "1,338,521"
+        ]
+      },
+      {
+        "label": "in credit portfolio management activities(b)(c)",
+        "values": [
+          -5442.0,
+          -33751.0,
+          -1695.0,
+          -40888.0,
+          -31691.0,
+          -9197.0,
+          -40888.0,
+          78.0
+        ],
+        "raw_cells": [
+          "(5,442)",
+          "(33,751)",
+          "(1,695)",
+          "(40,888)",
+          "(31,691)",
+          "(9,197)",
+          "(40,888)",
+          "78"
+        ]
+      }
+    ],
+    "n_rows": 22,
+    "n_value_cols": 8,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 | c7 | c8 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| December | 31 | 2025 | 1 | 5 |  |  |  |  |\n| Loans retained | 271648 | 330900 | 189819 | 792367 | 541364 | 251003 | 792367 | 68 |\n| Derivative receivables | 57777 | 57777 |  |  |  |  |  |  |\n| held against derivatives | -28891 | -28891 |  |  |  |  |  |  |\n| Total derivative receivables, net of collateral | 7941 | 6836 | 14109 | 28886 | 19721 | 9165 | 28886 | 68 |\n| Lending-related commitments | 155797 | 412594 | 27563 | 595954 | 383106 | 212848 | 595954 | 64 |\n| Subtotal | 435386 | 750330 | 231491 | 1417207 | 944191 | 473016 | 1417207 | 67 |\n| Loans held-for-sale and loans at fair value(a) | 51007 | 51007 |  |  |  |  |  |  |\n| Receivables from customers | 47336 | 47336 |  |  |  |  |  |  |\n| other cash collateral held against derivatives | 1515550 | 1515550 |  |  |  |  |  |  |\n| in credit portfolio management activities(b)(c) | -5356 | -17424 | -1118 | -23898 | -17831 | -6067 | -23898 | 75 |\n| December | 31 | 2024 | 1 | 5 |  |  |  |  |\n| Loans retained | 225982 | 289199 | 175215 | 690396 | 471670 | 218726 | 690396 | 68 |\n| Derivative receivables | 60967 | 60967 |  |  |  |  |  |  |\n| held against derivatives | -28160 | -28160 |  |  |  |  |  |  |\n| Total derivative receivables, net of collateral | 11515 | 7418 | 13874 | 32807 | 24707 | 8100 | 32807 | 75 |\n| Lending-related commitments | 121283 | 384529 | 25655 | 531467 | 352082 | 179385 | 531467 | 66 |\n| Subtotal | 358780 | 681146 | 214744 | 1254670 | 848459 | 406211 | 1254670 | 68 |\n| Loans held-for-sale and loans at fair value(a) | 31922 | 31922 |  |  |  |  |  |  |\n| Receivables from customers | 51929 | 51929 |  |  |  |  |  |  |\n| other cash collateral held against derivatives | 1338521 | 1338521 |  |  |  |  |  |  |\n| in credit portfolio management activities(b)(c) | -5442 | -33751 | -1695 | -40888 | -31691 | -9197 | -40888 | 78 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p121_t1",
+    "pdf_page": 121,
+    "printed_page": 119,
+    "section": "wholesale_credit_exposure",
+    "title": "(d) The maturity profile of retained loans, lending-related commitments and derivative receivables is generally based on remaining contractual",
+    "header_context": [
+      "reference entity on which protection has been purchased. Predominantly all of the credit derivatives entered into by the Firm where it has",
+      "purchased protection used in credit portfolio management activities are executed with investment-grade counterparties. In addition, the Firm",
+      "obtains credit protection against certain loans in the retained loan portfolio through the issuance of credit-related notes.",
+      "(d) The maturity profile of retained loans, lending-related commitments and derivative receivables is generally based on remaining contractual"
+    ],
+    "rows": [
+      {
+        "label": "maturity. Derivative contracts that are in a receivable position at December",
+        "values": [
+          31.0,
+          2025.0,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2025,"
+        ]
+      },
+      {
+        "label": "JPMorgan Chase & Co./",
+        "values": [
+          2025.0,
+          10.0,
+          119.0
+        ],
+        "raw_cells": [
+          "2025",
+          "10",
+          "119"
+        ]
+      }
+    ],
+    "n_rows": 2,
+    "n_value_cols": 3,
+    "markdown": "| row_label | c1 | c2 | c3 |\n| --- | --- | --- | --- |\n| maturity. Derivative contracts that are in a receivable position at December | 31 | 2025 |  |\n| JPMorgan Chase & Co./ | 2025 | 10 | 119 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p122_t0",
+    "pdf_page": 122,
+    "printed_page": 120,
+    "section": "wholesale_credit_exposure",
+    "title": "As of or for the year ended due and Net credit- against",
+    "header_context": [
+      "Credit Liquid securities",
+      "Noninvestment-grade 30 days or derivative and other cash",
+      "more past and collateral held",
+      "As of or for the year ended due and Net credit- against"
+    ],
+    "rows": [
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          2025.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2025"
+        ]
+      },
+      {
+        "label": "Real Estate",
+        "values": [
+          224858.0,
+          155712.0,
+          57478.0,
+          9967.0,
+          1701.0,
+          959.0,
+          380.0,
+          -99.0,
+          null
+        ],
+        "raw_cells": [
+          "224,858",
+          "155,712",
+          "57,478",
+          "9,967",
+          "1,701",
+          "959",
+          "380",
+          "(99)",
+          "—"
+        ]
+      },
+      {
+        "label": "Entities(b)",
+        "values": [
+          167700.0,
+          138142.0,
+          28677.0,
+          460.0,
+          421.0,
+          1012.0,
+          -15.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "167,700",
+          "138,142",
+          "28,677",
+          "460",
+          "421",
+          "1,012",
+          "(15)",
+          "—",
+          "—"
+        ]
+      },
+      {
+        "label": "Asset Managers",
+        "values": [
+          152848.0,
+          117426.0,
+          35113.0,
+          304.0,
+          5.0,
+          105.0,
+          1.0,
+          -5.0,
+          -10626.0
+        ],
+        "raw_cells": [
+          "152,848",
+          "117,426",
+          "35,113",
+          "304",
+          "5",
+          "105",
+          "1",
+          "(5)",
+          "(10,626)"
+        ]
+      },
+      {
+        "label": "Consumer & Retail",
+        "values": [
+          133945.0,
+          63523.0,
+          62382.0,
+          7425.0,
+          615.0,
+          115.0,
+          234.0,
+          -311.0,
+          null
+        ],
+        "raw_cells": [
+          "133,945",
+          "63,523",
+          "62,382",
+          "7,425",
+          "615",
+          "115",
+          "234",
+          "(311)",
+          "—"
+        ]
+      },
+      {
+        "label": "Telecommunications",
+        "values": [
+          97816.0,
+          44373.0,
+          42507.0,
+          10135.0,
+          801.0,
+          37.0,
+          281.0,
+          -1078.0,
+          null
+        ],
+        "raw_cells": [
+          "97,816",
+          "44,373",
+          "42,507",
+          "10,135",
+          "801",
+          "37",
+          "281",
+          "(1,078)",
+          "—"
+        ]
+      },
+      {
+        "label": "Industrials",
+        "values": [
+          80606.0,
+          44078.0,
+          33166.0,
+          3101.0,
+          261.0,
+          470.0,
+          18.0,
+          -68.0,
+          null
+        ],
+        "raw_cells": [
+          "80,606",
+          "44,078",
+          "33,166",
+          "3,101",
+          "261",
+          "470",
+          "18",
+          "(68)",
+          "—"
+        ]
+      },
+      {
+        "label": "Banks & Finance Companies",
+        "values": [
+          75653.0,
+          41904.0,
+          32826.0,
+          903.0,
+          20.0,
+          16.0,
+          8.0,
+          -574.0,
+          -657.0
+        ],
+        "raw_cells": [
+          "75,653",
+          "41,904",
+          "32,826",
+          "903",
+          "20",
+          "16",
+          "8",
+          "(574)",
+          "(657)"
+        ]
+      },
+      {
+        "label": "Healthcare",
+        "values": [
+          72218.0,
+          48888.0,
+          19713.0,
+          3059.0,
+          558.0,
+          12.0,
+          191.0,
+          -67.0,
+          null
+        ],
+        "raw_cells": [
+          "72,218",
+          "48,888",
+          "19,713",
+          "3,059",
+          "558",
+          "12",
+          "191",
+          "(67)",
+          "—"
+        ]
+      },
+      {
+        "label": "Utilities",
+        "values": [
+          39005.0,
+          24840.0,
+          12519.0,
+          1254.0,
+          392.0,
+          1.0,
+          63.0,
+          -203.0,
+          null
+        ],
+        "raw_cells": [
+          "39,005",
+          "24,840",
+          "12,519",
+          "1,254",
+          "392",
+          "1",
+          "63",
+          "(203)",
+          "—"
+        ]
+      },
+      {
+        "label": "Oil & Gas",
+        "values": [
+          36497.0,
+          21825.0,
+          14076.0,
+          347.0,
+          249.0,
+          52.0,
+          48.0,
+          -51.0,
+          null
+        ],
+        "raw_cells": [
+          "36,497",
+          "21,825",
+          "14,076",
+          "347",
+          "249",
+          "52",
+          "48",
+          "(51)",
+          "—"
+        ]
+      },
+      {
+        "label": "Automotive",
+        "values": [
+          35984.0,
+          19602.0,
+          15397.0,
+          958.0,
+          27.0,
+          109.0,
+          3.0,
+          -277.0,
+          null
+        ],
+        "raw_cells": [
+          "35,984",
+          "19,602",
+          "15,397",
+          "958",
+          "27",
+          "109",
+          "3",
+          "(277)",
+          "—"
+        ]
+      },
+      {
+        "label": "State & Municipal Govt(c)",
+        "values": [
+          32484.0,
+          31372.0,
+          1100.0,
+          3.0,
+          9.0,
+          30.0,
+          null,
+          -3.0,
+          null
+        ],
+        "raw_cells": [
+          "32,484",
+          "31,372",
+          "1,100",
+          "3",
+          "9",
+          "30",
+          "—",
+          "(3)",
+          "—"
+        ]
+      },
+      {
+        "label": "Insurance",
+        "values": [
+          25031.0,
+          17511.0,
+          7352.0,
+          168.0,
+          null,
+          6.0,
+          null,
+          -20.0,
+          -8310.0
+        ],
+        "raw_cells": [
+          "25,031",
+          "17,511",
+          "7,352",
+          "168",
+          "—",
+          "6",
+          "—",
+          "(20)",
+          "(8,310)"
+        ]
+      },
+      {
+        "label": "Chemicals & Plastics",
+        "values": [
+          23790.0,
+          11251.0,
+          10355.0,
+          2091.0,
+          93.0,
+          2.0,
+          82.0,
+          -239.0,
+          null
+        ],
+        "raw_cells": [
+          "23,790",
+          "11,251",
+          "10,355",
+          "2,091",
+          "93",
+          "2",
+          "82",
+          "(239)",
+          "—"
+        ]
+      },
+      {
+        "label": "Transportation",
+        "values": [
+          20861.0,
+          11450.0,
+          9097.0,
+          285.0,
+          29.0,
+          11.0,
+          -3.0,
+          -135.0,
+          null
+        ],
+        "raw_cells": [
+          "20,861",
+          "11,450",
+          "9,097",
+          "285",
+          "29",
+          "11",
+          "(3)",
+          "(135)",
+          "—"
+        ]
+      },
+      {
+        "label": "Metals & Mining",
+        "values": [
+          17767.0,
+          7459.0,
+          9883.0,
+          406.0,
+          19.0,
+          22.0,
+          4.0,
+          -39.0,
+          -67.0
+        ],
+        "raw_cells": [
+          "17,767",
+          "7,459",
+          "9,883",
+          "406",
+          "19",
+          "22",
+          "4",
+          "(39)",
+          "(67)"
+        ]
+      },
+      {
+        "label": "Central Govt",
+        "values": [
+          15164.0,
+          14666.0,
+          245.0,
+          44.0,
+          209.0,
+          8.0,
+          null,
+          -1258.0,
+          -1273.0
+        ],
+        "raw_cells": [
+          "15,164",
+          "14,666",
+          "245",
+          "44",
+          "209",
+          "8",
+          "—",
+          "(1,258)",
+          "(1,273)"
+        ]
+      },
+      {
+        "label": "Securities Firms",
+        "values": [
+          7966.0,
+          4372.0,
+          3593.0,
+          null,
+          1.0,
+          1.0,
+          null,
+          -13.0,
+          -2458.0
+        ],
+        "raw_cells": [
+          "7,966",
+          "4,372",
+          "3,593",
+          "—",
+          "1",
+          "1",
+          "—",
+          "(13)",
+          "(2,458)"
+        ]
+      },
+      {
+        "label": "Infrastructure",
+        "values": [
+          5734.0,
+          5306.0,
+          358.0,
+          70.0,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "5,734",
+          "5,306",
+          "358",
+          "70",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—"
+        ]
+      },
+      {
+        "label": "All other(d)",
+        "values": [
+          180171.0,
+          148214.0,
+          29887.0,
+          1953.0,
+          117.0,
+          3.0,
+          303.0,
+          -19458.0,
+          -5500.0
+        ],
+        "raw_cells": [
+          "180,171",
+          "148,214",
+          "29,887",
+          "1,953",
+          "117",
+          "3",
+          "303",
+          "(19,458)",
+          "(5,500)"
+        ]
+      },
+      {
+        "label": "Subtotal",
+        "values": [
+          1446098.0,
+          971914.0,
+          425724.0,
+          42933.0,
+          5527.0,
+          2971.0,
+          1598.0,
+          -23898.0,
+          -28891.0
+        ],
+        "raw_cells": [
+          "1,446,098",
+          "971,914",
+          "425,724",
+          "42,933",
+          "5,527",
+          "2,971",
+          "1,598",
+          "(23,898)",
+          "(28,891)"
+        ]
+      }
+    ],
+    "n_rows": 22,
+    "n_value_cols": 9,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 | c7 | c8 | c9 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| December | 31 | 2025 |  |  |  |  |  |  |  |\n| Real Estate | 224858 | 155712 | 57478 | 9967 | 1701 | 959 | 380 | -99 |  |\n| Entities(b) | 167700 | 138142 | 28677 | 460 | 421 | 1012 | -15 |  |  |\n| Asset Managers | 152848 | 117426 | 35113 | 304 | 5 | 105 | 1 | -5 | -10626 |\n| Consumer & Retail | 133945 | 63523 | 62382 | 7425 | 615 | 115 | 234 | -311 |  |\n| Telecommunications | 97816 | 44373 | 42507 | 10135 | 801 | 37 | 281 | -1078 |  |\n| Industrials | 80606 | 44078 | 33166 | 3101 | 261 | 470 | 18 | -68 |  |\n| Banks & Finance Companies | 75653 | 41904 | 32826 | 903 | 20 | 16 | 8 | -574 | -657 |\n| Healthcare | 72218 | 48888 | 19713 | 3059 | 558 | 12 | 191 | -67 |  |\n| Utilities | 39005 | 24840 | 12519 | 1254 | 392 | 1 | 63 | -203 |  |\n| Oil & Gas | 36497 | 21825 | 14076 | 347 | 249 | 52 | 48 | -51 |  |\n| Automotive | 35984 | 19602 | 15397 | 958 | 27 | 109 | 3 | -277 |  |\n| State & Municipal Govt(c) | 32484 | 31372 | 1100 | 3 | 9 | 30 |  | -3 |  |\n| Insurance | 25031 | 17511 | 7352 | 168 |  | 6 |  | -20 | -8310 |\n| Chemicals & Plastics | 23790 | 11251 | 10355 | 2091 | 93 | 2 | 82 | -239 |  |\n| Transportation | 20861 | 11450 | 9097 | 285 | 29 | 11 | -3 | -135 |  |\n| Metals & Mining | 17767 | 7459 | 9883 | 406 | 19 | 22 | 4 | -39 | -67 |\n| Central Govt | 15164 | 14666 | 245 | 44 | 209 | 8 |  | -1258 | -1273 |\n| Securities Firms | 7966 | 4372 | 3593 |  | 1 | 1 |  | -13 | -2458 |\n| Infrastructure | 5734 | 5306 | 358 | 70 |  |  |  |  |  |\n| All other(d) | 180171 | 148214 | 29887 | 1953 | 117 | 3 | 303 | -19458 | -5500 |\n| Subtotal | 1446098 | 971914 | 425724 | 42933 | 5527 | 2971 | 1598 | -23898 | -28891 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p123_t0",
+    "pdf_page": 123,
+    "printed_page": 121,
+    "section": "wholesale_credit_exposure",
+    "title": "As of or for the year ended due and Net credit- against",
+    "header_context": [
+      "Credit Liquid securities",
+      "Noninvestment-grade 30 days or derivative and other cash",
+      "more past and collateral held",
+      "As of or for the year ended due and Net credit- against"
+    ],
+    "rows": [
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          2024.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2024"
+        ]
+      },
+      {
+        "label": "Real Estate",
+        "values": [
+          207050.0,
+          143803.0,
+          50865.0,
+          10858.0,
+          1524.0,
+          913.0,
+          345.0,
+          -584.0,
+          null
+        ],
+        "raw_cells": [
+          "207,050",
+          "143,803",
+          "50,865",
+          "10,858",
+          "1,524",
+          "913",
+          "345",
+          "(584)",
+          "—"
+        ]
+      },
+      {
+        "label": "Entities(b)",
+        "values": [
+          144145.0,
+          118650.0,
+          24831.0,
+          217.0,
+          447.0,
+          831.0,
+          122.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "144,145",
+          "118,650",
+          "24,831",
+          "217",
+          "447",
+          "831",
+          "122",
+          "—",
+          "—"
+        ]
+      },
+      {
+        "label": "Asset Managers",
+        "values": [
+          135541.0,
+          101150.0,
+          34148.0,
+          206.0,
+          37.0,
+          375.0,
+          2.0,
+          null,
+          -9194.0
+        ],
+        "raw_cells": [
+          "135,541",
+          "101,150",
+          "34,148",
+          "206",
+          "37",
+          "375",
+          "2",
+          "—",
+          "(9,194)"
+        ]
+      },
+      {
+        "label": "Consumer & Retail",
+        "values": [
+          129815.0,
+          62800.0,
+          60141.0,
+          6055.0,
+          819.0,
+          252.0,
+          123.0,
+          -4320.0,
+          null
+        ],
+        "raw_cells": [
+          "129,815",
+          "62,800",
+          "60,141",
+          "6,055",
+          "819",
+          "252",
+          "123",
+          "(4,320)",
+          "—"
+        ]
+      },
+      {
+        "label": "Telecommunications",
+        "values": [
+          84716.0,
+          45021.0,
+          28629.0,
+          10592.0,
+          474.0,
+          79.0,
+          94.0,
+          -4800.0,
+          null
+        ],
+        "raw_cells": [
+          "84,716",
+          "45,021",
+          "28,629",
+          "10,592",
+          "474",
+          "79",
+          "94",
+          "(4,800)",
+          "—"
+        ]
+      },
+      {
+        "label": "Industrials",
+        "values": [
+          72530.0,
+          37572.0,
+          30912.0,
+          3807.0,
+          239.0,
+          185.0,
+          91.0,
+          -2312.0,
+          null
+        ],
+        "raw_cells": [
+          "72,530",
+          "37,572",
+          "30,912",
+          "3,807",
+          "239",
+          "185",
+          "91",
+          "(2,312)",
+          "—"
+        ]
+      },
+      {
+        "label": "Banks & Finance Companies",
+        "values": [
+          61287.0,
+          36884.0,
+          24119.0,
+          257.0,
+          27.0,
+          36.0,
+          null,
+          -702.0,
+          -729.0
+        ],
+        "raw_cells": [
+          "61,287",
+          "36,884",
+          "24,119",
+          "257",
+          "27",
+          "36",
+          "—",
+          "(702)",
+          "(729)"
+        ]
+      },
+      {
+        "label": "Healthcare",
+        "values": [
+          64224.0,
+          44135.0,
+          17062.0,
+          2219.0,
+          808.0,
+          245.0,
+          56.0,
+          -3286.0,
+          -34.0
+        ],
+        "raw_cells": [
+          "64,224",
+          "44,135",
+          "17,062",
+          "2,219",
+          "808",
+          "245",
+          "56",
+          "(3,286)",
+          "(34)"
+        ]
+      },
+      {
+        "label": "Utilities",
+        "values": [
+          35871.0,
+          24205.0,
+          10256.0,
+          1273.0,
+          137.0,
+          1.0,
+          null,
+          -2700.0,
+          null
+        ],
+        "raw_cells": [
+          "35,871",
+          "24,205",
+          "10,256",
+          "1,273",
+          "137",
+          "1",
+          "—",
+          "(2,700)",
+          "—"
+        ]
+      },
+      {
+        "label": "Oil & Gas",
+        "values": [
+          31724.0,
+          19053.0,
+          12479.0,
+          188.0,
+          4.0,
+          9.0,
+          -3.0,
+          -1711.0,
+          -2.0
+        ],
+        "raw_cells": [
+          "31,724",
+          "19,053",
+          "12,479",
+          "188",
+          "4",
+          "9",
+          "(3)",
+          "(1,711)",
+          "(2)"
+        ]
+      },
+      {
+        "label": "Automotive",
+        "values": [
+          34336.0,
+          22015.0,
+          11353.0,
+          931.0,
+          37.0,
+          121.0,
+          1.0,
+          -997.0,
+          null
+        ],
+        "raw_cells": [
+          "34,336",
+          "22,015",
+          "11,353",
+          "931",
+          "37",
+          "121",
+          "1",
+          "(997)",
+          "—"
+        ]
+      },
+      {
+        "label": "State & Municipal Govt(c)",
+        "values": [
+          35039.0,
+          33303.0,
+          1711.0,
+          9.0,
+          16.0,
+          90.0,
+          null,
+          -2.0,
+          -1.0
+        ],
+        "raw_cells": [
+          "35,039",
+          "33,303",
+          "1,711",
+          "9",
+          "16",
+          "90",
+          "—",
+          "(2)",
+          "(1)"
+        ]
+      },
+      {
+        "label": "Insurance",
+        "values": [
+          24267.0,
+          17847.0,
+          6198.0,
+          222.0,
+          null,
+          2.0,
+          null,
+          -1077.0,
+          -9184.0
+        ],
+        "raw_cells": [
+          "24,267",
+          "17,847",
+          "6,198",
+          "222",
+          "—",
+          "2",
+          "—",
+          "(1,077)",
+          "(9,184)"
+        ]
+      },
+      {
+        "label": "Chemicals & Plastics",
+        "values": [
+          20782.0,
+          11013.0,
+          8152.0,
+          1521.0,
+          96.0,
+          31.0,
+          14.0,
+          -1164.0,
+          null
+        ],
+        "raw_cells": [
+          "20,782",
+          "11,013",
+          "8,152",
+          "1,521",
+          "96",
+          "31",
+          "14",
+          "(1,164)",
+          "—"
+        ]
+      },
+      {
+        "label": "Transportation",
+        "values": [
+          17019.0,
+          9462.0,
+          7135.0,
+          391.0,
+          31.0,
+          17.0,
+          -20.0,
+          -658.0,
+          null
+        ],
+        "raw_cells": [
+          "17,019",
+          "9,462",
+          "7,135",
+          "391",
+          "31",
+          "17",
+          "(20)",
+          "(658)",
+          "—"
+        ]
+      },
+      {
+        "label": "Metals & Mining",
+        "values": [
+          15860.0,
+          7373.0,
+          7860.0,
+          590.0,
+          37.0,
+          9.0,
+          null,
+          -246.0,
+          -2.0
+        ],
+        "raw_cells": [
+          "15,860",
+          "7,373",
+          "7,860",
+          "590",
+          "37",
+          "9",
+          "—",
+          "(246)",
+          "(2)"
+        ]
+      },
+      {
+        "label": "Central Govt",
+        "values": [
+          13862.0,
+          13580.0,
+          157.0,
+          125.0,
+          null,
+          4.0,
+          null,
+          -1490.0,
+          -2051.0
+        ],
+        "raw_cells": [
+          "13,862",
+          "13,580",
+          "157",
+          "125",
+          "—",
+          "4",
+          "—",
+          "(1,490)",
+          "(2,051)"
+        ]
+      },
+      {
+        "label": "Securities Firms",
+        "values": [
+          9443.0,
+          5424.0,
+          4014.0,
+          5.0,
+          null,
+          null,
+          null,
+          -13.0,
+          -2635.0
+        ],
+        "raw_cells": [
+          "9,443",
+          "5,424",
+          "4,014",
+          "5",
+          "—",
+          "—",
+          "—",
+          "(13)",
+          "(2,635)"
+        ]
+      },
+      {
+        "label": "Infrastructure",
+        "values": [
+          4446.0,
+          4201.0,
+          245.0,
+          null,
+          null,
+          null,
+          null,
+          -1.0,
+          null
+        ],
+        "raw_cells": [
+          "4,446",
+          "4,201",
+          "245",
+          "—",
+          "—",
+          "—",
+          "—",
+          "(1)",
+          "—"
+        ]
+      },
+      {
+        "label": "All other(d)",
+        "values": [
+          140873.0,
+          117986.0,
+          22398.0,
+          398.0,
+          91.0,
+          10.0,
+          -3.0,
+          -14825.0,
+          -4328.0
+        ],
+        "raw_cells": [
+          "140,873",
+          "117,986",
+          "22,398",
+          "398",
+          "91",
+          "10",
+          "(3)",
+          "(14,825)",
+          "(4,328)"
+        ]
+      },
+      {
+        "label": "Subtotal",
+        "values": [
+          1282830.0,
+          875477.0,
+          362665.0,
+          39864.0,
+          4824.0,
+          3210.0,
+          822.0,
+          -40888.0,
+          -28160.0
+        ],
+        "raw_cells": [
+          "1,282,830",
+          "875,477",
+          "362,665",
+          "39,864",
+          "4,824",
+          "3,210",
+          "822",
+          "(40,888)",
+          "(28,160)"
+        ]
+      }
+    ],
+    "n_rows": 22,
+    "n_value_cols": 9,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 | c7 | c8 | c9 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| December | 31 | 2024 |  |  |  |  |  |  |  |\n| Real Estate | 207050 | 143803 | 50865 | 10858 | 1524 | 913 | 345 | -584 |  |\n| Entities(b) | 144145 | 118650 | 24831 | 217 | 447 | 831 | 122 |  |  |\n| Asset Managers | 135541 | 101150 | 34148 | 206 | 37 | 375 | 2 |  | -9194 |\n| Consumer & Retail | 129815 | 62800 | 60141 | 6055 | 819 | 252 | 123 | -4320 |  |\n| Telecommunications | 84716 | 45021 | 28629 | 10592 | 474 | 79 | 94 | -4800 |  |\n| Industrials | 72530 | 37572 | 30912 | 3807 | 239 | 185 | 91 | -2312 |  |\n| Banks & Finance Companies | 61287 | 36884 | 24119 | 257 | 27 | 36 |  | -702 | -729 |\n| Healthcare | 64224 | 44135 | 17062 | 2219 | 808 | 245 | 56 | -3286 | -34 |\n| Utilities | 35871 | 24205 | 10256 | 1273 | 137 | 1 |  | -2700 |  |\n| Oil & Gas | 31724 | 19053 | 12479 | 188 | 4 | 9 | -3 | -1711 | -2 |\n| Automotive | 34336 | 22015 | 11353 | 931 | 37 | 121 | 1 | -997 |  |\n| State & Municipal Govt(c) | 35039 | 33303 | 1711 | 9 | 16 | 90 |  | -2 | -1 |\n| Insurance | 24267 | 17847 | 6198 | 222 |  | 2 |  | -1077 | -9184 |\n| Chemicals & Plastics | 20782 | 11013 | 8152 | 1521 | 96 | 31 | 14 | -1164 |  |\n| Transportation | 17019 | 9462 | 7135 | 391 | 31 | 17 | -20 | -658 |  |\n| Metals & Mining | 15860 | 7373 | 7860 | 590 | 37 | 9 |  | -246 | -2 |\n| Central Govt | 13862 | 13580 | 157 | 125 |  | 4 |  | -1490 | -2051 |\n| Securities Firms | 9443 | 5424 | 4014 | 5 |  |  |  | -13 | -2635 |\n| Infrastructure | 4446 | 4201 | 245 |  |  |  |  | -1 |  |\n| All other(d) | 140873 | 117986 | 22398 | 398 | 91 | 10 | -3 | -14825 | -4328 |\n| Subtotal | 1282830 | 875477 | 362665 | 39864 | 4824 | 3210 | 822 | -40888 | -28160 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p123_t1",
+    "pdf_page": 123,
+    "printed_page": 121,
+    "section": "wholesale_credit_exposure",
+    "title": "(c) In addition to the credit risk exposure to states and municipal governments (both U.S. and non-U.S.) at December 31, 2025 and 2024, noted",
+    "header_context": [
+      "of December 31, 2025, not actual rankings of such exposures as of December 31, 2024.",
+      "(b) Individuals and Individual Entities predominantly consists of Global Private Bank clients within AWM and J.P. Morgan Wealth Management",
+      "within CCB, and includes exposure to personal investment companies and personal and testamentary trusts.",
+      "(c) In addition to the credit risk exposure to states and municipal governments (both U.S. and non-U.S.) at December 31, 2025 and 2024, noted"
+    ],
+    "rows": [
+      {
+        "label": "above, the Firm held:",
+        "values": [
+          6.1,
+          20.2,
+          17.9,
+          8.6
+        ],
+        "raw_cells": [
+          "6.1",
+          "20.2",
+          "17.9",
+          "8.6"
+        ]
+      },
+      {
+        "label": "billion and",
+        "values": [
+          9.3,
+          2.0,
+          10.0,
+          null
+        ],
+        "raw_cells": [
+          "9.3",
+          "2",
+          "10"
+        ]
+      },
+      {
+        "label": "(d) All other includes: SPEs and Private education and civic organizations, representing approximately",
+        "values": [
+          95.0,
+          5.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "95",
+          "5"
+        ]
+      }
+    ],
+    "n_rows": 3,
+    "n_value_cols": 4,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 |\n| --- | --- | --- | --- | --- |\n| above, the Firm held: | 6.1 | 20.2 | 17.9 | 8.6 |\n| billion and | 9.3 | 2 | 10 |  |\n| (d) All other includes: SPEs and Private education and civic organizations, representing approximately | 95 | 5 |  |  |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p133_t0",
+    "pdf_page": 133,
+    "printed_page": 131,
+    "section": "market_risk_var",
+    "title": "December 31, % of retained loans to % of retained loans to",
+    "header_context": [
+      "information on loan classes.",
+      "2025 2024",
+      "December 31, % of retained loans to % of retained loans to",
+      "(in millions, except ratios) Allowance for loan losses total retained loans Allowance for loan losses total retained loans"
+    ],
+    "rows": [
+      {
+        "label": "Residential real estate",
+        "values": [
+          869.0,
+          21.0,
+          666.0,
+          24.0
+        ],
+        "raw_cells": [
+          "869",
+          "21",
+          "666",
+          "24"
+        ]
+      },
+      {
+        "label": "Auto and other",
+        "values": [
+          1051.0,
+          5.0,
+          1141.0,
+          5.0
+        ],
+        "raw_cells": [
+          "1,051",
+          "5",
+          "1,141",
+          "5"
+        ]
+      },
+      {
+        "label": "Consumer, excluding credit card",
+        "values": [
+          1920.0,
+          26.0,
+          1807.0,
+          29.0
+        ],
+        "raw_cells": [
+          "1,920",
+          "26",
+          "1,807",
+          "29"
+        ]
+      },
+      {
+        "label": "Credit card",
+        "values": [
+          15557.0,
+          18.0,
+          14600.0,
+          18.0
+        ],
+        "raw_cells": [
+          "15,557",
+          "18",
+          "14,600",
+          "18"
+        ]
+      },
+      {
+        "label": "Total consumer",
+        "values": [
+          17477.0,
+          44.0,
+          16407.0,
+          47.0
+        ],
+        "raw_cells": [
+          "17,477",
+          "44",
+          "16,407",
+          "47"
+        ]
+      },
+      {
+        "label": "Secured by real estate",
+        "values": [
+          2226.0,
+          12.0,
+          2978.0,
+          12.0
+        ],
+        "raw_cells": [
+          "2,226",
+          "12",
+          "2,978",
+          "12"
+        ]
+      },
+      {
+        "label": "Commercial and industrial",
+        "values": [
+          4240.0,
+          12.0,
+          3350.0,
+          13.0
+        ],
+        "raw_cells": [
+          "4,240",
+          "12",
+          "3,350",
+          "13"
+        ]
+      },
+      {
+        "label": "Other",
+        "values": [
+          1822.0,
+          32.0,
+          1610.0,
+          28.0
+        ],
+        "raw_cells": [
+          "1,822",
+          "32",
+          "1,610",
+          "28"
+        ]
+      },
+      {
+        "label": "Total wholesale",
+        "values": [
+          8288.0,
+          56.0,
+          7938.0,
+          53.0
+        ],
+        "raw_cells": [
+          "8,288",
+          "56",
+          "7,938",
+          "53"
+        ]
+      },
+      {
+        "label": "Total",
+        "values": [
+          25765.0,
+          100.0,
+          24345.0,
+          100.0
+        ],
+        "raw_cells": [
+          "25,765",
+          "100",
+          "24,345",
+          "100"
+        ]
+      },
+      {
+        "label": "JPMorgan Chase & Co./",
+        "values": [
+          2025.0,
+          10.0,
+          131.0,
+          null
+        ],
+        "raw_cells": [
+          "2025",
+          "10",
+          "131"
+        ]
+      }
+    ],
+    "n_rows": 11,
+    "n_value_cols": 4,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 |\n| --- | --- | --- | --- | --- |\n| Residential real estate | 869 | 21 | 666 | 24 |\n| Auto and other | 1051 | 5 | 1141 | 5 |\n| Consumer, excluding credit card | 1920 | 26 | 1807 | 29 |\n| Credit card | 15557 | 18 | 14600 | 18 |\n| Total consumer | 17477 | 44 | 16407 | 47 |\n| Secured by real estate | 2226 | 12 | 2978 | 12 |\n| Commercial and industrial | 4240 | 12 | 3350 | 13 |\n| Other | 1822 | 32 | 1610 | 28 |\n| Total wholesale | 8288 | 56 | 7938 | 53 |\n| Total | 25765 | 100 | 24345 | 100 |\n| JPMorgan Chase & Co./ | 2025 | 10 | 131 |  |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p134_t0",
+    "pdf_page": 134,
+    "printed_page": 132,
+    "section": "market_risk_var",
+    "title": "CIO predominantly consists of high-quality securities.",
+    "header_context": [
+      "associated with a default in the payment of principal The table below presents the aggregate carrying",
+      "and interest. This risk is mitigated given that the values of the principal investment portfolios as of",
+      "investment securities portfolio held by Treasury and December 31, 2025 and 2024.",
+      "CIO predominantly consists of high-quality securities."
+    ],
+    "rows": [
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          31.0
+        ],
+        "raw_cells": [
+          "31,",
+          "31,"
+        ]
+      },
+      {
+        "label": "At December",
+        "values": [
+          31.0,
+          2025.0
+        ],
+        "raw_cells": [
+          "31,",
+          "2025,"
+        ]
+      }
+    ],
+    "n_rows": 2,
+    "n_value_cols": 2,
+    "markdown": "| row_label | c1 | c2 |\n| --- | --- | --- |\n| December | 31 | 31 |\n| At December | 31 | 2025 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p134_t1",
+    "pdf_page": 134,
+    "printed_page": 132,
+    "section": "market_risk_var",
+    "title": "available, and where not available, based primarily",
+    "header_context": [
+      "portfolio was AA+ (based upon external ratings where Private equity, various debt and",
+      "equity instruments, and real",
+      "available, and where not available, based primarily"
+    ],
+    "rows": [
+      {
+        "label": "assets",
+        "values": [
+          11.3,
+          9.1,
+          null
+        ],
+        "raw_cells": [
+          "11.3",
+          "9.1"
+        ]
+      },
+      {
+        "label": "Total carrying value",
+        "values": [
+          47.0,
+          42.4,
+          null
+        ],
+        "raw_cells": [
+          "47.0",
+          "42.4"
+        ]
+      },
+      {
+        "label": "on pages",
+        "values": [
+          80.0,
+          82.0,
+          10.0
+        ],
+        "raw_cells": [
+          "80",
+          "82",
+          "10"
+        ]
+      }
+    ],
+    "n_rows": 3,
+    "n_value_cols": 3,
+    "markdown": "| row_label | c1 | c2 | c3 |\n| --- | --- | --- | --- |\n| assets | 11.3 | 9.1 |  |\n| Total carrying value | 47 | 42.4 |  |\n| on pages | 80 | 82 | 10 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p138_t0",
+    "pdf_page": 138,
+    "printed_page": 136,
+    "section": "market_risk_var",
+    "title": "CIB trading VaR by risk type",
+    "header_context": [
+      "Total VaR",
+      "As of or for the year ended December 31, 2025 2024",
+      "(in millions) Avg. Min Max Avg. Min Max",
+      "CIB trading VaR by risk type"
+    ],
+    "rows": [
+      {
+        "label": "Fixed income",
+        "values": [
+          35.0,
+          27.0,
+          51.0,
+          34.0,
+          26.0,
+          53.0
+        ],
+        "raw_cells": [
+          "35",
+          "27",
+          "51",
+          "34",
+          "26",
+          "53"
+        ]
+      },
+      {
+        "label": "Foreign exchange",
+        "values": [
+          9.0,
+          6.0,
+          15.0,
+          15.0,
+          7.0,
+          23.0
+        ],
+        "raw_cells": [
+          "9",
+          "6",
+          "15",
+          "15",
+          "7",
+          "23"
+        ]
+      },
+      {
+        "label": "Equities",
+        "values": [
+          17.0,
+          7.0,
+          138.0,
+          8.0,
+          4.0,
+          15.0
+        ],
+        "raw_cells": [
+          "17",
+          "7",
+          "138",
+          "8",
+          "4",
+          "15"
+        ]
+      },
+      {
+        "label": "Commodities and other",
+        "values": [
+          24.0,
+          10.0,
+          48.0,
+          8.0,
+          6.0,
+          13.0
+        ],
+        "raw_cells": [
+          "24",
+          "10",
+          "48",
+          "8",
+          "6",
+          "13"
+        ]
+      },
+      {
+        "label": "Diversification benefit to CIB trading VaR (a)",
+        "values": [
+          -51.0,
+          null,
+          null,
+          -32.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "(51)",
+          "NM",
+          "NM",
+          "(32)",
+          "NM",
+          "NM"
+        ]
+      },
+      {
+        "label": "CIB trading VaR",
+        "values": [
+          34.0,
+          21.0,
+          142.0,
+          33.0,
+          27.0,
+          42.0
+        ],
+        "raw_cells": [
+          "34",
+          "21",
+          "142",
+          "33",
+          "27",
+          "42"
+        ]
+      },
+      {
+        "label": "Credit Portfolio VaR(b)",
+        "values": [
+          21.0,
+          16.0,
+          27.0,
+          22.0,
+          18.0,
+          28.0
+        ],
+        "raw_cells": [
+          "21",
+          "16",
+          "27",
+          "22",
+          "18",
+          "28"
+        ]
+      },
+      {
+        "label": "Diversification benefit to CIB VaR(a)",
+        "values": [
+          -18.0,
+          null,
+          null,
+          -16.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "(18)",
+          "NM",
+          "NM",
+          "(16)",
+          "NM",
+          "NM"
+        ]
+      },
+      {
+        "label": "CIB VaR",
+        "values": [
+          37.0,
+          23.0,
+          133.0,
+          39.0,
+          27.0,
+          52.0
+        ],
+        "raw_cells": [
+          "37",
+          "23",
+          "133",
+          "39",
+          "27",
+          "52"
+        ]
+      },
+      {
+        "label": "CCB VaR",
+        "values": [
+          4.0,
+          2.0,
+          7.0,
+          3.0,
+          1.0,
+          6.0
+        ],
+        "raw_cells": [
+          "4",
+          "2",
+          "7",
+          "3",
+          "1",
+          "6"
+        ]
+      },
+      {
+        "label": "AWM VaR(c)",
+        "values": [
+          9.0,
+          8.0,
+          12.0,
+          9.0,
+          5.0,
+          10.0
+        ],
+        "raw_cells": [
+          "9",
+          "8",
+          "12",
+          "9",
+          "5",
+          "10"
+        ]
+      },
+      {
+        "label": "Corporate VaR(d)",
+        "values": [
+          10.0,
+          9.0,
+          12.0,
+          23.0,
+          7.0,
+          102.0
+        ],
+        "raw_cells": [
+          "10",
+          "9",
+          "12",
+          "23",
+          "7",
+          "102"
+        ]
+      },
+      {
+        "label": "Diversification benefit to other VaR(a)",
+        "values": [
+          -11.0,
+          null,
+          null,
+          -10.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "(11)",
+          "NM",
+          "NM",
+          "(10)",
+          "NM",
+          "NM"
+        ]
+      },
+      {
+        "label": "Other VaR",
+        "values": [
+          12.0,
+          10.0,
+          14.0,
+          25.0,
+          10.0,
+          101.0
+        ],
+        "raw_cells": [
+          "12",
+          "10",
+          "14",
+          "25",
+          "10",
+          "101"
+        ]
+      },
+      {
+        "label": "Diversification benefit to CIB and other VaR(a)",
+        "values": [
+          -9.0,
+          null,
+          null,
+          -17.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "(9)",
+          "NM",
+          "NM",
+          "(17)",
+          "NM",
+          "NM"
+        ]
+      },
+      {
+        "label": "Total VaR",
+        "values": [
+          40.0,
+          25.0,
+          136.0,
+          47.0,
+          30.0,
+          91.0
+        ],
+        "raw_cells": [
+          "40",
+          "25",
+          "136",
+          "47",
+          "30",
+          "91"
+        ]
+      }
+    ],
+    "n_rows": 16,
+    "n_value_cols": 6,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Fixed income | 35 | 27 | 51 | 34 | 26 | 53 |\n| Foreign exchange | 9 | 6 | 15 | 15 | 7 | 23 |\n| Equities | 17 | 7 | 138 | 8 | 4 | 15 |\n| Commodities and other | 24 | 10 | 48 | 8 | 6 | 13 |\n| Diversification benefit to CIB trading VaR (a) | -51 |  |  | -32 |  |  |\n| CIB trading VaR | 34 | 21 | 142 | 33 | 27 | 42 |\n| Credit Portfolio VaR(b) | 21 | 16 | 27 | 22 | 18 | 28 |\n| Diversification benefit to CIB VaR(a) | -18 |  |  | -16 |  |  |\n| CIB VaR | 37 | 23 | 133 | 39 | 27 | 52 |\n| CCB VaR | 4 | 2 | 7 | 3 | 1 | 6 |\n| AWM VaR(c) | 9 | 8 | 12 | 9 | 5 | 10 |\n| Corporate VaR(d) | 10 | 9 | 12 | 23 | 7 | 102 |\n| Diversification benefit to other VaR(a) | -11 |  |  | -10 |  |  |\n| Other VaR | 12 | 10 | 14 | 25 | 10 | 101 |\n| Diversification benefit to CIB and other VaR(a) | -9 |  |  | -17 |  |  |\n| Total VaR | 40 | 25 | 136 | 47 | 30 | 91 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p138_t1",
+    "pdf_page": 138,
+    "printed_page": 136,
+    "section": "market_risk_var",
+    "title": "lower for the years ended:",
+    "header_context": [
+      "increased risk exposure in the commodities and",
+      "Amounts by which reported",
+      "average VaR would have been equities risk types.",
+      "lower for the years ended:"
+    ],
+    "rows": [
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          31.0,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "31,"
+        ]
+      },
+      {
+        "label": "Fixed income",
+        "values": [
+          -1.0,
+          -3.0,
+          null
+        ],
+        "raw_cells": [
+          "(1)",
+          "(3)"
+        ]
+      },
+      {
+        "label": "CIB trading VaR",
+        "values": [
+          -2.0,
+          -3.0,
+          null
+        ],
+        "raw_cells": [
+          "(2)",
+          "(3)"
+        ]
+      },
+      {
+        "label": "CIB VaR",
+        "values": [
+          -1.0,
+          -3.0,
+          null
+        ],
+        "raw_cells": [
+          "(1)",
+          "(3)"
+        ]
+      },
+      {
+        "label": "Total VaR",
+        "values": [
+          -1.0,
+          -2.0,
+          null
+        ],
+        "raw_cells": [
+          "(1)",
+          "(2)"
+        ]
+      },
+      {
+        "label": "",
+        "values": [
+          136.0,
+          2025.0,
+          10.0
+        ],
+        "raw_cells": [
+          "136",
+          "2025",
+          "10"
+        ]
+      }
+    ],
+    "n_rows": 6,
+    "n_value_cols": 3,
+    "markdown": "| row_label | c1 | c2 | c3 |\n| --- | --- | --- | --- |\n| December | 31 | 31 |  |\n| Fixed income | -1 | -3 |  |\n| CIB trading VaR | -2 | -3 |  |\n| CIB VaR | -1 | -3 |  |\n| Total VaR | -1 | -2 |  |\n|  | 136 | 2025 | 10 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p143_t0",
+    "pdf_page": 143,
+    "printed_page": 141,
+    "section": "market_risk_var",
+    "title": "economic value of equity by measuring the sensitivity",
+    "header_context": [
+      "(in billions) 2025(a) 2024(a) months, the Firm also measures economic value",
+      "sensitivity (“EVS”). EVS stress tests the longer-term",
+      "Parallel shift:",
+      "economic value of equity by measuring the sensitivity"
+    ],
+    "rows": [
+      {
+        "label": "+",
+        "values": [
+          100.0,
+          2.1,
+          2.3
+        ],
+        "raw_cells": [
+          "100",
+          "2.1",
+          "2.3"
+        ]
+      },
+      {
+        "label": "",
+        "values": [
+          -100.0,
+          -2.4,
+          -2.5
+        ],
+        "raw_cells": [
+          "-100",
+          "(2.4)",
+          "(2.5)"
+        ]
+      },
+      {
+        "label": "+",
+        "values": [
+          200.0,
+          3.7,
+          4.6
+        ],
+        "raw_cells": [
+          "200",
+          "3.7",
+          "4.6"
+        ]
+      },
+      {
+        "label": "",
+        "values": [
+          -200.0,
+          -6.0,
+          -4.9
+        ],
+        "raw_cells": [
+          "-200",
+          "(6.0)",
+          "(4.9)"
+        ]
+      },
+      {
+        "label": "+",
+        "values": [
+          100.0,
+          1.4,
+          1.0
+        ],
+        "raw_cells": [
+          "100",
+          "1.4",
+          "1.0"
+        ]
+      },
+      {
+        "label": "",
+        "values": [
+          -100.0,
+          -1.0,
+          -1.4
+        ],
+        "raw_cells": [
+          "-100",
+          "(1.0)",
+          "(1.4)"
+        ]
+      }
+    ],
+    "n_rows": 6,
+    "n_value_cols": 3,
+    "markdown": "| row_label | c1 | c2 | c3 |\n| --- | --- | --- | --- |\n| + | 100 | 2.1 | 2.3 |\n|  | -100 | -2.4 | -2.5 |\n| + | 200 | 3.7 | 4.6 |\n|  | -200 | -6 | -4.9 |\n| + | 100 | 1.4 | 1 |\n|  | -100 | -1 | -1.4 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p143_t1",
+    "pdf_page": 143,
+    "printed_page": 141,
+    "section": "market_risk_var",
+    "title": "TCE.",
+    "header_context": [
+      "Firm has established limits on EVS as a percentage of",
+      "Flatter yield curve:",
+      "TCE."
+    ],
+    "rows": [
+      {
+        "label": "+",
+        "values": [
+          100.0,
+          0.7,
+          1.2
+        ],
+        "raw_cells": [
+          "100",
+          "0.7",
+          "1.2"
+        ]
+      },
+      {
+        "label": "",
+        "values": [
+          -100.0,
+          -1.4,
+          -1.1
+        ],
+        "raw_cells": [
+          "-100",
+          "(1.4)",
+          "(1.1)"
+        ]
+      }
+    ],
+    "n_rows": 2,
+    "n_value_cols": 3,
+    "markdown": "| row_label | c1 | c2 | c3 |\n| --- | --- | --- | --- |\n| + | 100 | 0.7 | 1.2 |\n|  | -100 | -1.4 | -1.1 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p207_t0",
+    "pdf_page": 207,
+    "printed_page": 205,
+    "section": "derivatives_note",
+    "title": "Interest rate contracts",
+    "header_context": [
+      "December 31, 2025 and 2024.",
+      "Notional amounts(b)",
+      "December 31, (in billions) 2025 2024",
+      "Interest rate contracts"
+    ],
+    "rows": [
+      {
+        "label": "Swaps",
+        "values": [
+          19056.0,
+          20437.0
+        ],
+        "raw_cells": [
+          "19,056",
+          "20,437"
+        ]
+      },
+      {
+        "label": "Futures and forwards",
+        "values": [
+          3305.0,
+          3067.0
+        ],
+        "raw_cells": [
+          "3,305",
+          "3,067"
+        ]
+      },
+      {
+        "label": "Written options",
+        "values": [
+          3775.0,
+          3067.0
+        ],
+        "raw_cells": [
+          "3,775",
+          "3,067"
+        ]
+      },
+      {
+        "label": "Purchased options",
+        "values": [
+          3400.0,
+          3089.0
+        ],
+        "raw_cells": [
+          "3,400",
+          "3,089"
+        ]
+      },
+      {
+        "label": "Total interest rate contracts",
+        "values": [
+          29536.0,
+          29660.0
+        ],
+        "raw_cells": [
+          "29,536",
+          "29,660"
+        ]
+      },
+      {
+        "label": "Credit derivatives(a)",
+        "values": [
+          1381.0,
+          1191.0
+        ],
+        "raw_cells": [
+          "1,381",
+          "1,191"
+        ]
+      },
+      {
+        "label": "Cross-currency swaps",
+        "values": [
+          5476.0,
+          4509.0
+        ],
+        "raw_cells": [
+          "5,476",
+          "4,509"
+        ]
+      },
+      {
+        "label": "Spot, futures and forwards",
+        "values": [
+          8187.0,
+          7005.0
+        ],
+        "raw_cells": [
+          "8,187",
+          "7,005"
+        ]
+      },
+      {
+        "label": "Written options",
+        "values": [
+          979.0,
+          1015.0
+        ],
+        "raw_cells": [
+          "979",
+          "1,015"
+        ]
+      },
+      {
+        "label": "Purchased options",
+        "values": [
+          953.0,
+          984.0
+        ],
+        "raw_cells": [
+          "953",
+          "984"
+        ]
+      },
+      {
+        "label": "Total foreign exchange contracts",
+        "values": [
+          15595.0,
+          13513.0
+        ],
+        "raw_cells": [
+          "15,595",
+          "13,513"
+        ]
+      },
+      {
+        "label": "Swaps",
+        "values": [
+          1147.0,
+          850.0
+        ],
+        "raw_cells": [
+          "1,147",
+          "850"
+        ]
+      },
+      {
+        "label": "Futures and forwards",
+        "values": [
+          196.0,
+          206.0
+        ],
+        "raw_cells": [
+          "196",
+          "206"
+        ]
+      },
+      {
+        "label": "Written options",
+        "values": [
+          1118.0,
+          914.0
+        ],
+        "raw_cells": [
+          "1,118",
+          "914"
+        ]
+      },
+      {
+        "label": "Purchased options",
+        "values": [
+          971.0,
+          788.0
+        ],
+        "raw_cells": [
+          "971",
+          "788"
+        ]
+      },
+      {
+        "label": "Total equity contracts",
+        "values": [
+          3432.0,
+          2758.0
+        ],
+        "raw_cells": [
+          "3,432",
+          "2,758"
+        ]
+      },
+      {
+        "label": "Swaps",
+        "values": [
+          189.0,
+          148.0
+        ],
+        "raw_cells": [
+          "189",
+          "148"
+        ]
+      },
+      {
+        "label": "Spot, futures and forwards",
+        "values": [
+          270.0,
+          191.0
+        ],
+        "raw_cells": [
+          "270",
+          "191"
+        ]
+      },
+      {
+        "label": "Written options",
+        "values": [
+          119.0,
+          137.0
+        ],
+        "raw_cells": [
+          "119",
+          "137"
+        ]
+      },
+      {
+        "label": "Purchased options",
+        "values": [
+          120.0,
+          125.0
+        ],
+        "raw_cells": [
+          "120",
+          "125"
+        ]
+      },
+      {
+        "label": "Total commodity contracts",
+        "values": [
+          698.0,
+          601.0
+        ],
+        "raw_cells": [
+          "698",
+          "601"
+        ]
+      },
+      {
+        "label": "Total derivative notional amounts",
+        "values": [
+          50642.0,
+          47723.0
+        ],
+        "raw_cells": [
+          "50,642",
+          "47,723"
+        ]
+      },
+      {
+        "label": "(a) Refer to the Credit derivatives discussion on pages",
+        "values": [
+          215.0,
+          217.0
+        ],
+        "raw_cells": [
+          "215",
+          "217"
+        ]
+      }
+    ],
+    "n_rows": 23,
+    "n_value_cols": 2,
+    "markdown": "| row_label | c1 | c2 |\n| --- | --- | --- |\n| Swaps | 19056 | 20437 |\n| Futures and forwards | 3305 | 3067 |\n| Written options | 3775 | 3067 |\n| Purchased options | 3400 | 3089 |\n| Total interest rate contracts | 29536 | 29660 |\n| Credit derivatives(a) | 1381 | 1191 |\n| Cross-currency swaps | 5476 | 4509 |\n| Spot, futures and forwards | 8187 | 7005 |\n| Written options | 979 | 1015 |\n| Purchased options | 953 | 984 |\n| Total foreign exchange contracts | 15595 | 13513 |\n| Swaps | 1147 | 850 |\n| Futures and forwards | 196 | 206 |\n| Written options | 1118 | 914 |\n| Purchased options | 971 | 788 |\n| Total equity contracts | 3432 | 2758 |\n| Swaps | 189 | 148 |\n| Spot, futures and forwards | 270 | 191 |\n| Written options | 119 | 137 |\n| Purchased options | 120 | 125 |\n| Total commodity contracts | 698 | 601 |\n| Total derivative notional amounts | 50642 | 47723 |\n| (a) Refer to the Credit derivatives discussion on pages | 215 | 217 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p208_t0",
+    "pdf_page": 208,
+    "printed_page": 206,
+    "section": "derivatives_note",
+    "title": "liabilities",
+    "header_context": [
+      "(in millions) as hedges as hedges receivables receivables(b) as hedges as hedges payables payables(b)",
+      "Trading assets and",
+      "liabilities"
+    ],
+    "rows": [
+      {
+        "label": "Interest rate",
+        "values": [
+          281884.0,
+          null,
+          281884.0,
+          25401.0,
+          257582.0,
+          1.0,
+          257583.0,
+          7461.0
+        ],
+        "raw_cells": [
+          "281,884",
+          "—",
+          "281,884",
+          "25,401",
+          "257,582",
+          "1",
+          "257,583",
+          "7,461"
+        ]
+      },
+      {
+        "label": "Credit",
+        "values": [
+          13024.0,
+          null,
+          13024.0,
+          479.0,
+          17628.0,
+          null,
+          17628.0,
+          2016.0
+        ],
+        "raw_cells": [
+          "13,024",
+          "—",
+          "13,024",
+          "479",
+          "17,628",
+          "—",
+          "17,628",
+          "2,016"
+        ]
+      },
+      {
+        "label": "Foreign exchange",
+        "values": [
+          182887.0,
+          349.0,
+          183236.0,
+          19355.0,
+          177158.0,
+          983.0,
+          178141.0,
+          14833.0
+        ],
+        "raw_cells": [
+          "182,887",
+          "349",
+          "183,236",
+          "19,355",
+          "177,158",
+          "983",
+          "178,141",
+          "14,833"
+        ]
+      },
+      {
+        "label": "Equity",
+        "values": [
+          97723.0,
+          null,
+          97723.0,
+          5867.0,
+          117017.0,
+          null,
+          117017.0,
+          14806.0
+        ],
+        "raw_cells": [
+          "97,723",
+          "—",
+          "97,723",
+          "5,867",
+          "117,017",
+          "—",
+          "117,017",
+          "14,806"
+        ]
+      },
+      {
+        "label": "Commodity",
+        "values": [
+          29932.0,
+          583.0,
+          30515.0,
+          6675.0,
+          24744.0,
+          1625.0,
+          26369.0,
+          7213.0
+        ],
+        "raw_cells": [
+          "29,932",
+          "583",
+          "30,515",
+          "6,675",
+          "24,744",
+          "1,625",
+          "26,369",
+          "7,213"
+        ]
+      },
+      {
+        "label": "assets and liabilities",
+        "values": [
+          605450.0,
+          932.0,
+          606382.0,
+          57777.0,
+          594129.0,
+          2609.0,
+          596738.0,
+          46329.0
+        ],
+        "raw_cells": [
+          "605,450",
+          "932",
+          "606,382",
+          "57,777",
+          "594,129",
+          "2,609",
+          "596,738",
+          "46,329"
+        ]
+      },
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          2024.0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2024"
+        ]
+      }
+    ],
+    "n_rows": 7,
+    "n_value_cols": 8,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 | c7 | c8 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Interest rate | 281884 |  | 281884 | 25401 | 257582 | 1 | 257583 | 7461 |\n| Credit | 13024 |  | 13024 | 479 | 17628 |  | 17628 | 2016 |\n| Foreign exchange | 182887 | 349 | 183236 | 19355 | 177158 | 983 | 178141 | 14833 |\n| Equity | 97723 |  | 97723 | 5867 | 117017 |  | 117017 | 14806 |\n| Commodity | 29932 | 583 | 30515 | 6675 | 24744 | 1625 | 26369 | 7213 |\n| assets and liabilities | 605450 | 932 | 606382 | 57777 | 594129 | 2609 | 596738 | 46329 |\n| December | 31 | 2024 |  |  |  |  |  |  |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p208_t1",
+    "pdf_page": 208,
+    "printed_page": 206,
+    "section": "derivatives_note",
+    "title": "liabilities",
+    "header_context": [
+      "(in millions) as hedges as hedges receivables receivables(b) as hedges as hedges payables payables(b)",
+      "Trading assets and",
+      "liabilities"
+    ],
+    "rows": [
+      {
+        "label": "Interest rate",
+        "values": [
+          290734.0,
+          null,
+          290734.0,
+          24945.0,
+          274226.0,
+          2.0,
+          274228.0,
+          9239.0
+        ],
+        "raw_cells": [
+          "290,734",
+          "—",
+          "290,734",
+          "24,945",
+          "274,226",
+          "2",
+          "274,228",
+          "9,239"
+        ]
+      },
+      {
+        "label": "Credit",
+        "values": [
+          11087.0,
+          null,
+          11087.0,
+          814.0,
+          13796.0,
+          null,
+          13796.0,
+          1898.0
+        ],
+        "raw_cells": [
+          "11,087",
+          "—",
+          "11,087",
+          "814",
+          "13,796",
+          "—",
+          "13,796",
+          "1,898"
+        ]
+      },
+      {
+        "label": "Foreign exchange",
+        "values": [
+          261035.0,
+          1885.0,
+          262920.0,
+          25312.0,
+          253289.0,
+          1278.0,
+          254567.0,
+          15597.0
+        ],
+        "raw_cells": [
+          "261,035",
+          "1,885",
+          "262,920",
+          "25,312",
+          "253,289",
+          "1,278",
+          "254,567",
+          "15,597"
+        ]
+      },
+      {
+        "label": "Equity",
+        "values": [
+          85220.0,
+          null,
+          85220.0,
+          5285.0,
+          96139.0,
+          null,
+          96139.0,
+          8648.0
+        ],
+        "raw_cells": [
+          "85,220",
+          "—",
+          "85,220",
+          "5,285",
+          "96,139",
+          "—",
+          "96,139",
+          "8,648"
+        ]
+      },
+      {
+        "label": "Commodity",
+        "values": [
+          15490.0,
+          136.0,
+          15626.0,
+          4611.0,
+          14415.0,
+          73.0,
+          14488.0,
+          4279.0
+        ],
+        "raw_cells": [
+          "15,490",
+          "136",
+          "15,626",
+          "4,611",
+          "14,415",
+          "73",
+          "14,488",
+          "4,279"
+        ]
+      },
+      {
+        "label": "assets and liabilities",
+        "values": [
+          663566.0,
+          2021.0,
+          665587.0,
+          60967.0,
+          651865.0,
+          1353.0,
+          653218.0,
+          39661.0
+        ],
+        "raw_cells": [
+          "663,566",
+          "2,021",
+          "665,587",
+          "60,967",
+          "651,865",
+          "1,353",
+          "653,218",
+          "39,661"
+        ]
+      }
+    ],
+    "n_rows": 6,
+    "n_value_cols": 8,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 | c7 | c8 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Interest rate | 290734 |  | 290734 | 24945 | 274226 | 2 | 274228 | 9239 |\n| Credit | 11087 |  | 11087 | 814 | 13796 |  | 13796 | 1898 |\n| Foreign exchange | 261035 | 1885 | 262920 | 25312 | 253289 | 1278 | 254567 | 15597 |\n| Equity | 85220 |  | 85220 | 5285 | 96139 |  | 96139 | 8648 |\n| Commodity | 15490 | 136 | 15626 | 4611 | 14415 | 73 | 14488 | 4279 |\n| assets and liabilities | 663566 | 2021 | 665587 | 60967 | 651865 | 1353 | 653218 | 39661 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p210_t0",
+    "pdf_page": 210,
+    "printed_page": 208,
+    "section": "derivatives_note",
+    "title": "Interest rate contracts:",
+    "header_context": [
+      "derivative balance derivative derivative balance derivative",
+      "December 31, (in millions) receivables sheets receivables receivables sheets receivables",
+      "U.S. GAAP nettable derivative receivables",
+      "Interest rate contracts:"
+    ],
+    "rows": [
+      {
+        "label": "Over-the-counter (“OTC”)",
+        "values": [
+          162300.0,
+          -138107.0,
+          24193.0,
+          158202.0,
+          -134791.0,
+          23411.0
+        ],
+        "raw_cells": [
+          "162,300",
+          "(138,107)",
+          "24,193",
+          "158,202",
+          "(134,791)",
+          "23,411"
+        ]
+      },
+      {
+        "label": "OTC–cleared",
+        "values": [
+          118377.0,
+          -118303.0,
+          74.0,
+          130989.0,
+          -130810.0,
+          179.0
+        ],
+        "raw_cells": [
+          "118,377",
+          "(118,303)",
+          "74",
+          "130,989",
+          "(130,810)",
+          "179"
+        ]
+      },
+      {
+        "label": "Exchange-traded(a)",
+        "values": [
+          128.0,
+          -73.0,
+          55.0,
+          190.0,
+          -188.0,
+          2.0
+        ],
+        "raw_cells": [
+          "128",
+          "(73)",
+          "55",
+          "190",
+          "(188)",
+          "2"
+        ]
+      },
+      {
+        "label": "Total interest rate contracts",
+        "values": [
+          280805.0,
+          -256483.0,
+          24322.0,
+          289381.0,
+          -265789.0,
+          23592.0
+        ],
+        "raw_cells": [
+          "280,805",
+          "(256,483)",
+          "24,322",
+          "289,381",
+          "(265,789)",
+          "23,592"
+        ]
+      },
+      {
+        "label": "OTC",
+        "values": [
+          9723.0,
+          -9433.0,
+          290.0,
+          8680.0,
+          -8030.0,
+          650.0
+        ],
+        "raw_cells": [
+          "9,723",
+          "(9,433)",
+          "290",
+          "8,680",
+          "(8,030)",
+          "650"
+        ]
+      },
+      {
+        "label": "OTC–cleared",
+        "values": [
+          3233.0,
+          -3112.0,
+          121.0,
+          2267.0,
+          -2243.0,
+          24.0
+        ],
+        "raw_cells": [
+          "3,233",
+          "(3,112)",
+          "121",
+          "2,267",
+          "(2,243)",
+          "24"
+        ]
+      },
+      {
+        "label": "Total credit contracts",
+        "values": [
+          12956.0,
+          -12545.0,
+          411.0,
+          10947.0,
+          -10273.0,
+          674.0
+        ],
+        "raw_cells": [
+          "12,956",
+          "(12,545)",
+          "411",
+          "10,947",
+          "(10,273)",
+          "674"
+        ]
+      },
+      {
+        "label": "OTC",
+        "values": [
+          180120.0,
+          -163029.0,
+          17091.0,
+          259608.0,
+          -236931.0,
+          22677.0
+        ],
+        "raw_cells": [
+          "180,120",
+          "(163,029)",
+          "17,091",
+          "259,608",
+          "(236,931)",
+          "22,677"
+        ]
+      },
+      {
+        "label": "OTC–cleared",
+        "values": [
+          904.0,
+          -849.0,
+          55.0,
+          685.0,
+          -677.0,
+          8.0
+        ],
+        "raw_cells": [
+          "904",
+          "(849)",
+          "55",
+          "685",
+          "(677)",
+          "8"
+        ]
+      },
+      {
+        "label": "Exchange-traded(a)",
+        "values": [
+          21.0,
+          -3.0,
+          18.0,
+          34.0,
+          null,
+          34.0
+        ],
+        "raw_cells": [
+          "21",
+          "(3)",
+          "18",
+          "34",
+          "—",
+          "34"
+        ]
+      },
+      {
+        "label": "Total foreign exchange contracts",
+        "values": [
+          181045.0,
+          -163881.0,
+          17164.0,
+          260327.0,
+          -237608.0,
+          22719.0
+        ],
+        "raw_cells": [
+          "181,045",
+          "(163,881)",
+          "17,164",
+          "260,327",
+          "(237,608)",
+          "22,719"
+        ]
+      },
+      {
+        "label": "OTC",
+        "values": [
+          33418.0,
+          -31170.0,
+          2248.0,
+          33269.0,
+          -30742.0,
+          2527.0
+        ],
+        "raw_cells": [
+          "33,418",
+          "(31,170)",
+          "2,248",
+          "33,269",
+          "(30,742)",
+          "2,527"
+        ]
+      },
+      {
+        "label": "Exchange-traded(a)",
+        "values": [
+          63168.0,
+          -60686.0,
+          2482.0,
+          51040.0,
+          -49193.0,
+          1847.0
+        ],
+        "raw_cells": [
+          "63,168",
+          "(60,686)",
+          "2,482",
+          "51,040",
+          "(49,193)",
+          "1,847"
+        ]
+      },
+      {
+        "label": "Total equity contracts",
+        "values": [
+          96586.0,
+          -91856.0,
+          4730.0,
+          84309.0,
+          -79935.0,
+          4374.0
+        ],
+        "raw_cells": [
+          "96,586",
+          "(91,856)",
+          "4,730",
+          "84,309",
+          "(79,935)",
+          "4,374"
+        ]
+      },
+      {
+        "label": "OTC",
+        "values": [
+          18244.0,
+          -14469.0,
+          3775.0,
+          8340.0,
+          -5848.0,
+          2492.0
+        ],
+        "raw_cells": [
+          "18,244",
+          "(14,469)",
+          "3,775",
+          "8,340",
+          "(5,848)",
+          "2,492"
+        ]
+      },
+      {
+        "label": "OTC–cleared",
+        "values": [
+          109.0,
+          -79.0,
+          30.0,
+          126.0,
+          -84.0,
+          42.0
+        ],
+        "raw_cells": [
+          "109",
+          "(79)",
+          "30",
+          "126",
+          "(84)",
+          "42"
+        ]
+      },
+      {
+        "label": "Exchange-traded(a)",
+        "values": [
+          9565.0,
+          -9292.0,
+          273.0,
+          5179.0,
+          -5083.0,
+          96.0
+        ],
+        "raw_cells": [
+          "9,565",
+          "(9,292)",
+          "273",
+          "5,179",
+          "(5,083)",
+          "96"
+        ]
+      },
+      {
+        "label": "Total commodity contracts",
+        "values": [
+          27918.0,
+          -23840.0,
+          4078.0,
+          13645.0,
+          -11015.0,
+          2630.0
+        ],
+        "raw_cells": [
+          "27,918",
+          "(23,840)",
+          "4,078",
+          "13,645",
+          "(11,015)",
+          "2,630"
+        ]
+      },
+      {
+        "label": "opinion",
+        "values": [
+          599310.0,
+          -548605.0,
+          50705.0,
+          658609.0,
+          -604620.0,
+          53989.0
+        ],
+        "raw_cells": [
+          "599,310",
+          "(548,605)",
+          "50,705",
+          "658,609",
+          "(604,620)",
+          "53,989"
+        ]
+      },
+      {
+        "label": "obtained",
+        "values": [
+          7072.0,
+          7072.0,
+          6978.0,
+          6978.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "7,072",
+          "7,072",
+          "6,978",
+          "6,978"
+        ]
+      },
+      {
+        "label": "Consolidated balance sheets",
+        "values": [
+          606382.0,
+          57777.0,
+          665587.0,
+          60967.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "606,382",
+          "57,777",
+          "665,587",
+          "60,967"
+        ]
+      },
+      {
+        "label": "balance sheets(b)(c)",
+        "values": [
+          -28891.0,
+          -28160.0,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "(28,891)",
+          "(28,160)"
+        ]
+      },
+      {
+        "label": "Net amounts",
+        "values": [
+          28886.0,
+          32807.0,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "28,886",
+          "32,807"
+        ]
+      },
+      {
+        "label": "",
+        "values": [
+          208.0,
+          2025.0,
+          10.0,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "208",
+          "2025",
+          "10"
+        ]
+      }
+    ],
+    "n_rows": 24,
+    "n_value_cols": 6,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Over-the-counter (“OTC”) | 162300 | -138107 | 24193 | 158202 | -134791 | 23411 |\n| OTC–cleared | 118377 | -118303 | 74 | 130989 | -130810 | 179 |\n| Exchange-traded(a) | 128 | -73 | 55 | 190 | -188 | 2 |\n| Total interest rate contracts | 280805 | -256483 | 24322 | 289381 | -265789 | 23592 |\n| OTC | 9723 | -9433 | 290 | 8680 | -8030 | 650 |\n| OTC–cleared | 3233 | -3112 | 121 | 2267 | -2243 | 24 |\n| Total credit contracts | 12956 | -12545 | 411 | 10947 | -10273 | 674 |\n| OTC | 180120 | -163029 | 17091 | 259608 | -236931 | 22677 |\n| OTC–cleared | 904 | -849 | 55 | 685 | -677 | 8 |\n| Exchange-traded(a) | 21 | -3 | 18 | 34 |  | 34 |\n| Total foreign exchange contracts | 181045 | -163881 | 17164 | 260327 | -237608 | 22719 |\n| OTC | 33418 | -31170 | 2248 | 33269 | -30742 | 2527 |\n| Exchange-traded(a) | 63168 | -60686 | 2482 | 51040 | -49193 | 1847 |\n| Total equity contracts | 96586 | -91856 | 4730 | 84309 | -79935 | 4374 |\n| OTC | 18244 | -14469 | 3775 | 8340 | -5848 | 2492 |\n| OTC–cleared | 109 | -79 | 30 | 126 | -84 | 42 |\n| Exchange-traded(a) | 9565 | -9292 | 273 | 5179 | -5083 | 96 |\n| Total commodity contracts | 27918 | -23840 | 4078 | 13645 | -11015 | 2630 |\n| opinion | 599310 | -548605 | 50705 | 658609 | -604620 | 53989 |\n| obtained | 7072 | 7072 | 6978 | 6978 |  |  |\n| Consolidated balance sheets | 606382 | 57777 | 665587 | 60967 |  |  |\n| balance sheets(b)(c) | -28891 | -28160 |  |  |  |  |\n| Net amounts | 28886 | 32807 |  |  |  |  |\n|  | 208 | 2025 | 10 |  |  |  |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p211_t0",
+    "pdf_page": 211,
+    "printed_page": 209,
+    "section": "derivatives_note",
+    "title": "Interest rate contracts:",
+    "header_context": [
+      "derivative balance derivative derivative balance derivative",
+      "December 31, (in millions) payables sheets payables payables sheets payables",
+      "U.S. GAAP nettable derivative payables",
+      "Interest rate contracts:"
+    ],
+    "rows": [
+      {
+        "label": "OTC",
+        "values": [
+          135045.0,
+          -128464.0,
+          6581.0,
+          138215.0,
+          -130375.0,
+          7840.0
+        ],
+        "raw_cells": [
+          "135,045",
+          "(128,464)",
+          "6,581",
+          "138,215",
+          "(130,375)",
+          "7,840"
+        ]
+      },
+      {
+        "label": "OTC–cleared",
+        "values": [
+          121702.0,
+          -121557.0,
+          145.0,
+          134555.0,
+          -134262.0,
+          293.0
+        ],
+        "raw_cells": [
+          "121,702",
+          "(121,557)",
+          "145",
+          "134,555",
+          "(134,262)",
+          "293"
+        ]
+      },
+      {
+        "label": "Exchange-traded(a)",
+        "values": [
+          104.0,
+          -101.0,
+          3.0,
+          363.0,
+          -352.0,
+          11.0
+        ],
+        "raw_cells": [
+          "104",
+          "(101)",
+          "3",
+          "363",
+          "(352)",
+          "11"
+        ]
+      },
+      {
+        "label": "Total interest rate contracts",
+        "values": [
+          256851.0,
+          -250122.0,
+          6729.0,
+          273133.0,
+          -264989.0,
+          8144.0
+        ],
+        "raw_cells": [
+          "256,851",
+          "(250,122)",
+          "6,729",
+          "273,133",
+          "(264,989)",
+          "8,144"
+        ]
+      },
+      {
+        "label": "OTC",
+        "values": [
+          14848.0,
+          -13196.0,
+          1652.0,
+          11381.0,
+          -10133.0,
+          1248.0
+        ],
+        "raw_cells": [
+          "14,848",
+          "(13,196)",
+          "1,652",
+          "11,381",
+          "(10,133)",
+          "1,248"
+        ]
+      },
+      {
+        "label": "OTC–cleared",
+        "values": [
+          2446.0,
+          -2416.0,
+          30.0,
+          1779.0,
+          -1765.0,
+          14.0
+        ],
+        "raw_cells": [
+          "2,446",
+          "(2,416)",
+          "30",
+          "1,779",
+          "(1,765)",
+          "14"
+        ]
+      },
+      {
+        "label": "Total credit contracts",
+        "values": [
+          17294.0,
+          -15612.0,
+          1682.0,
+          13160.0,
+          -11898.0,
+          1262.0
+        ],
+        "raw_cells": [
+          "17,294",
+          "(15,612)",
+          "1,682",
+          "13,160",
+          "(11,898)",
+          "1,262"
+        ]
+      },
+      {
+        "label": "OTC",
+        "values": [
+          175485.0,
+          -162455.0,
+          13030.0,
+          251860.0,
+          -238292.0,
+          13568.0
+        ],
+        "raw_cells": [
+          "175,485",
+          "(162,455)",
+          "13,030",
+          "251,860",
+          "(238,292)",
+          "13,568"
+        ]
+      },
+      {
+        "label": "OTC–cleared",
+        "values": [
+          897.0,
+          -850.0,
+          47.0,
+          772.0,
+          -678.0,
+          94.0
+        ],
+        "raw_cells": [
+          "897",
+          "(850)",
+          "47",
+          "772",
+          "(678)",
+          "94"
+        ]
+      },
+      {
+        "label": "Exchange-traded(a)",
+        "values": [
+          9.0,
+          -3.0,
+          6.0,
+          14.0,
+          null,
+          14.0
+        ],
+        "raw_cells": [
+          "9",
+          "(3)",
+          "6",
+          "14",
+          "—",
+          "14"
+        ]
+      },
+      {
+        "label": "Total foreign exchange contracts",
+        "values": [
+          176391.0,
+          -163308.0,
+          13083.0,
+          252646.0,
+          -238970.0,
+          13676.0
+        ],
+        "raw_cells": [
+          "176,391",
+          "(163,308)",
+          "13,083",
+          "252,646",
+          "(238,970)",
+          "13,676"
+        ]
+      },
+      {
+        "label": "OTC",
+        "values": [
+          53530.0,
+          -41552.0,
+          11978.0,
+          44394.0,
+          -38298.0,
+          6096.0
+        ],
+        "raw_cells": [
+          "53,530",
+          "(41,552)",
+          "11,978",
+          "44,394",
+          "(38,298)",
+          "6,096"
+        ]
+      },
+      {
+        "label": "Exchange-traded(a)",
+        "values": [
+          61363.0,
+          -60659.0,
+          704.0,
+          49578.0,
+          -49193.0,
+          385.0
+        ],
+        "raw_cells": [
+          "61,363",
+          "(60,659)",
+          "704",
+          "49,578",
+          "(49,193)",
+          "385"
+        ]
+      },
+      {
+        "label": "Total equity contracts",
+        "values": [
+          114893.0,
+          -102211.0,
+          12682.0,
+          93972.0,
+          -87491.0,
+          6481.0
+        ],
+        "raw_cells": [
+          "114,893",
+          "(102,211)",
+          "12,682",
+          "93,972",
+          "(87,491)",
+          "6,481"
+        ]
+      },
+      {
+        "label": "OTC",
+        "values": [
+          14176.0,
+          -9786.0,
+          4390.0,
+          6918.0,
+          -5206.0,
+          1712.0
+        ],
+        "raw_cells": [
+          "14,176",
+          "(9,786)",
+          "4,390",
+          "6,918",
+          "(5,206)",
+          "1,712"
+        ]
+      },
+      {
+        "label": "OTC–cleared",
+        "values": [
+          79.0,
+          -79.0,
+          null,
+          84.0,
+          -84.0,
+          null
+        ],
+        "raw_cells": [
+          "79",
+          "(79)",
+          "—",
+          "84",
+          "(84)",
+          "—"
+        ]
+      },
+      {
+        "label": "Exchange-traded(a)",
+        "values": [
+          9334.0,
+          -9291.0,
+          43.0,
+          5182.0,
+          -4919.0,
+          263.0
+        ],
+        "raw_cells": [
+          "9,334",
+          "(9,291)",
+          "43",
+          "5,182",
+          "(4,919)",
+          "263"
+        ]
+      },
+      {
+        "label": "Total commodity contracts",
+        "values": [
+          23589.0,
+          -19156.0,
+          4433.0,
+          12184.0,
+          -10209.0,
+          1975.0
+        ],
+        "raw_cells": [
+          "23,589",
+          "(19,156)",
+          "4,433",
+          "12,184",
+          "(10,209)",
+          "1,975"
+        ]
+      },
+      {
+        "label": "Derivative payables with appropriate legal opinion",
+        "values": [
+          589018.0,
+          -550409.0,
+          38609.0,
+          645095.0,
+          -613557.0,
+          31538.0
+        ],
+        "raw_cells": [
+          "589,018",
+          "(550,409)",
+          "38,609",
+          "645,095",
+          "(613,557)",
+          "31,538"
+        ]
+      },
+      {
+        "label": "opinion has not been either sought or obtained",
+        "values": [
+          7720.0,
+          7720.0,
+          8123.0,
+          8123.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "7,720",
+          "7,720",
+          "8,123",
+          "8,123"
+        ]
+      },
+      {
+        "label": "Consolidated balance sheets",
+        "values": [
+          596738.0,
+          46329.0,
+          653218.0,
+          39661.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "596,738",
+          "46,329",
+          "653,218",
+          "39,661"
+        ]
+      },
+      {
+        "label": "balance sheets(b)(c)",
+        "values": [
+          -18478.0,
+          -10163.0,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "(18,478)",
+          "(10,163)"
+        ]
+      },
+      {
+        "label": "Net amounts",
+        "values": [
+          27851.0,
+          29498.0,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "27,851",
+          "29,498"
+        ]
+      }
+    ],
+    "n_rows": 23,
+    "n_value_cols": 6,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 |\n| --- | --- | --- | --- | --- | --- | --- |\n| OTC | 135045 | -128464 | 6581 | 138215 | -130375 | 7840 |\n| OTC–cleared | 121702 | -121557 | 145 | 134555 | -134262 | 293 |\n| Exchange-traded(a) | 104 | -101 | 3 | 363 | -352 | 11 |\n| Total interest rate contracts | 256851 | -250122 | 6729 | 273133 | -264989 | 8144 |\n| OTC | 14848 | -13196 | 1652 | 11381 | -10133 | 1248 |\n| OTC–cleared | 2446 | -2416 | 30 | 1779 | -1765 | 14 |\n| Total credit contracts | 17294 | -15612 | 1682 | 13160 | -11898 | 1262 |\n| OTC | 175485 | -162455 | 13030 | 251860 | -238292 | 13568 |\n| OTC–cleared | 897 | -850 | 47 | 772 | -678 | 94 |\n| Exchange-traded(a) | 9 | -3 | 6 | 14 |  | 14 |\n| Total foreign exchange contracts | 176391 | -163308 | 13083 | 252646 | -238970 | 13676 |\n| OTC | 53530 | -41552 | 11978 | 44394 | -38298 | 6096 |\n| Exchange-traded(a) | 61363 | -60659 | 704 | 49578 | -49193 | 385 |\n| Total equity contracts | 114893 | -102211 | 12682 | 93972 | -87491 | 6481 |\n| OTC | 14176 | -9786 | 4390 | 6918 | -5206 | 1712 |\n| OTC–cleared | 79 | -79 |  | 84 | -84 |  |\n| Exchange-traded(a) | 9334 | -9291 | 43 | 5182 | -4919 | 263 |\n| Total commodity contracts | 23589 | -19156 | 4433 | 12184 | -10209 | 1975 |\n| Derivative payables with appropriate legal opinion | 589018 | -550409 | 38609 | 645095 | -613557 | 31538 |\n| opinion has not been either sought or obtained | 7720 | 7720 | 8123 | 8123 |  |  |\n| Consolidated balance sheets | 596738 | 46329 | 653218 | 39661 |  |  |\n| balance sheets(b)(c) | -18478 | -10163 |  |  |  |  |\n| Net amounts | 27851 | 29498 |  |  |  |  |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p212_t0",
+    "pdf_page": 212,
+    "printed_page": 210,
+    "section": "derivatives_note",
+    "title": "OTC and OTC-cleared derivative payables containing downgrade triggers",
+    "header_context": [
+      "downgrade, and the associated collateral the Firm has posted in the normal course of business, at December 31,",
+      "2025 and 2024.",
+      "OTC and OTC-cleared derivative payables containing downgrade triggers",
+      "(in millions) December 31, 2025 December 31, 2024"
+    ],
+    "rows": [
+      {
+        "label": "Aggregate fair value of net derivative payables",
+        "values": [
+          19986.0,
+          15371.0
+        ],
+        "raw_cells": [
+          "19,986",
+          "15,371"
+        ]
+      },
+      {
+        "label": "Collateral posted",
+        "values": [
+          20555.0,
+          15204.0
+        ],
+        "raw_cells": [
+          "20,555",
+          "15,204"
+        ]
+      },
+      {
+        "label": "JPMorgan Chase & Co. and its subsidiaries, predominantly JPMorgan Chase Bank, N.A., at December",
+        "values": [
+          31.0,
+          2025.0
+        ],
+        "raw_cells": [
+          "31,",
+          "2025"
+        ]
+      }
+    ],
+    "n_rows": 3,
+    "n_value_cols": 2,
+    "markdown": "| row_label | c1 | c2 |\n| --- | --- | --- |\n| Aggregate fair value of net derivative payables | 19986 | 15371 |\n| Collateral posted | 20555 | 15204 |\n| JPMorgan Chase & Co. and its subsidiaries, predominantly JPMorgan Chase Bank, N.A., at December | 31 | 2025 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p212_t1",
+    "pdf_page": 212,
+    "printed_page": 210,
+    "section": "derivatives_note",
+    "title": "Single-notch Two-notch Single-notch Two-notch",
+    "header_context": [
+      "Liquidity impact of downgrade triggers on OTC and OTC-cleared derivatives",
+      "December 31, 2025 December 31, 2024",
+      "Single-notch Two-notch Single-notch Two-notch",
+      "(in millions) downgrade downgrade downgrade downgrade"
+    ],
+    "rows": [
+      {
+        "label": "Amount of additional collateral to be posted upon downgrade(a)",
+        "values": [
+          28.0,
+          124.0,
+          119.0,
+          1205.0
+        ],
+        "raw_cells": [
+          "28",
+          "124",
+          "119",
+          "1,205"
+        ]
+      },
+      {
+        "label": "downgrade(b)",
+        "values": [
+          15.0,
+          96.0,
+          78.0,
+          458.0
+        ],
+        "raw_cells": [
+          "15",
+          "96",
+          "78",
+          "458"
+        ]
+      },
+      {
+        "label": "",
+        "values": [
+          210.0,
+          2025.0,
+          10.0,
+          null
+        ],
+        "raw_cells": [
+          "210",
+          "2025",
+          "10"
+        ]
+      }
+    ],
+    "n_rows": 3,
+    "n_value_cols": 4,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 |\n| --- | --- | --- | --- | --- |\n| Amount of additional collateral to be posted upon downgrade(a) | 28 | 124 | 119 | 1205 |\n| downgrade(b) | 15 | 96 | 78 | 458 |\n|  | 210 | 2025 | 10 |  |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p213_t0",
+    "pdf_page": 213,
+    "printed_page": 211,
+    "section": "derivatives_note",
+    "title": "Income Derivatives -",
+    "header_context": [
+      "derivative in the same line item in the Consolidated statements of income as the related hedged item.",
+      "Income statement impact of",
+      "Gains/(losses) recorded in income excluded components(e) OCI impact",
+      "Income Derivatives -"
+    ],
+    "rows": [
+      {
+        "label": "Year ended December",
+        "values": [
+          31.0,
+          2025.0,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2025"
+        ]
+      },
+      {
+        "label": "Interest rate(a)(b)",
+        "values": [
+          -88.0,
+          1360.0,
+          1272.0,
+          null,
+          1250.0,
+          null
+        ],
+        "raw_cells": [
+          "(88)",
+          "1,360",
+          "1,272",
+          "—",
+          "1,250",
+          "—"
+        ]
+      },
+      {
+        "label": "Foreign exchange(c)",
+        "values": [
+          1077.0,
+          -743.0,
+          334.0,
+          -696.0,
+          334.0,
+          84.0
+        ],
+        "raw_cells": [
+          "1,077",
+          "(743)",
+          "334",
+          "(696)",
+          "334",
+          "84"
+        ]
+      },
+      {
+        "label": "Commodity(d)",
+        "values": [
+          -3852.0,
+          4127.0,
+          275.0,
+          null,
+          224.0,
+          null
+        ],
+        "raw_cells": [
+          "(3,852)",
+          "4,127",
+          "275",
+          "—",
+          "224",
+          "—"
+        ]
+      },
+      {
+        "label": "Total",
+        "values": [
+          -2863.0,
+          4744.0,
+          1881.0,
+          -696.0,
+          1808.0,
+          84.0
+        ],
+        "raw_cells": [
+          "(2,863)",
+          "4,744",
+          "1,881",
+          "(696)",
+          "1,808",
+          "84"
+        ]
+      }
+    ],
+    "n_rows": 5,
+    "n_value_cols": 6,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Year ended December | 31 | 2025 |  |  |  |  |\n| Interest rate(a)(b) | -88 | 1360 | 1272 |  | 1250 |  |\n| Foreign exchange(c) | 1077 | -743 | 334 | -696 | 334 | 84 |\n| Commodity(d) | -3852 | 4127 | 275 |  | 224 |  |\n| Total | -2863 | 4744 | 1881 | -696 | 1808 | 84 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p213_t1",
+    "pdf_page": 213,
+    "printed_page": 211,
+    "section": "derivatives_note",
+    "title": "Income Derivatives -",
+    "header_context": [
+      "Income statement impact of",
+      "Gains/(losses) recorded in income excluded components(e) OCI impact",
+      "Income Derivatives -"
+    ],
+    "rows": [
+      {
+        "label": "Year ended December",
+        "values": [
+          31.0,
+          2024.0,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2024"
+        ]
+      },
+      {
+        "label": "Interest rate(a)(b)",
+        "values": [
+          711.0,
+          -65.0,
+          646.0,
+          null,
+          699.0,
+          null
+        ],
+        "raw_cells": [
+          "711",
+          "(65)",
+          "646",
+          "—",
+          "699",
+          "—"
+        ]
+      },
+      {
+        "label": "Foreign exchange(c)",
+        "values": [
+          -177.0,
+          402.0,
+          225.0,
+          -532.0,
+          225.0,
+          -115.0
+        ],
+        "raw_cells": [
+          "(177)",
+          "402",
+          "225",
+          "(532)",
+          "225",
+          "(115)"
+        ]
+      },
+      {
+        "label": "Commodity(d)",
+        "values": [
+          293.0,
+          -160.0,
+          133.0,
+          null,
+          122.0,
+          null
+        ],
+        "raw_cells": [
+          "293",
+          "(160)",
+          "133",
+          "—",
+          "122",
+          "—"
+        ]
+      },
+      {
+        "label": "Total",
+        "values": [
+          827.0,
+          177.0,
+          1004.0,
+          -532.0,
+          1046.0,
+          -115.0
+        ],
+        "raw_cells": [
+          "827",
+          "177",
+          "1,004",
+          "(532)",
+          "1,046",
+          "(115)"
+        ]
+      }
+    ],
+    "n_rows": 5,
+    "n_value_cols": 6,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Year ended December | 31 | 2024 |  |  |  |  |\n| Interest rate(a)(b) | 711 | -65 | 646 |  | 699 |  |\n| Foreign exchange(c) | -177 | 402 | 225 | -532 | 225 | -115 |\n| Commodity(d) | 293 | -160 | 133 |  | 122 |  |\n| Total | 827 | 177 | 1004 | -532 | 1046 | -115 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p213_t2",
+    "pdf_page": 213,
+    "printed_page": 211,
+    "section": "derivatives_note",
+    "title": "Income Derivatives -",
+    "header_context": [
+      "Income statement impact of",
+      "Gains/(losses) recorded in income excluded components(e) OCI impact",
+      "Income Derivatives -"
+    ],
+    "rows": [
+      {
+        "label": "Year ended December",
+        "values": [
+          31.0,
+          2023.0,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2023"
+        ]
+      },
+      {
+        "label": "Interest rate(a)(b)",
+        "values": [
+          1554.0,
+          -1248.0,
+          306.0,
+          null,
+          157.0,
+          null
+        ],
+        "raw_cells": [
+          "1,554",
+          "(1,248)",
+          "306",
+          "—",
+          "157",
+          "—"
+        ]
+      },
+      {
+        "label": "Foreign exchange(c)",
+        "values": [
+          722.0,
+          -483.0,
+          239.0,
+          -601.0,
+          239.0,
+          -134.0
+        ],
+        "raw_cells": [
+          "722",
+          "(483)",
+          "239",
+          "(601)",
+          "239",
+          "(134)"
+        ]
+      },
+      {
+        "label": "Commodity(d)",
+        "values": [
+          1227.0,
+          -706.0,
+          521.0,
+          null,
+          525.0,
+          null
+        ],
+        "raw_cells": [
+          "1,227",
+          "(706)",
+          "521",
+          "—",
+          "525",
+          "—"
+        ]
+      },
+      {
+        "label": "Total",
+        "values": [
+          3503.0,
+          -2437.0,
+          1066.0,
+          -601.0,
+          921.0,
+          -134.0
+        ],
+        "raw_cells": [
+          "3,503",
+          "(2,437)",
+          "1,066",
+          "(601)",
+          "921",
+          "(134)"
+        ]
+      }
+    ],
+    "n_rows": 5,
+    "n_value_cols": 6,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Year ended December | 31 | 2023 |  |  |  |  |\n| Interest rate(a)(b) | 1554 | -1248 | 306 |  | 157 |  |\n| Foreign exchange(c) | 722 | -483 | 239 | -601 | 239 | -134 |\n| Commodity(d) | 1227 | -706 | 521 |  | 525 |  |\n| Total | 3503 | -2437 | 1066 | -601 | 921 | -134 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p214_t0",
+    "pdf_page": 214,
+    "printed_page": 212,
+    "section": "derivatives_note",
+    "title": "Carrying amount",
+    "header_context": [
+      "statement in future periods as an adjustment to yield.",
+      "Cumulative amount of fair value hedging adjustments",
+      "included in the carrying amount of hedged items:(d)",
+      "Carrying amount"
+    ],
+    "rows": [
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          2025.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2025"
+        ]
+      },
+      {
+        "label": "Investment securities - AFS",
+        "values": [
+          255109.0,
+          3693.0,
+          -1374.0,
+          2319.0
+        ],
+        "raw_cells": [
+          "255,109",
+          "3,693",
+          "(1,374)",
+          "2,319"
+        ]
+      },
+      {
+        "label": "Long-term debt",
+        "values": [
+          222611.0,
+          232.0,
+          -8689.0,
+          -8457.0
+        ],
+        "raw_cells": [
+          "222,611",
+          "232",
+          "(8,689)",
+          "(8,457)"
+        ]
+      },
+      {
+        "label": "Beneficial interests issued by consolidated VIEs",
+        "values": [
+          5884.0,
+          37.0,
+          null,
+          37.0
+        ],
+        "raw_cells": [
+          "5,884",
+          "37",
+          "—",
+          "37"
+        ]
+      }
+    ],
+    "n_rows": 4,
+    "n_value_cols": 4,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 |\n| --- | --- | --- | --- | --- |\n| December | 31 | 2025 |  |  |\n| Investment securities - AFS | 255109 | 3693 | -1374 | 2319 |\n| Long-term debt | 222611 | 232 | -8689 | -8457 |\n| Beneficial interests issued by consolidated VIEs | 5884 | 37 |  | 37 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p214_t1",
+    "pdf_page": 214,
+    "printed_page": 212,
+    "section": "derivatives_note",
+    "title": "Carrying amount",
+    "header_context": [
+      "Cumulative amount of fair value hedging adjustments",
+      "included in the carrying amount of hedged items:(d)",
+      "Carrying amount"
+    ],
+    "rows": [
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          2024.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2024"
+        ]
+      },
+      {
+        "label": "Investment securities - AFS",
+        "values": [
+          203141.0,
+          -1675.0,
+          -1959.0,
+          -3634.0
+        ],
+        "raw_cells": [
+          "203,141",
+          "(1,675)",
+          "(1,959)",
+          "(3,634)"
+        ]
+      },
+      {
+        "label": "Long-term debt",
+        "values": [
+          211288.0,
+          -3711.0,
+          -9332.0,
+          -13043.0
+        ],
+        "raw_cells": [
+          "211,288",
+          "(3,711)",
+          "(9,332)",
+          "(13,043)"
+        ]
+      },
+      {
+        "label": "Beneficial interests issued by consolidated VIEs",
+        "values": [
+          5312.0,
+          -30.0,
+          -5.0,
+          -35.0
+        ],
+        "raw_cells": [
+          "5,312",
+          "(30)",
+          "(5)",
+          "(35)"
+        ]
+      }
+    ],
+    "n_rows": 4,
+    "n_value_cols": 4,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 |\n| --- | --- | --- | --- | --- |\n| December | 31 | 2024 |  |  |\n| Investment securities - AFS | 203141 | -1675 | -1959 | -3634 |\n| Long-term debt | 211288 | -3711 | -9332 | -13043 |\n| Beneficial interests issued by consolidated VIEs | 5312 | -30 | -5 | -35 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p214_t2",
+    "pdf_page": 214,
+    "printed_page": 212,
+    "section": "derivatives_note",
+    "title": "impact to net income in future periods.",
+    "header_context": [
+      "impact to net income in future periods.",
+      "(b) Excludes hedged items where only foreign currency risk is the designated hedged risk, as basis adjustments related to foreign currency",
+      "hedges will not reverse through the income statement in future periods. At December 31, 2025 and 2024, the carrying amount excluded for",
+      "AFS securities was $33.6 billion and $28.7 billion, respectively. At December 31, 2025 and 2024, the carrying amount excluded for long-term"
+    ],
+    "rows": [
+      {
+        "label": "debt was",
+        "values": [
+          587.0,
+          518.0,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "587",
+          "518"
+        ]
+      },
+      {
+        "label": "portfolio layer method closed portfolios was",
+        "values": [
+          91.9,
+          72.8,
+          68.9,
+          41.2,
+          null
+        ],
+        "raw_cells": [
+          "91.9",
+          "72.8",
+          "68.9",
+          "41.2"
+        ]
+      },
+      {
+        "label": "and",
+        "values": [
+          -1.7,
+          641.0,
+          -1.2,
+          -673.0,
+          -566.0
+        ],
+        "raw_cells": [
+          "(1.7)",
+          "641",
+          "(1.2)",
+          "(673)",
+          "(566)"
+        ]
+      }
+    ],
+    "n_rows": 3,
+    "n_value_cols": 5,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 |\n| --- | --- | --- | --- | --- | --- |\n| debt was | 587 | 518 |  |  |  |\n| portfolio layer method closed portfolios was | 91.9 | 72.8 | 68.9 | 41.2 |  |\n| and | -1.7 | 641 | -1.2 | -673 | -566 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p215_t0",
+    "pdf_page": 215,
+    "printed_page": 213,
+    "section": "derivatives_note",
+    "title": "Derivatives gains/(losses) recorded in income and other comprehensive income/(loss)",
+    "header_context": [
+      "2024 and 2023, respectively. The Firm includes the gains/(losses) on the hedging derivative in the same line item in",
+      "the Consolidated statements of income as the change in cash flows on the related hedged item.",
+      "Derivatives gains/(losses) recorded in income and other comprehensive income/(loss)"
+    ],
+    "rows": [
+      {
+        "label": "Year ended December",
+        "values": [
+          31.0,
+          2025.0,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2025"
+        ]
+      },
+      {
+        "label": "Interest rate(a)",
+        "values": [
+          -2456.0,
+          1860.0,
+          4316.0
+        ],
+        "raw_cells": [
+          "(2,456)",
+          "1,860",
+          "4,316"
+        ]
+      },
+      {
+        "label": "Foreign exchange(b)",
+        "values": [
+          50.0,
+          197.0,
+          147.0
+        ],
+        "raw_cells": [
+          "50",
+          "197",
+          "147"
+        ]
+      },
+      {
+        "label": "Total",
+        "values": [
+          -2406.0,
+          2057.0,
+          4463.0
+        ],
+        "raw_cells": [
+          "(2,406)",
+          "2,057",
+          "4,463"
+        ]
+      },
+      {
+        "label": "Year ended December",
+        "values": [
+          31.0,
+          2024.0,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2024"
+        ]
+      },
+      {
+        "label": "Interest rate(a)",
+        "values": [
+          -2668.0,
+          -3603.0,
+          -935.0
+        ],
+        "raw_cells": [
+          "(2,668)",
+          "(3,603)",
+          "(935)"
+        ]
+      },
+      {
+        "label": "Foreign exchange(b)",
+        "values": [
+          89.0,
+          -139.0,
+          -228.0
+        ],
+        "raw_cells": [
+          "89",
+          "(139)",
+          "(228)"
+        ]
+      },
+      {
+        "label": "Total",
+        "values": [
+          -2579.0,
+          -3742.0,
+          -1163.0
+        ],
+        "raw_cells": [
+          "(2,579)",
+          "(3,742)",
+          "(1,163)"
+        ]
+      },
+      {
+        "label": "Year ended December",
+        "values": [
+          31.0,
+          2023.0,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2023"
+        ]
+      },
+      {
+        "label": "Interest rate(a)",
+        "values": [
+          -1839.0,
+          274.0,
+          2113.0
+        ],
+        "raw_cells": [
+          "(1,839)",
+          "274",
+          "2,113"
+        ]
+      },
+      {
+        "label": "Foreign exchange(b)",
+        "values": [
+          64.0,
+          209.0,
+          145.0
+        ],
+        "raw_cells": [
+          "64",
+          "209",
+          "145"
+        ]
+      },
+      {
+        "label": "Total",
+        "values": [
+          -1775.0,
+          483.0,
+          2258.0
+        ],
+        "raw_cells": [
+          "(1,775)",
+          "483",
+          "2,258"
+        ]
+      }
+    ],
+    "n_rows": 12,
+    "n_value_cols": 3,
+    "markdown": "| row_label | c1 | c2 | c3 |\n| --- | --- | --- | --- |\n| Year ended December | 31 | 2025 |  |\n| Interest rate(a) | -2456 | 1860 | 4316 |\n| Foreign exchange(b) | 50 | 197 | 147 |\n| Total | -2406 | 2057 | 4463 |\n| Year ended December | 31 | 2024 |  |\n| Interest rate(a) | -2668 | -3603 | -935 |\n| Foreign exchange(b) | 89 | -139 | -228 |\n| Total | -2579 | -3742 | -1163 |\n| Year ended December | 31 | 2023 |  |\n| Interest rate(a) | -1839 | 274 | 2113 |\n| Foreign exchange(b) | 64 | 209 | 145 |\n| Total | -1775 | 483 | 2258 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p215_t1",
+    "pdf_page": 215,
+    "printed_page": 213,
+    "section": "derivatives_note",
+    "title": "2023.",
+    "header_context": [
+      "(b) Primarily consists of hedges of the foreign currency risk of non-U.S. dollar-denominated revenue and expense. The income statement",
+      "classification of gains and losses follows the hedged item – primarily noninterest revenue and compensation expense.",
+      "The Firm did not experience any forecasted transactions that failed to occur for the years ended 2025, 2024 and",
+      "2023."
+    ],
+    "rows": [
+      {
+        "label": "Over the next",
+        "values": [
+          12.0,
+          -926.0
+        ],
+        "raw_cells": [
+          "12",
+          "(926)"
+        ]
+      },
+      {
+        "label": "AOCI at December",
+        "values": [
+          31.0,
+          2025.0
+        ],
+        "raw_cells": [
+          "31,",
+          "2025,"
+        ]
+      }
+    ],
+    "n_rows": 2,
+    "n_value_cols": 2,
+    "markdown": "| row_label | c1 | c2 |\n| --- | --- | --- |\n| Over the next | 12 | -926 |\n| AOCI at December | 31 | 2025 |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p216_t0",
+    "pdf_page": 216,
+    "printed_page": 214,
+    "section": "derivatives_note",
+    "title": "Amounts Amounts Amounts Amounts Amounts Amounts",
+    "header_context": [
+      "2025 2024 2023",
+      "Amounts Amounts Amounts Amounts Amounts Amounts",
+      "Year ended December 31, recorded in recorded in recorded in recorded in recorded in recorded in",
+      "(in millions) income(b) OCI income(b) OCI income(b) OCI"
+    ],
+    "rows": [
+      {
+        "label": "Foreign exchange derivatives",
+        "values": [
+          431.0,
+          -6028.0,
+          467.0,
+          4411.0,
+          384.0,
+          -1732.0
+        ],
+        "raw_cells": [
+          "431",
+          "(6,028)",
+          "467",
+          "4,411",
+          "384",
+          "(1,732)"
+        ]
+      },
+      {
+        "label": "(b) Excludes amounts reclassified from AOCI to income on the sale or liquidation of hedged entities. During the years ended December",
+        "values": [
+          31.0,
+          2025.0,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2025"
+        ]
+      },
+      {
+        "label": "and",
+        "values": [
+          2024.0,
+          14.0,
+          89.0,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "2024,",
+          "14",
+          "89"
+        ]
+      },
+      {
+        "label": "December",
+        "values": [
+          31.0,
+          2023.0,
+          -35.0,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "31,",
+          "2023,",
+          "(35)"
+        ]
+      }
+    ],
+    "n_rows": 4,
+    "n_value_cols": 6,
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Foreign exchange derivatives | 431 | -6028 | 467 | 4411 | 384 | -1732 |\n| (b) Excludes amounts reclassified from AOCI to income on the sale or liquidation of hedged entities. During the years ended December | 31 | 2025 |  |  |  |  |\n| and | 2024 | 14 | 89 |  |  |  |\n| December | 31 | 2023 | -35 |  |  |  |",
+    "parser": "custom_financial"
+  },
+  {
+    "table_id": "p216_t1",
+    "pdf_page": 216,
+    "printed_page": 214,
+    "section": "derivatives_note",
+    "title": "Contract type",
+    "header_context": [
+      "on principal transactions revenue.",
+      "Year ended December 31,",
+      "(in millions) 2025 2024 2023",
+      "Contract type"
+    ],
+    "rows": [
+      {
+        "label": "Interest rate(a)",
+        "values": [
+          -34.0,
+          -425.0,
+          -135.0
+        ],
+        "raw_cells": [
+          "(34)",
+          "(425)",
+          "(135)"
+        ]
+      },
+      {
+        "label": "Credit(b)",
+        "values": [
+          -616.0,
+          -604.0,
+          -441.0
+        ],
+        "raw_cells": [
+          "(616)",
+          "(604)",
+          "(441)"
+        ]
+      },
+      {
+        "label": "Foreign exchange(c)",
+        "values": [
+          82.0,
+          -10.0,
+          -2.0
+        ],
+        "raw_cells": [
+          "82",
+          "(10)",
+          "(2)"
+        ]
+      },
+      {
+        "label": "Equity(d)",
+        "values": [
+          -21.0,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "(21)",
+          "—",
+          "—"
+        ]
+      },
+      {
+        "label": "Total",
+        "values": [
+          -589.0,
+          -1039.0,
+          -578.0
+        ],
+        "raw_cells": [
+          "(589)",
+          "(1,039)",
+          "(578)"
+        ]
+      }
+    ],
+    "n_rows": 5,
+    "n_value_cols": 3,
+    "markdown": "| row_label | c1 | c2 | c3 |\n| --- | --- | --- | --- |\n| Interest rate(a) | -34 | -425 | -135 |\n| Credit(b) | -616 | -604 | -441 |\n| Foreign exchange(c) | 82 | -10 | -2 |\n| Equity(d) | -21 |  |  |\n| Total | -589 | -1039 | -578 |",
+    "parser": "custom_financial"
+  }
+]

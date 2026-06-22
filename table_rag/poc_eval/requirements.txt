@@ -1,0 +1,13 @@
+# Dependencies for the TableRAG-vs-baseline POC evaluation (poc_eval/).
+# Kept separate from the repo root requirements.txt so the original
+# online_inference / offline_data_ingestion stacks remain on their own pins.
+# Verified to install & import on Python 3.14 (macOS, no GPU).
+pdfplumber==0.11.10
+openai==2.43.0
+langchain-text-splitters==1.1.2
+faiss-cpu==1.14.3
+pandas==3.0.3
+numpy==2.5.0
+# Optional table-extraction fallback (needs system ghostscript + opencv).
+# Imported lazily in ingestion/extract_pdf.py; pdfplumber is the primary parser.
+# camelot-py[cv]

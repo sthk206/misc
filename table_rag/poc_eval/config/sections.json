@@ -1,0 +1,31 @@
+{
+  "source_pdf": "corp-10k-2025.pdf",
+  "issuer": "JPMorgan Chase & Co.",
+  "filing": "2025 Form 10-K (fiscal year ended December 31, 2025)",
+  "total_pdf_pages": 410,
+  "page_numbering_note": "PDF physical page (1-based, as pdfplumber indexes) = printed footer page + 2. All page fields below and in benchmark_questions.json use the PDF physical page as canonical; printed_page is the human-facing footer number.",
+  "selected_sections": [
+    {
+      "name": "wholesale_credit_exposure",
+      "topic": "Credit Risk",
+      "pdf_pages": [119, 120, 121, 122, 123],
+      "key_table_pages": [122, 123],
+      "rationale": "Wholesale credit exposure by industry (large multi-row, multi-column table). Comparison + aggregation questions."
+    },
+    {
+      "name": "market_risk_var",
+      "topic": "Market Risk / Value-at-Risk",
+      "pdf_pages": [133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144],
+      "key_table_pages": [138],
+      "rationale": "Total VaR table (risk types x {Avg,Min,Max} x {2025,2024}), VaR backtesting, stress and structural interest-rate risk. Exact retrieval, row/col reading, table+text."
+    },
+    {
+      "name": "derivatives_note",
+      "topic": "Derivatives / Hedging",
+      "pdf_pages": [205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216],
+      "key_table_pages": [207, 214],
+      "rationale": "Notional amount of derivative contracts (p207) and cumulative fair value hedging adjustments (p214). Exact retrieval, comparison, % and YoY arithmetic, table+footnote, hedge-accounting reasoning."
+    }
+  ],
+  "total_selected_pages": 29
+}
