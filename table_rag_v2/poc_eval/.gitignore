@@ -1,0 +1,5 @@
+# generated artifacts (rebuildable from the PDF via build_all.sh)
+data/
+results/
+*.pkl
+__pycache__/
