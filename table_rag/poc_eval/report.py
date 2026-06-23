@@ -10,7 +10,12 @@ from collections import defaultdict
 from typing import Any
 
 ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-REPORT_PATH = os.path.join(ROOT, "poc_eval", "results", "summary_report.md")
+RESULTS_DIR = os.path.join(ROOT, "poc_eval", "results")
+
+
+def _report_path(clean: bool) -> str:
+    name = "summary_report_optionB.md" if clean else "summary_report.md"
+    return os.path.join(RESULTS_DIR, name)
 
 CATEGORIES = [("A", "Exact retrieval"), ("B", "Comparison"),
               ("C", "Arithmetic / aggregation"), ("D", "Cross-table / multi-step")]
@@ -48,7 +53,7 @@ def _by_id(rows: list[dict]) -> dict[str, dict[str, dict]]:
     return out
 
 
-def generate_report(rows: list[dict[str, Any]], mock: bool = False) -> None:
+def generate_report(rows: list[dict[str, Any]], mock: bool = False, clean: bool = False) -> None:
     byid = _by_id(rows)
     n_q = len(byid)
 
@@ -113,10 +118,25 @@ def generate_report(rows: list[dict[str, Any]], mock: bool = False) -> None:
         "not findings.** Re-run against the real gateway for meaningful results.\n\n"
         if mock else ""
     )
+    if clean:
+        option_banner = (
+            "> 🧪 **Option B (sensitivity run).** TableRAG was fed the **verified gold tables**, "
+            "not the auto-parsed ones — this isolates retrieval/reasoning from parser quality. "
+            "Compare against the Option A report (`summary_report.md`): the A→B gap on TableRAG "
+            "is the damage attributable to PDF table parsing.\n\n"
+        )
+        title = "# TableRAG vs. Baseline RAG — POC Summary Report (Option B: clean tables)"
+    else:
+        option_banner = (
+            "> Option A (realistic end-to-end): TableRAG consumes the auto-parsed tables; parser "
+            "errors count against it. See `summary_report_optionB.md` for the clean-table "
+            "sensitivity run if present.\n\n"
+        )
+        title = "# TableRAG vs. Baseline RAG — POC Summary Report"
 
-    md = f"""# TableRAG vs. Baseline RAG — POC Summary Report
+    md = f"""{title}
 
-{mock_banner}## Benchmark Overview
+{mock_banner}{option_banner}## Benchmark Overview
 
 - **Question:** Does TableRAG provide a measurable advantage over baseline RAG when answering questions that depend on structured financial tables?
 - **Document:** JPMorgan Chase & Co. 2025 Form 10-K (`corp-10k-2025.pdf`, 410 pages).
@@ -173,7 +193,8 @@ def generate_report(rows: list[dict[str, Any]], mock: bool = False) -> None:
 - SQLite stands in for MySQL; embeddings come from the gateway rather than local bge-m3; no neural reranker on either side. These keep the comparison fair and runnable but diverge from the paper's exact stack.
 - Ground truth was verified from the source PDF text, independent of the parser.
 """
-    os.makedirs(os.path.dirname(REPORT_PATH), exist_ok=True)
-    with open(REPORT_PATH, "w") as f:
+    path = _report_path(clean)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as f:
         f.write(md)
-    print(f"Wrote report -> {REPORT_PATH}")
+    print(f"Wrote report -> {path}")

@@ -1,159 +1,73 @@
+"""
+tool_utils.py
+
+POC adaptation: the original Embedder/Reranker used local bge-m3 / bge-reranker-v2-m3
+via torch+transformers on CUDA. That is exactly the part that is impossible with an
+OpenAI-compatible *gateway* (no local model, no GPU), so it is the only thing swapped:
+  - Embedder.encode  -> gateway embeddings (poc_eval.common.llm_gateway.embed)
+  - Reranker         -> pass-through (no gateway rerank endpoint); preserves recall order
+Everything else in the repo (retriever flow, agent loop, prompts, NL2SQL) is unchanged.
+Heavy imports are made lazy so the module loads without torch/transformers/openpyxl.
+"""
+
 import sys
-from openpyxl import load_workbook
-import torch
 from typing import Union, List, Tuple
-from transformers import AutoTokenizer, AutoModel, AutoModelForSequenceClassification
-from tqdm import tqdm
 import numpy as np
 
-def sigmoid(x) :
+
+def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
-class Embedder :
-    def __init__(self, model_path, device_id=1) -> None:
-        self.model_path = model_path
-        self.device = torch.device(f"cuda:{device_id}")
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_path, use_fast=True)
-        self.model = AutoModel.from_pretrained(self.model_path)
-        self.model = self.model.to(self.device)
-        self.model.eval()
-    
-    @torch.no_grad()
-    def encode(self, texts) :
-        features = self.tokenizer(texts, padding=True, truncation=True, 
-                                    return_tensors="pt").to(self.device)
-        model_output = self.model(**features)
-        embs = model_output[0][:, 0].cpu().numpy()
-        return embs
 
-class Reranker :
-    def __init__(
-        self,
-        model_name_or_path: str = None,
-        use_fp16: bool = False,
-        inference_mode: str = "huggingface",
-        cache_dir: str = None,
-        device: Union[str, int] = 4
-    ) -> None:
+class Embedder:
+    """Gateway-backed drop-in for the original bge-m3 embedder."""
 
-        self.interence_mode = inference_mode
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, cache_dir=cache_dir)
+    def __init__(self, model_path=None, device_id=1) -> None:
+        self.model_path = model_path  # kept for signature compatibility; unused
 
-        if device and isinstance(device, str) :
-            self.device = torch.device(device)
-            if device == "auto" :
-                use_fp16 = False
-        else :
-            if torch.cuda.is_available() :
-                if device is not None :
-                    self.device = torch.device(f"cuda:{device}")
-                else :
-                    self.device = torch.device("cuda")       
+    def encode(self, texts):
+        from poc_eval.common import llm_gateway
+        if isinstance(texts, str):
+            texts = [texts]
+        vecs = llm_gateway.embed(list(texts))
+        return np.asarray(vecs, dtype="float32")
 
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            model_name_or_path,
-            cache_dir=cache_dir,
-            trust_remote_code=True
-        )
 
-        if use_fp16 :
-            self.model.half()
-        self.model.eval()
+class Reranker:
+    """Pass-through reranker (no gateway rerank endpoint).
 
-        self.model = self.model.to(self.device)
+    compute_score returns descending scores in input order, so the caller's
+    `sorted(zip(scores, docs, ...), reverse=True)` preserves the recall ranking.
+    """
 
-        if device is None :
-            self.num_gpus = torch.cuda.device_count()
-            if self.num_gpus > 1 :
-                print(f"----- using {self.num_gpus}*GPUs -------")
-                self.model = torch.nn.DataParallel(self.model)
-        else :
-            self.num_gpus = 1
+    def __init__(self, model_name_or_path: str = None, *args, **kwargs) -> None:
+        self.model_name_or_path = model_name_or_path
 
-    @torch.no_grad()
-    def compute_score(self, sentence_paris: Union[List[Tuple[str, str]], Tuple[str, str]], batch_size: int = 256,
-                        max_length: int = 512, normalize: bool = False) -> List[float] :
-        if self.num_gpus > 0 :
-            batch_size = batch_size * self.num_gpus
-        
-        assert isinstance(sentence_paris, list)
-        if isinstance(sentence_paris[0], str) :
-            sentence_paris = [sentence_paris]
-        
-        all_scores = []
-        flag = False
-        error_count = 0
-        while not flag :
-            try :
-                test_inputs_batch = self.tokenizer(
-                    sentence_paris[: min(len(sentence_paris), batch_size)],
-                    padding=True,
-                    truncation=True,
-                    max_length=max_length,
-                    return_tensors="pt"
-                ).to(self.device)
+    def compute_score(self, sentence_pairs, batch_size: int = 256,
+                      max_length: int = 512, normalize: bool = False) -> List[float]:
+        if sentence_pairs and isinstance(sentence_pairs[0], str):
+            sentence_pairs = [sentence_pairs]
+        n = len(sentence_pairs)
+        return [float(n - i) for i in range(n)]
 
-                scores = self.model(**test_inputs_batch, return_dict=True).logits.view(-1).float()
-                all_scores.extend(scores.cpu().numpy().tolist())
-                flag = True
 
-            except RuntimeError as e :
-                batch_size = batch_size // 2
-                error_count += 1
-                print("adjust", batch_size)
-            
-            except torch.cuda.OutOfMemoryError as e :
-                batch_size = batch_size // 2
-                error_count += 1
-                print("adjust", batch_size)
-            
-            finally :
-                if error_count > 5 :
-                    raise NotImplementedError('error count')
-            
-        for start_index in tqdm(range(batch_size, len(sentence_paris), batch_size), desc="Compute Scores",
-                                disable=len(sentence_paris) < batch_size) :
-            sentences_batch = sentence_paris[start_index: start_index + batch_size]
-
-            inputs = self.tokenizer(
-                sentences_batch,
-                padding=True,
-                truncation=True,
-                return_tensors="pt",
-                max_length=max_length
-            ).to(self.device)
-
-            scores = self.model(**inputs, return_dict=True).logits.view(-1, ).float()
-            all_scores.extend(scores.cpu().numpy().tolist())
-
-        if normalize :
-            all_scores = [sigmoid(score) for score in all_scores]
-        
-        return all_scores
-    
-def excel_to_markdown(file_path) :
+def excel_to_markdown(file_path):
+    from openpyxl import load_workbook  # lazy: only needed if reading real .xlsx
     workbook = load_workbook(file_path)
 
     content = ""
     file_name = file_path.split("/")[-1]
     table_name = file_name.replace(".xlsx", "")
     content += f"Table name: {table_name}\n"
-    for sheet_name in workbook.sheetnames :
+    for sheet_name in workbook.sheetnames:
         work_sheet = workbook[sheet_name]
-        row_count = 0
-        for i, row in enumerate(work_sheet) :
-            columns = []
-            for column in row :
-                if column.value is None :
-                    continue
-                columns.append(column.value)
-
+        for i, row in enumerate(work_sheet):
+            columns = [str(c.value) for c in row if c.value is not None]
             content += " | " + " | ".join(columns) + " | \n"
-            if i == 0 :
-                content += " | " + " | ".join(["---"]*len(columns)) + " | \n"
-            row_count += 1
+            if i == 0:
+                content += " | " + " | ".join(["---"] * len(columns)) + " | \n"
     return content
 
 
-if __name__ == '__main__' :
+if __name__ == '__main__':
     print(excel_to_markdown("./test.xlsx"))

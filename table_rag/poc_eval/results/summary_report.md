@@ -2,6 +2,8 @@
 
 > ⚠️ **MOCK RUN** — generated with the offline fake gateway. Answers are canned and embeddings are bag-of-words hashes, so **all numbers below are plumbing artifacts, not findings.** Re-run against the real gateway for meaningful results.
 
+> Option A (realistic end-to-end): TableRAG consumes the auto-parsed tables; parser errors count against it. See `summary_report_optionB.md` for the clean-table sensitivity run if present.
+
 ## Benchmark Overview
 
 - **Question:** Does TableRAG provide a measurable advantage over baseline RAG when answering questions that depend on structured financial tables?
@@ -34,20 +36,20 @@
 ### Evidence correctness (correct supporting table/page retrieved)
 | Category | Baseline RAG | TableRAG |
 | --- | --- | --- |
-| Exact retrieval (A) | 3/5 (60%) | 1/5 (20%) |
-| Comparison (B) | 4/4 (100%) | 1/4 (25%) |
-| Arithmetic / aggregation (C) | 2/4 (50%) | 1/4 (25%) |
-| Cross-table / multi-step (D) | 3/3 (100%) | 1/3 (33%) |
-| **Overall** | **12/16 (75%)** | **4/16 (25%)** |
+| Exact retrieval (A) | 3/5 (60%) | 4/5 (80%) |
+| Comparison (B) | 4/4 (100%) | 2/4 (50%) |
+| Arithmetic / aggregation (C) | 2/4 (50%) | 3/4 (75%) |
+| Cross-table / multi-step (D) | 3/3 (100%) | 3/3 (100%) |
+| **Overall** | **12/16 (75%)** | **12/16 (75%)** |
 
 ### Source correctness (cited the correct page)
 | Category | Baseline RAG | TableRAG |
 | --- | --- | --- |
-| Exact retrieval (A) | 0/5 (0%) | 0/5 (0%) |
-| Comparison (B) | 0/4 (0%) | 0/4 (0%) |
-| Arithmetic / aggregation (C) | 0/4 (0%) | 0/4 (0%) |
-| Cross-table / multi-step (D) | 0/3 (0%) | 0/3 (0%) |
-| **Overall** | **0/16 (0%)** | **0/16 (0%)** |
+| Exact retrieval (A) | 0/5 (0%) | 4/5 (80%) |
+| Comparison (B) | 0/4 (0%) | 2/4 (50%) |
+| Arithmetic / aggregation (C) | 0/4 (0%) | 3/4 (75%) |
+| Cross-table / multi-step (D) | 0/3 (0%) | 3/3 (100%) |
+| **Overall** | **0/16 (0%)** | **12/16 (75%)** |
 
 ### Head-to-head
 - TableRAG correct, Baseline wrong: 0 — none
@@ -58,11 +60,11 @@
 ### Failure analysis (by type)
 | Failure type | Baseline RAG | TableRAG |
 | --- | --- | --- |
-| retrieval failure | 4 | 12 |
+| retrieval failure | 4 | 4 |
 | table parsing failure | 0 | 0 |
 | row/column association failure | 0 | 0 |
 | arithmetic failure | 0 | 0 |
-| reasoning failure | 12 | 4 |
+| reasoning failure | 12 | 12 |
 | hallucination | 0 | 0 |
 
 ## Qualitative Analysis

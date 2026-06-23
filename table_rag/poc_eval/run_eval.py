@@ -25,7 +25,12 @@ from poc_eval.common.jsonutil import extract_json
 ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 BENCH_PATH = os.path.join(ROOT, "poc_eval", "benchmark", "benchmark_questions.json")
 RESULTS_DIR = os.path.join(ROOT, "poc_eval", "results")
-CSV_PATH = os.path.join(RESULTS_DIR, "evaluation_results.csv")
+GOLD_TABLES_PATH = os.path.join(ROOT, "poc_eval", "data", "gold_tables.json")
+
+
+def csv_path(clean: bool) -> str:
+    name = "evaluation_results_optionB.csv" if clean else "evaluation_results.csv"
+    return os.path.join(RESULTS_DIR, name)
 
 FAILURE_TYPES = [
     "retrieval failure",
@@ -119,17 +124,21 @@ def classify_failure(q: dict[str, Any], res: dict[str, Any], evidence_ok: bool) 
 
 
 # ----------------------------------------------------------------------------- driver
-def evaluate(limit: Optional[int] = None) -> list[dict[str, Any]]:
+def evaluate(limit: Optional[int] = None, clean: bool = False) -> list[dict[str, Any]]:
     from poc_eval.baseline_rag.pipeline import BaselineRAG
-    from poc_eval.tablerag.pipeline import TableRAG
+    from poc_eval.tablerag.runner import TableRAGRunner
 
     with open(BENCH_PATH) as f:
         bench = json.load(f)
     questions = bench["questions"][:limit] if limit else bench["questions"]
 
     print(llm_gateway.config_banner())
+    mode = "Option B (TableRAG fed VERIFIED gold tables)" if clean \
+        else "Option A (TableRAG fed auto-parsed tables)"
+    print(f"Mode: {mode}")
     print(f"Building systems and evaluating {len(questions)} questions x 2 systems...\n")
-    systems = [BaselineRAG(), TableRAG()]
+    tr = TableRAGRunner(tables_path=GOLD_TABLES_PATH if clean else None)
+    systems = [BaselineRAG(), tr]
 
     rows: list[dict[str, Any]] = []
     for q in questions:
@@ -178,20 +187,23 @@ def evaluate(limit: Optional[int] = None) -> list[dict[str, Any]]:
     return rows
 
 
-def write_csv(rows: list[dict[str, Any]]) -> None:
+def write_csv(rows: list[dict[str, Any]], clean: bool = False) -> None:
     os.makedirs(RESULTS_DIR, exist_ok=True)
+    path = csv_path(clean)
     fields = list(rows[0].keys())
-    with open(CSV_PATH, "w", newline="") as f:
+    with open(path, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fields)
         w.writeheader()
         w.writerows(rows)
-    print(f"\nWrote {len(rows)} rows -> {CSV_PATH}")
+    print(f"\nWrote {len(rows)} rows -> {path}")
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--mock", action="store_true", help="offline plumbing check (fake LLM)")
+    ap.add_argument("--clean", action="store_true",
+                    help="Option B: feed TableRAG the verified gold tables (isolates parser impact)")
     args = ap.parse_args()
 
     if args.mock:
@@ -199,11 +211,11 @@ def main() -> None:
         mock_gateway.install()
         print(">>> MOCK MODE: answers are fake; metrics are plumbing artifacts only.\n")
 
-    rows = evaluate(limit=args.limit)
-    write_csv(rows)
+    rows = evaluate(limit=args.limit, clean=args.clean)
+    write_csv(rows, clean=args.clean)
 
     from poc_eval.report import generate_report
-    generate_report(rows, mock=args.mock)
+    generate_report(rows, mock=args.mock, clean=args.clean)
 
 
 if __name__ == "__main__":

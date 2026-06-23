@@ -1,0 +1,1 @@
+{"table_name": "p138_t1", "columns": ["row_label", "c1", "c2", "c3"], "data": [["December", 31.0, 31.0, null], ["Fixed income", -1.0, -3.0, null], ["CIB trading VaR", -2.0, -3.0, null], ["CIB VaR", -1.0, -3.0, null], ["Total VaR", -1.0, -2.0, null], ["", 136.0, 2025.0, 10.0]]}

@@ -8,6 +8,8 @@ langchain-text-splitters==1.1.2
 faiss-cpu==1.14.3
 pandas==3.0.3
 numpy==2.5.0
+SQLAlchemy>=2.0          # in-process SQLite for the repo's NL2SQL execution (replaces MySQL)
+tabulate>=0.9            # pandas .to_markdown for the repo retriever's table chunks
 # Optional table-extraction fallback (needs system ghostscript + opencv).
 # Imported lazily in ingestion/extract_pdf.py; pdfplumber is the primary parser.
 # camelot-py[cv]

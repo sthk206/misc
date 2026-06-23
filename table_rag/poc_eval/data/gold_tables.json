@@ -1,0 +1,1287 @@
+[
+  {
+    "table_id": "gold_p207_notional",
+    "pdf_page": 207,
+    "printed_page": 205,
+    "section": "derivatives_note",
+    "title": "Notional amount of derivative contracts",
+    "header_context": [
+      "Notional amount of free-standing derivative contracts outstanding, in $ billions.",
+      "Columns: c1 = December 31 2025, c2 = December 31 2024."
+    ],
+    "rows": [
+      {
+        "label": "Interest rate contracts - Swaps",
+        "values": [
+          19056,
+          20437
+        ],
+        "raw_cells": [
+          "19056",
+          "20437"
+        ]
+      },
+      {
+        "label": "Interest rate contracts - Futures and forwards",
+        "values": [
+          3305,
+          3067
+        ],
+        "raw_cells": [
+          "3305",
+          "3067"
+        ]
+      },
+      {
+        "label": "Interest rate contracts - Written options",
+        "values": [
+          3775,
+          3067
+        ],
+        "raw_cells": [
+          "3775",
+          "3067"
+        ]
+      },
+      {
+        "label": "Interest rate contracts - Purchased options",
+        "values": [
+          3400,
+          3089
+        ],
+        "raw_cells": [
+          "3400",
+          "3089"
+        ]
+      },
+      {
+        "label": "Total interest rate contracts",
+        "values": [
+          29536,
+          29660
+        ],
+        "raw_cells": [
+          "29536",
+          "29660"
+        ]
+      },
+      {
+        "label": "Credit derivatives",
+        "values": [
+          1381,
+          1191
+        ],
+        "raw_cells": [
+          "1381",
+          "1191"
+        ]
+      },
+      {
+        "label": "Foreign exchange contracts - Cross-currency swaps",
+        "values": [
+          5476,
+          4509
+        ],
+        "raw_cells": [
+          "5476",
+          "4509"
+        ]
+      },
+      {
+        "label": "Foreign exchange contracts - Spot, futures and forwards",
+        "values": [
+          8187,
+          7005
+        ],
+        "raw_cells": [
+          "8187",
+          "7005"
+        ]
+      },
+      {
+        "label": "Foreign exchange contracts - Written options",
+        "values": [
+          979,
+          1015
+        ],
+        "raw_cells": [
+          "979",
+          "1015"
+        ]
+      },
+      {
+        "label": "Foreign exchange contracts - Purchased options",
+        "values": [
+          953,
+          984
+        ],
+        "raw_cells": [
+          "953",
+          "984"
+        ]
+      },
+      {
+        "label": "Total foreign exchange contracts",
+        "values": [
+          15595,
+          13513
+        ],
+        "raw_cells": [
+          "15595",
+          "13513"
+        ]
+      },
+      {
+        "label": "Equity contracts - Swaps",
+        "values": [
+          1147,
+          850
+        ],
+        "raw_cells": [
+          "1147",
+          "850"
+        ]
+      },
+      {
+        "label": "Equity contracts - Futures and forwards",
+        "values": [
+          196,
+          206
+        ],
+        "raw_cells": [
+          "196",
+          "206"
+        ]
+      },
+      {
+        "label": "Equity contracts - Written options",
+        "values": [
+          1118,
+          914
+        ],
+        "raw_cells": [
+          "1118",
+          "914"
+        ]
+      },
+      {
+        "label": "Equity contracts - Purchased options",
+        "values": [
+          971,
+          788
+        ],
+        "raw_cells": [
+          "971",
+          "788"
+        ]
+      },
+      {
+        "label": "Total equity contracts",
+        "values": [
+          3432,
+          2758
+        ],
+        "raw_cells": [
+          "3432",
+          "2758"
+        ]
+      },
+      {
+        "label": "Commodity contracts - Swaps",
+        "values": [
+          189,
+          148
+        ],
+        "raw_cells": [
+          "189",
+          "148"
+        ]
+      },
+      {
+        "label": "Commodity contracts - Spot, futures and forwards",
+        "values": [
+          270,
+          191
+        ],
+        "raw_cells": [
+          "270",
+          "191"
+        ]
+      },
+      {
+        "label": "Commodity contracts - Written options",
+        "values": [
+          119,
+          137
+        ],
+        "raw_cells": [
+          "119",
+          "137"
+        ]
+      },
+      {
+        "label": "Commodity contracts - Purchased options",
+        "values": [
+          120,
+          125
+        ],
+        "raw_cells": [
+          "120",
+          "125"
+        ]
+      },
+      {
+        "label": "Total commodity contracts",
+        "values": [
+          698,
+          601
+        ],
+        "raw_cells": [
+          "698",
+          "601"
+        ]
+      },
+      {
+        "label": "Total derivative notional amounts",
+        "values": [
+          50642,
+          47723
+        ],
+        "raw_cells": [
+          "50642",
+          "47723"
+        ]
+      }
+    ],
+    "n_rows": 22,
+    "n_value_cols": 2,
+    "parser": "gold_verified",
+    "markdown": "| row_label | c1 | c2 |\n| --- | --- | --- |\n| Interest rate contracts - Swaps | 19056 | 20437 |\n| Interest rate contracts - Futures and forwards | 3305 | 3067 |\n| Interest rate contracts - Written options | 3775 | 3067 |\n| Interest rate contracts - Purchased options | 3400 | 3089 |\n| Total interest rate contracts | 29536 | 29660 |\n| Credit derivatives | 1381 | 1191 |\n| Foreign exchange contracts - Cross-currency swaps | 5476 | 4509 |\n| Foreign exchange contracts - Spot, futures and forwards | 8187 | 7005 |\n| Foreign exchange contracts - Written options | 979 | 1015 |\n| Foreign exchange contracts - Purchased options | 953 | 984 |\n| Total foreign exchange contracts | 15595 | 13513 |\n| Equity contracts - Swaps | 1147 | 850 |\n| Equity contracts - Futures and forwards | 196 | 206 |\n| Equity contracts - Written options | 1118 | 914 |\n| Equity contracts - Purchased options | 971 | 788 |\n| Total equity contracts | 3432 | 2758 |\n| Commodity contracts - Swaps | 189 | 148 |\n| Commodity contracts - Spot, futures and forwards | 270 | 191 |\n| Commodity contracts - Written options | 119 | 137 |\n| Commodity contracts - Purchased options | 120 | 125 |\n| Total commodity contracts | 698 | 601 |\n| Total derivative notional amounts | 50642 | 47723 |"
+  },
+  {
+    "table_id": "gold_p138_var",
+    "pdf_page": 138,
+    "printed_page": 136,
+    "section": "market_risk_var",
+    "title": "Total VaR",
+    "header_context": [
+      "Risk Management VaR at 95% confidence, in $ millions.",
+      "Columns: c1=2025 Average, c2=2025 Minimum, c3=2025 Maximum, c4=2024 Average, c5=2024 Minimum, c6=2024 Maximum. NM (not meaningful) -> null."
+    ],
+    "rows": [
+      {
+        "label": "Fixed income",
+        "values": [
+          35,
+          27,
+          51,
+          34,
+          26,
+          53
+        ],
+        "raw_cells": [
+          "35",
+          "27",
+          "51",
+          "34",
+          "26",
+          "53"
+        ]
+      },
+      {
+        "label": "Foreign exchange",
+        "values": [
+          9,
+          6,
+          15,
+          15,
+          7,
+          23
+        ],
+        "raw_cells": [
+          "9",
+          "6",
+          "15",
+          "15",
+          "7",
+          "23"
+        ]
+      },
+      {
+        "label": "Equities",
+        "values": [
+          17,
+          7,
+          138,
+          8,
+          4,
+          15
+        ],
+        "raw_cells": [
+          "17",
+          "7",
+          "138",
+          "8",
+          "4",
+          "15"
+        ]
+      },
+      {
+        "label": "Commodities and other",
+        "values": [
+          24,
+          10,
+          48,
+          8,
+          6,
+          13
+        ],
+        "raw_cells": [
+          "24",
+          "10",
+          "48",
+          "8",
+          "6",
+          "13"
+        ]
+      },
+      {
+        "label": "Diversification benefit to CIB trading VaR",
+        "values": [
+          -51,
+          null,
+          null,
+          -32,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "-51",
+          "None",
+          "None",
+          "-32",
+          "None",
+          "None"
+        ]
+      },
+      {
+        "label": "CIB trading VaR",
+        "values": [
+          34,
+          21,
+          142,
+          33,
+          27,
+          42
+        ],
+        "raw_cells": [
+          "34",
+          "21",
+          "142",
+          "33",
+          "27",
+          "42"
+        ]
+      },
+      {
+        "label": "Credit Portfolio VaR",
+        "values": [
+          21,
+          16,
+          27,
+          22,
+          18,
+          28
+        ],
+        "raw_cells": [
+          "21",
+          "16",
+          "27",
+          "22",
+          "18",
+          "28"
+        ]
+      },
+      {
+        "label": "Diversification benefit to CIB VaR",
+        "values": [
+          -18,
+          null,
+          null,
+          -16,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "-18",
+          "None",
+          "None",
+          "-16",
+          "None",
+          "None"
+        ]
+      },
+      {
+        "label": "CIB VaR",
+        "values": [
+          37,
+          23,
+          133,
+          39,
+          27,
+          52
+        ],
+        "raw_cells": [
+          "37",
+          "23",
+          "133",
+          "39",
+          "27",
+          "52"
+        ]
+      },
+      {
+        "label": "CCB VaR",
+        "values": [
+          4,
+          2,
+          7,
+          3,
+          1,
+          6
+        ],
+        "raw_cells": [
+          "4",
+          "2",
+          "7",
+          "3",
+          "1",
+          "6"
+        ]
+      },
+      {
+        "label": "AWM VaR",
+        "values": [
+          9,
+          8,
+          12,
+          9,
+          5,
+          10
+        ],
+        "raw_cells": [
+          "9",
+          "8",
+          "12",
+          "9",
+          "5",
+          "10"
+        ]
+      },
+      {
+        "label": "Corporate VaR",
+        "values": [
+          10,
+          9,
+          12,
+          23,
+          7,
+          102
+        ],
+        "raw_cells": [
+          "10",
+          "9",
+          "12",
+          "23",
+          "7",
+          "102"
+        ]
+      },
+      {
+        "label": "Diversification benefit to other VaR",
+        "values": [
+          -11,
+          null,
+          null,
+          -10,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "-11",
+          "None",
+          "None",
+          "-10",
+          "None",
+          "None"
+        ]
+      },
+      {
+        "label": "Other VaR",
+        "values": [
+          12,
+          10,
+          14,
+          25,
+          10,
+          101
+        ],
+        "raw_cells": [
+          "12",
+          "10",
+          "14",
+          "25",
+          "10",
+          "101"
+        ]
+      },
+      {
+        "label": "Diversification benefit to CIB and other VaR",
+        "values": [
+          -9,
+          null,
+          null,
+          -17,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "-9",
+          "None",
+          "None",
+          "-17",
+          "None",
+          "None"
+        ]
+      },
+      {
+        "label": "Total VaR",
+        "values": [
+          40,
+          25,
+          136,
+          47,
+          30,
+          91
+        ],
+        "raw_cells": [
+          "40",
+          "25",
+          "136",
+          "47",
+          "30",
+          "91"
+        ]
+      }
+    ],
+    "n_rows": 16,
+    "n_value_cols": 6,
+    "parser": "gold_verified",
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Fixed income | 35 | 27 | 51 | 34 | 26 | 53 |\n| Foreign exchange | 9 | 6 | 15 | 15 | 7 | 23 |\n| Equities | 17 | 7 | 138 | 8 | 4 | 15 |\n| Commodities and other | 24 | 10 | 48 | 8 | 6 | 13 |\n| Diversification benefit to CIB trading VaR | -51 |  |  | -32 |  |  |\n| CIB trading VaR | 34 | 21 | 142 | 33 | 27 | 42 |\n| Credit Portfolio VaR | 21 | 16 | 27 | 22 | 18 | 28 |\n| Diversification benefit to CIB VaR | -18 |  |  | -16 |  |  |\n| CIB VaR | 37 | 23 | 133 | 39 | 27 | 52 |\n| CCB VaR | 4 | 2 | 7 | 3 | 1 | 6 |\n| AWM VaR | 9 | 8 | 12 | 9 | 5 | 10 |\n| Corporate VaR | 10 | 9 | 12 | 23 | 7 | 102 |\n| Diversification benefit to other VaR | -11 |  |  | -10 |  |  |\n| Other VaR | 12 | 10 | 14 | 25 | 10 | 101 |\n| Diversification benefit to CIB and other VaR | -9 |  |  | -17 |  |  |\n| Total VaR | 40 | 25 | 136 | 47 | 30 | 91 |"
+  },
+  {
+    "table_id": "gold_p122_credit",
+    "pdf_page": 122,
+    "printed_page": 120,
+    "section": "wholesale_credit_exposure",
+    "title": "Wholesale credit exposure - industries (December 31, 2025)",
+    "header_context": [
+      "Wholesale credit exposure by industry as of December 31, 2025, in $ millions.",
+      "Columns: c1=Credit exposure, c2=Investment-grade, c3=Noncriticized, c4=Criticized performing, c5=Criticized nonperforming, c6=30+ days past due and accruing loans, c7=Net charge-offs/(recoveries), c8=Credit derivative/notes hedges, c9=Liquid securities/collateral held against derivative receivables. Parenthesized = negative; blank -> null.",
+      "Source column groups: c2-c5 break down credit exposure as Investment-grade (c2) vs. Noninvestment-grade (Noncriticized c3 / Criticized performing c4 / Criticized nonperforming c5); c6-c9 fall under the 'Selected metrics' group header.",
+      "Row structure: named industries + 'All other' sum to 'Subtotal'; Subtotal + 'Loans held-for-sale and loans at fair value' + 'Receivables from customers' = 'Total'."
+    ],
+    "rows": [
+      {
+        "label": "Real Estate",
+        "values": [
+          224858,
+          155712,
+          57478,
+          9967,
+          1701,
+          959,
+          380,
+          -99,
+          null
+        ],
+        "raw_cells": [
+          "224858",
+          "155712",
+          "57478",
+          "9967",
+          "1701",
+          "959",
+          "380",
+          "-99",
+          "None"
+        ]
+      },
+      {
+        "label": "Individuals and Individual Entities",
+        "values": [
+          167700,
+          138142,
+          28677,
+          460,
+          421,
+          1012,
+          -15,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "167700",
+          "138142",
+          "28677",
+          "460",
+          "421",
+          "1012",
+          "-15",
+          "None",
+          "None"
+        ]
+      },
+      {
+        "label": "Asset Managers",
+        "values": [
+          152848,
+          117426,
+          35113,
+          304,
+          5,
+          105,
+          1,
+          -5,
+          -10626
+        ],
+        "raw_cells": [
+          "152848",
+          "117426",
+          "35113",
+          "304",
+          "5",
+          "105",
+          "1",
+          "-5",
+          "-10626"
+        ]
+      },
+      {
+        "label": "Consumer & Retail",
+        "values": [
+          133945,
+          63523,
+          62382,
+          7425,
+          615,
+          115,
+          234,
+          -311,
+          null
+        ],
+        "raw_cells": [
+          "133945",
+          "63523",
+          "62382",
+          "7425",
+          "615",
+          "115",
+          "234",
+          "-311",
+          "None"
+        ]
+      },
+      {
+        "label": "Technology, Media & Telecommunications",
+        "values": [
+          97816,
+          44373,
+          42507,
+          10135,
+          801,
+          37,
+          281,
+          -1078,
+          null
+        ],
+        "raw_cells": [
+          "97816",
+          "44373",
+          "42507",
+          "10135",
+          "801",
+          "37",
+          "281",
+          "-1078",
+          "None"
+        ]
+      },
+      {
+        "label": "Industrials",
+        "values": [
+          80606,
+          44078,
+          33166,
+          3101,
+          261,
+          470,
+          18,
+          -68,
+          null
+        ],
+        "raw_cells": [
+          "80606",
+          "44078",
+          "33166",
+          "3101",
+          "261",
+          "470",
+          "18",
+          "-68",
+          "None"
+        ]
+      },
+      {
+        "label": "Banks & Finance Companies",
+        "values": [
+          75653,
+          41904,
+          32826,
+          903,
+          20,
+          16,
+          8,
+          -574,
+          -657
+        ],
+        "raw_cells": [
+          "75653",
+          "41904",
+          "32826",
+          "903",
+          "20",
+          "16",
+          "8",
+          "-574",
+          "-657"
+        ]
+      },
+      {
+        "label": "Healthcare",
+        "values": [
+          72218,
+          48888,
+          19713,
+          3059,
+          558,
+          12,
+          191,
+          -67,
+          null
+        ],
+        "raw_cells": [
+          "72218",
+          "48888",
+          "19713",
+          "3059",
+          "558",
+          "12",
+          "191",
+          "-67",
+          "None"
+        ]
+      },
+      {
+        "label": "Utilities",
+        "values": [
+          39005,
+          24840,
+          12519,
+          1254,
+          392,
+          1,
+          63,
+          -203,
+          null
+        ],
+        "raw_cells": [
+          "39005",
+          "24840",
+          "12519",
+          "1254",
+          "392",
+          "1",
+          "63",
+          "-203",
+          "None"
+        ]
+      },
+      {
+        "label": "Oil & Gas",
+        "values": [
+          36497,
+          21825,
+          14076,
+          347,
+          249,
+          52,
+          48,
+          -51,
+          null
+        ],
+        "raw_cells": [
+          "36497",
+          "21825",
+          "14076",
+          "347",
+          "249",
+          "52",
+          "48",
+          "-51",
+          "None"
+        ]
+      },
+      {
+        "label": "Automotive",
+        "values": [
+          35984,
+          19602,
+          15397,
+          958,
+          27,
+          109,
+          3,
+          -277,
+          null
+        ],
+        "raw_cells": [
+          "35984",
+          "19602",
+          "15397",
+          "958",
+          "27",
+          "109",
+          "3",
+          "-277",
+          "None"
+        ]
+      },
+      {
+        "label": "State & Municipal Govt",
+        "values": [
+          32484,
+          31372,
+          1100,
+          3,
+          9,
+          30,
+          null,
+          -3,
+          null
+        ],
+        "raw_cells": [
+          "32484",
+          "31372",
+          "1100",
+          "3",
+          "9",
+          "30",
+          "None",
+          "-3",
+          "None"
+        ]
+      },
+      {
+        "label": "Insurance",
+        "values": [
+          25031,
+          17511,
+          7352,
+          168,
+          null,
+          6,
+          null,
+          -20,
+          -8310
+        ],
+        "raw_cells": [
+          "25031",
+          "17511",
+          "7352",
+          "168",
+          "None",
+          "6",
+          "None",
+          "-20",
+          "-8310"
+        ]
+      },
+      {
+        "label": "Chemicals & Plastics",
+        "values": [
+          23790,
+          11251,
+          10355,
+          2091,
+          93,
+          2,
+          82,
+          -239,
+          null
+        ],
+        "raw_cells": [
+          "23790",
+          "11251",
+          "10355",
+          "2091",
+          "93",
+          "2",
+          "82",
+          "-239",
+          "None"
+        ]
+      },
+      {
+        "label": "Transportation",
+        "values": [
+          20861,
+          11450,
+          9097,
+          285,
+          29,
+          11,
+          -3,
+          -135,
+          null
+        ],
+        "raw_cells": [
+          "20861",
+          "11450",
+          "9097",
+          "285",
+          "29",
+          "11",
+          "-3",
+          "-135",
+          "None"
+        ]
+      },
+      {
+        "label": "Metals & Mining",
+        "values": [
+          17767,
+          7459,
+          9883,
+          406,
+          19,
+          22,
+          4,
+          -39,
+          -67
+        ],
+        "raw_cells": [
+          "17767",
+          "7459",
+          "9883",
+          "406",
+          "19",
+          "22",
+          "4",
+          "-39",
+          "-67"
+        ]
+      },
+      {
+        "label": "Central Govt",
+        "values": [
+          15164,
+          14666,
+          245,
+          44,
+          209,
+          8,
+          null,
+          -1258,
+          -1273
+        ],
+        "raw_cells": [
+          "15164",
+          "14666",
+          "245",
+          "44",
+          "209",
+          "8",
+          "None",
+          "-1258",
+          "-1273"
+        ]
+      },
+      {
+        "label": "Securities Firms",
+        "values": [
+          7966,
+          4372,
+          3593,
+          null,
+          1,
+          1,
+          null,
+          -13,
+          -2458
+        ],
+        "raw_cells": [
+          "7966",
+          "4372",
+          "3593",
+          "None",
+          "1",
+          "1",
+          "None",
+          "-13",
+          "-2458"
+        ]
+      },
+      {
+        "label": "Financial Markets Infrastructure",
+        "values": [
+          5734,
+          5306,
+          358,
+          70,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "5734",
+          "5306",
+          "358",
+          "70",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None"
+        ]
+      },
+      {
+        "label": "All other",
+        "values": [
+          180171,
+          148214,
+          29887,
+          1953,
+          117,
+          3,
+          303,
+          -19458,
+          -5500
+        ],
+        "raw_cells": [
+          "180171",
+          "148214",
+          "29887",
+          "1953",
+          "117",
+          "3",
+          "303",
+          "-19458",
+          "-5500"
+        ]
+      },
+      {
+        "label": "Subtotal",
+        "values": [
+          1446098,
+          971914,
+          425724,
+          42933,
+          5527,
+          2971,
+          1598,
+          -23898,
+          -28891
+        ],
+        "raw_cells": [
+          "1446098",
+          "971914",
+          "425724",
+          "42933",
+          "5527",
+          "2971",
+          "1598",
+          "-23898",
+          "-28891"
+        ]
+      },
+      {
+        "label": "Loans held-for-sale and loans at fair value",
+        "values": [
+          51007,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "51007",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None"
+        ]
+      },
+      {
+        "label": "Receivables from customers",
+        "values": [
+          47336,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "47336",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None"
+        ]
+      },
+      {
+        "label": "Total",
+        "values": [
+          1544441,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_cells": [
+          "1544441",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None"
+        ]
+      }
+    ],
+    "n_rows": 24,
+    "n_value_cols": 9,
+    "parser": "gold_verified",
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 | c7 | c8 | c9 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Real Estate | 224858 | 155712 | 57478 | 9967 | 1701 | 959 | 380 | -99 |  |\n| Individuals and Individual Entities | 167700 | 138142 | 28677 | 460 | 421 | 1012 | -15 |  |  |\n| Asset Managers | 152848 | 117426 | 35113 | 304 | 5 | 105 | 1 | -5 | -10626 |\n| Consumer & Retail | 133945 | 63523 | 62382 | 7425 | 615 | 115 | 234 | -311 |  |\n| Technology, Media & Telecommunications | 97816 | 44373 | 42507 | 10135 | 801 | 37 | 281 | -1078 |  |\n| Industrials | 80606 | 44078 | 33166 | 3101 | 261 | 470 | 18 | -68 |  |\n| Banks & Finance Companies | 75653 | 41904 | 32826 | 903 | 20 | 16 | 8 | -574 | -657 |\n| Healthcare | 72218 | 48888 | 19713 | 3059 | 558 | 12 | 191 | -67 |  |\n| Utilities | 39005 | 24840 | 12519 | 1254 | 392 | 1 | 63 | -203 |  |\n| Oil & Gas | 36497 | 21825 | 14076 | 347 | 249 | 52 | 48 | -51 |  |\n| Automotive | 35984 | 19602 | 15397 | 958 | 27 | 109 | 3 | -277 |  |\n| State & Municipal Govt | 32484 | 31372 | 1100 | 3 | 9 | 30 |  | -3 |  |\n| Insurance | 25031 | 17511 | 7352 | 168 |  | 6 |  | -20 | -8310 |\n| Chemicals & Plastics | 23790 | 11251 | 10355 | 2091 | 93 | 2 | 82 | -239 |  |\n| Transportation | 20861 | 11450 | 9097 | 285 | 29 | 11 | -3 | -135 |  |\n| Metals & Mining | 17767 | 7459 | 9883 | 406 | 19 | 22 | 4 | -39 | -67 |\n| Central Govt | 15164 | 14666 | 245 | 44 | 209 | 8 |  | -1258 | -1273 |\n| Securities Firms | 7966 | 4372 | 3593 |  | 1 | 1 |  | -13 | -2458 |\n| Financial Markets Infrastructure | 5734 | 5306 | 358 | 70 |  |  |  |  |  |\n| All other | 180171 | 148214 | 29887 | 1953 | 117 | 3 | 303 | -19458 | -5500 |\n| Subtotal | 1446098 | 971914 | 425724 | 42933 | 5527 | 2971 | 1598 | -23898 | -28891 |\n| Loans held-for-sale and loans at fair value | 51007 |  |  |  |  |  |  |  |  |\n| Receivables from customers | 47336 |  |  |  |  |  |  |  |  |\n| Total | 1544441 |  |  |  |  |  |  |  |  |"
+  },
+  {
+    "table_id": "gold_p214_hedge",
+    "pdf_page": 214,
+    "printed_page": 212,
+    "section": "derivatives_note",
+    "title": "Cumulative amount of fair value hedging adjustments in carrying amount of hedged items",
+    "header_context": [
+      "Cumulative fair value hedge basis adjustments, in $ millions.",
+      "Columns: c1=2025 Carrying amount of hedged items, c2=2025 Active hedging relationships, c3=2025 Discontinued hedging relationships, c4=2025 Total, c5=2024 Carrying amount, c6=2024 Active, c7=2024 Discontinued, c8=2024 Total. Parenthesized = negative; blank -> null."
+    ],
+    "rows": [
+      {
+        "label": "Investment securities - AFS",
+        "values": [
+          255109,
+          3693,
+          -1374,
+          2319,
+          203141,
+          -1675,
+          -1959,
+          -3634
+        ],
+        "raw_cells": [
+          "255109",
+          "3693",
+          "-1374",
+          "2319",
+          "203141",
+          "-1675",
+          "-1959",
+          "-3634"
+        ]
+      },
+      {
+        "label": "Long-term debt",
+        "values": [
+          222611,
+          232,
+          -8689,
+          -8457,
+          211288,
+          -3711,
+          -9332,
+          -13043
+        ],
+        "raw_cells": [
+          "222611",
+          "232",
+          "-8689",
+          "-8457",
+          "211288",
+          "-3711",
+          "-9332",
+          "-13043"
+        ]
+      },
+      {
+        "label": "Beneficial interests issued by consolidated VIEs",
+        "values": [
+          5884,
+          37,
+          null,
+          37,
+          5312,
+          -30,
+          -5,
+          -35
+        ],
+        "raw_cells": [
+          "5884",
+          "37",
+          "None",
+          "37",
+          "5312",
+          "-30",
+          "-5",
+          "-35"
+        ]
+      }
+    ],
+    "n_rows": 3,
+    "n_value_cols": 8,
+    "parser": "gold_verified",
+    "markdown": "| row_label | c1 | c2 | c3 | c4 | c5 | c6 | c7 | c8 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Investment securities - AFS | 255109 | 3693 | -1374 | 2319 | 203141 | -1675 | -1959 | -3634 |\n| Long-term debt | 222611 | 232 | -8689 | -8457 | 211288 | -3711 | -9332 | -13043 |\n| Beneficial interests issued by consolidated VIEs | 5884 | 37 |  | 37 | 5312 | -30 | -5 | -35 |"
+  }
+]

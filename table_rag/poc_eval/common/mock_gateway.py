@@ -11,6 +11,7 @@ plumbing artifacts, not findings. Run against the real gateway for real numbers.
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from typing import Any
 
@@ -36,30 +37,49 @@ def _first_table_name(text: str) -> str | None:
 
 
 def _mock_chat_text(messages: list[dict[str, Any]], **kwargs) -> str:
-    system = messages[0]["content"] if messages else ""
-    last = messages[-1]["content"] if messages else ""
-    if "translate a question into ONE SQLite SELECT" in system:
-        name = _first_table_name(last) or "t_unknown"
-        return f'{{"table":"{name}","sql":"SELECT row_label, c1 FROM \\"{name}\\" LIMIT 3"}}'
-    if "You are TableRAG" in system:
-        # Issue one real sub-query (exercises retrieval + NL->SQL), then finalize.
-        if not last.startswith("Observation"):
-            return '{"action":"query","subquery":"mock sub-query"}'
-        return '{"action":"final","answer":"MOCK ANSWER","value":null,"pages":[]}'
-    if "financial analyst answering questions" in system:
-        return '{"answer":"MOCK ANSWER","value":null,"pages":[]}'
-    if "impartial grader" in system:
+    blob = " ".join(m.get("content", "") or "" for m in messages)
+    # Repo NL2SQL (offline NL2SQL_SYSTEM_PROMPT)
+    if "expert in SQL" in blob:
+        m = re.search(r'"table_name":\s*"([^"]+)"', blob)
+        name = m.group(1) if m else "t_unknown"
+        return f'```sql\nSELECT row_label FROM "{name}" LIMIT 3\n```'
+    # Repo TableRAG controller (SYSTEM_EXPLORE_PROMPT) -> terminate with an answer
+    if "table-related question answering task" in blob or "solve_subquery" in blob:
+        return "<Answer>: MOCK ANSWER"
+    if "impartial grader" in blob:        # eval judge
         return "0"
-    if "classify the failure" in system:
+    if "classify the failure" in blob:    # failure taxonomy
         return "reasoning failure"
+    if "financial analyst answering questions" in blob:   # baseline RAG
+        return '{"answer":"MOCK ANSWER","value":null,"pages":[]}'
     return '{"answer":"MOCK","value":null,"pages":[]}'
 
 
-def _mock_chat(messages, **kwargs):
-    class _M:
-        content = _mock_chat_text(messages, **kwargs)
-        tool_calls = None
-    return _M()
+class _Fn:
+    def __init__(self, sq): self.arguments = json.dumps({"subquery": sq})
+
+
+class _Call:
+    def __init__(self, sq):
+        self.id = "call_mock"
+        self.function = _Fn(sq)
+
+
+class _Msg:
+    def __init__(self, content, tool_calls=None):
+        self.content = content
+        self.tool_calls = tool_calls
+
+
+def _mock_chat(messages, tools=None, **kwargs):
+    """Object-returning mock for the repo's get_chat_result (controller + COMBINE)."""
+    blob = " ".join(m.get("content", "") or "" for m in messages if isinstance(m, dict))
+    if tools and "table-related question answering task" in blob:   # the decompose controller
+        # 1st turn: issue a sub-query (exercises retrieval + NL->SQL); then finalize.
+        if not any(isinstance(m, dict) and m.get("role") == "tool" for m in messages):
+            return _Msg("", [_Call("total interest rate contracts and total derivative notional 2025")])
+        return _Msg("<Answer>: MOCK ANSWER", None)
+    return _Msg(_mock_chat_text(messages, **kwargs), None)
 
 
 def install() -> None:

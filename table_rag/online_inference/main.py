@@ -36,9 +36,9 @@ class TableRAG() :
             excel_dir_path=_args.excel_dir,
             llm_path=os.path.join(_args.bge_dir, "bge-m3"),
             reranker_path=os.path.join(_args.bge_dir, "bge-reranker-v2-m3"),
-            save_path="./embedding.pkl"
+            save_path=None,  # POC: disable cross-run embedding cache (A/B use different corpora)
         )
-        # self.repo_id = self.config.get("repo_id", "")
+        self.repo_id = ""  # POC: was commented out, leaving it referenced-but-undefined in _run
         self.function_lock = threading.Lock()
 
     def relate_to_table(self, doc_name: str) -> str :
@@ -125,10 +125,9 @@ class TableRAG() :
         Single iteration of TableRAG inference.
         """
         query = case["question"]
-        table_id = case["table_id"]
-
-        # TO BE FIXED
-        query_with_suffix = case['question'] + f"The given table is in {table_id}"
+        # POC: our questions are not tied to a known table_id; the system must FIND the
+        # relevant table via open retrieval, so we drop the original table-id suffix hint.
+        query_with_suffix = query
 
         _, _, doc_filenaems = self.retriever.retrieve(query_with_suffix, 30, 5)
 
@@ -166,20 +165,24 @@ class TableRAG() :
             text_messages.append(messages)
 
             for sub_query, tool_call_id in zip(sub_queries, tool_call_ids) :
-                reranked_docs, _, _ = self.retriever.retrieve(sub_query, 30, 5)
+                reranked_docs, _, sub_filenames = self.retriever.retrieve(sub_query, 30, 5)
                 unique_retriebed_docs = list(set(reranked_docs))
                 doc_content = "\n".join([r for r in unique_retriebed_docs[:3]])
 
-                excel_rag_response_dict = get_excel_rag_response_plain(related_table_name_list, sub_query, self.repo_id)
+                # POC (paper eq. 4): per-subquery, run NL2SQL over the schemas of ALL table
+                # chunks in the top-k retrieved set (S_t), not the frozen top-1. The SQL tool
+                # keeps only names that have a schema (= tables); text-doc names are ignored.
+                subquery_tables = [fn.replace(".json", "").replace(".xlsx", "") for fn in sub_filenames]
+                excel_rag_response_dict = get_excel_rag_response_plain(subquery_tables, sub_query, self.repo_id)
                 excel_rag_response = copy.deepcopy(excel_rag_response_dict)
-                logger.info(f"Requesting ExcelRAG, source file {str(related_table_name_list)}, with query {sub_query}")
+                logger.info(f"Requesting ExcelRAG, source file {str(subquery_tables)}, with query {sub_query}")
 
                 try :
                     sql_str = excel_rag_response['sql_str']
                     sql_execute_result = excel_rag_response['sql_execution_result']
-                    schema  = get_excel_rag_response['nl2sql_prompt'].split('Based on the schemas above, please use MySQL syntax to solve the following problem')[0].strip()
-                except :
-                    sql_str, sql_execute_result, schema = "ExcelRAG execute fails, key does not exists."
+                    schema = excel_rag_response['nl2sql_prompt'].split('Based on the schemas above')[0].strip()
+                except Exception :  # POC: fix shipped bug (referenced the function + bad unpack)
+                    sql_str, sql_execute_result, schema = "", "", ""
 
                 combine_prompt_formatted = COMBINE_PROMPT.format(
                     docs=doc_content, 
@@ -212,10 +215,12 @@ class TableRAG() :
     def construct_initial_prompt(self, case: dict, top1_table_name: str) -> Any :
         query = case["question"]
 
-        table_id = top1_table_name + ".csv"
-        csv_file_path = os.path.join(self.config.excel_dir, table_id)
-        if os.path.exists(csv_file_path) :
-            markdown_text = read_plain_csv(csv_file_path)
+        # POC: tables are kept as JSON (not csv/xlsx); build the same markdown content.
+        json_path = os.path.join(self.config.excel_dir, top1_table_name + ".json")
+        if os.path.exists(json_path) :
+            import pandas as _pd, json as _json
+            _t = _json.load(open(json_path, encoding="utf-8"))
+            markdown_text = _pd.DataFrame(_t["data"], columns=_t["columns"]).to_markdown(index=False)
         else :
             markdown_text = "Can NOT find table content!"
         

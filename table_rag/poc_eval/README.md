@@ -35,6 +35,44 @@ the same chunking (1000/200), and the same FAISS top-k retrieval. The **only** d
 | Tables | seen only as linearized page text | parsed into a SQLite store |
 | Reasoning | single-shot retrieve → generate | iterative sub-query decomposition + NL→SQL + text retrieval |
 
+## System 2 = the repo's actual TableRAG (not a reimplementation)
+
+`tablerag/runner.py` instantiates and runs the repo's real `online_inference/main.py`
+`TableRAG` — its 4-step loop, `SYSTEM_EXPLORE_PROMPT` / `COMBINE_PROMPT`, `solve_subquery`
+tool-calls, `MixedDocRetriever` recall→rerank flow, and the offline NL2SQL prompt + schema
+generation. We only change what an OpenAI-compatible **gateway** (no local models/GPU) and
+"no servers" force; the prompts and control flow are the repo's, verbatim.
+
+Forced adaptations (each marked `# POC:` in the patched repo files):
+- **bge-m3 embedder → gateway embeddings** (`utils/tool_utils.Embedder`); **bge-reranker
+  dropped → pass-through** that preserves recall order (no gateway rerank endpoint).
+- **GPU faiss → CPU** `IndexFlatIP` (`tools/retriever.py`).
+- **DeepSeek/gpt-4o config → gateway** `llm_config` (`config.py`); the repo's `get_chat_result`
+  is routed through `llm_gateway.chat`, so the bearer token flows into `OpenAI(...)` exactly
+  as the repo does.
+- **MySQL + Flask NL2SQL service → in-process SQLite** (`tools/sql_tool.py`), reusing the
+  offline NL2SQL prompts + `extract_sql_statement` + the pandas schema-gen verbatim.
+- **Tables kept as JSON** (no xlsx): `build_corpus.py` turns each table into a DataFrame and
+  feeds the repo's exact schema-gen / SQLite insert / retriever-markdown logic.
+- A couple of shipped bugs in `main.py._run` (a wrong variable reference + a bad tuple unpack
+  in the SQL block) are fixed minimally so the loop runs; the algorithm is unchanged.
+
+**Two deliberate, paper-aligned choices about retrieval (not the repo's defaults):**
+- **Open retrieval** — we drop the repo's `query + "The given table is in {table_id}"` suffix.
+  The repo names the gold table in the query (HeteQA queries are built that way); our 10-K
+  questions don't name a table, so the system must *find* it. This makes retrieval harder, not
+  easier — a conservative choice.
+- **Per-sub-query, top-k table selection (paper eq. 4)** instead of the repo's frozen top-1.
+  The repo's top-1 worked *because* it had the table-name hint; without that hint, freezing on
+  top-1 would unfairly starve the SQL step. So each sub-query runs NL2SQL over the schemas of
+  **all table chunks in its top-k retrieved set** (`S_t`), matching the paper's *"for each chunk
+  in the top-ranked set … extract its associated schema."* (`main.py._run`, marked `# POC`.)
+
+Because System 2 is the repo verbatim, it returns only an answer string; the runner captures
+the pages it actually retrieved (for evidence scoring) and parses the key number from the
+answer (for numeric scoring). It does not emit explicit page citations, so "source
+correctness" for TableRAG is taken as its retrieved-evidence pages.
+
 ## Layout
 
 ```
@@ -46,9 +84,10 @@ poc_eval/
   config/sections.json      # the table-dense pages selected from the 10-K
   ingestion/extract_pdf.py  # PDF -> pages.json (text) + tables.json (parsed tables)
   ingestion/table_parser.py # custom financial-table parser (borderless tables)
-  baseline_rag/pipeline.py  # System 1
-  tablerag/sql_store.py     # tables.json -> in-memory SQLite + schema docs
-  tablerag/pipeline.py      # System 2 (agent loop)
+  ingestion/build_gold_tables.py  # -> data/gold_tables.json (verified tables, Option B)
+  baseline_rag/pipeline.py  # System 1 (no equivalent in the repo, so written here)
+  tablerag/build_corpus.py  # our JSON tables -> repo corpus (per-table JSON + schema JSON + SQLite)
+  tablerag/runner.py        # System 2 = drives the REPO's online_inference/main.py TableRAG
   benchmark/benchmark_questions.json   # 16 questions + verified ground truth
   run_eval.py               # runs both systems, scores, classifies failures
   report.py                 # builds summary_report.md from results
@@ -81,10 +120,26 @@ Generation uses `client.chat.completions.create(...)`; embeddings use
 ```bash
 # from repo root, with the venv active
 python -m poc_eval.ingestion.extract_pdf      # (re)build pages.json + tables.json
-python -m poc_eval.run_eval                    # full run -> results/ (needs the gateway)
+python -m poc_eval.ingestion.build_gold_tables # build the verified gold tables (Option B)
+python -m poc_eval.run_eval                    # Option A: full run -> results/ (needs gateway)
+python -m poc_eval.run_eval --clean            # Option B: TableRAG fed verified gold tables
 python -m poc_eval.run_eval --limit 3          # quick smoke test
 python -m poc_eval.run_eval --mock             # offline plumbing check, no key/network
 ```
+
+### Option A vs. Option B (the parser sensitivity check)
+
+- **Option A** (`run_eval`, default): TableRAG consumes the **auto-parsed** tables — realistic
+  end-to-end; parser errors count against it. → `results/evaluation_results.csv`, `summary_report.md`.
+- **Option B** (`run_eval --clean`): TableRAG is fed **`data/gold_tables.json`** — hand-verified
+  clean versions of the 4 tables the benchmark depends on (built by `build_gold_tables.py` from
+  the source PDF text, independent of the parser). → `results/evaluation_results_optionB.csv`,
+  `summary_report_optionB.md`.
+
+Run both, then read the TableRAG accuracy in each: **the A→B gap is the damage attributable to
+PDF table parsing**, separated from the value of the method itself. If A ≈ B, parsing isn't the
+bottleneck; if B ≫ A, TableRAG's method works but our parser is holding it back. Everything else
+(retrieval, NL→SQL, agent loop, the baseline) is identical across the two runs.
 
 ## Deliverables
 
