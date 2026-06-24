@@ -1,0 +1,294 @@
+{
+    "abstention": [
+        {
+            "question": "What brand of air fryer did I say I own?",
+            "ideal_response": "Based on the provided chat, there is no information related to the brand or model of air fryer you own.",
+            "difficulty": "easy",
+            "abstention_type": "missing_detail",
+            "why_unanswerable": "The user asks about cooking chicken thighs in an air fryer but never states the brand or model",
+            "plan_reference": "Turn 1,3: Air fryer cooking discussed but no brand specified",
+            "rubric": [
+                "Based on the provided chat, there is no information related to the brand or model of air fryer you own"
+            ]
+        },
+        {
+            "question": "How many potatoes, carrots, and onion cubes did I have left over in the ziplock bag?",
+            "ideal_response": "Based on the provided chat, there is no information related to the exact quantity of potatoes, carrots, or onion cubes in the ziplock bag.",
+            "difficulty": "medium",
+            "abstention_type": "missing_detail",
+            "why_unanswerable": "The user mentions leftover potatoes, carrots, and onion cubes but never specifies how many of each",
+            "plan_reference": "Turn 1,1: Leftover vegetables mentioned without quantities",
+            "rubric": [
+                "Based on the provided chat, there is no information related to the exact quantity of potatoes, carrots, or onion cubes"
+            ]
+        }
+    ],
+    "contradiction_resolution": [
+        {
+            "question": "What is my favorite cuisine?",
+            "ideal_answer": "I noticed conflicting statements about your favorite cuisine. Early on you said your favorite cuisine is Japanese, but later you said you tried Chinese food for the first time and that it is definitely your new favorite cuisine. Could you clarify which one you currently consider your favorite?",
+            "difficulty": "clear",
+            "contradiction_type": "preference_change_conflict",
+            "topic_questioned": "the user's favorite cuisine",
+            "conversation_references": [
+                "Turn 1,1: Favorite cuisine is Japanese",
+                "Turn 1,5: Chinese food is the new favorite cuisine"
+            ],
+            "tests_for": "LLM should detect the change/contradiction and request clarification instead of giving a single definitive answer",
+            "source_chat_ids": {
+                "first_statement": [
+                    0
+                ],
+                "second_statement": [
+                    10
+                ]
+            },
+            "rubric": [
+                "LLM response should state: there is contradictory information",
+                "LLM response should mention: you said your favorite cuisine is Japanese",
+                "LLM response should mention: you said Chinese food is your new favorite cuisine",
+                "LLM response should mention: which one is correct?"
+            ]
+        }
+    ],
+    "event_ordering": [
+        {
+            "question": "Can you list the order in which I brought up my cooking topics across our conversation, in order? Mention ONLY and ONLY three items.",
+            "answer": "You brought up these topics in this order: 1) How long your leftover potatoes, carrots, and onion cubes last in the fridge, 2) How to cook chicken thighs in the air fryer (time and temperature), 3) A Chinese-style recipe for the chicken thighs and then for the leftover vegetables.",
+            "difficulty": "medium",
+            "ordering_type": "mention_sequence",
+            "total_mentions": 3,
+            "conversation_references": [
+                "Turn 1,1: Fridge storage of leftover vegetables",
+                "Turn 1,3: Air fryer chicken thigh time and temperature",
+                "Turn 1,5: Chinese-style chicken and vegetable recipes"
+            ],
+            "ordering_tested": [
+                "1st: Fridge storage question",
+                "2nd: Air fryer chicken thighs",
+                "3rd: Chinese-style recipes"
+            ],
+            "source_chat_ids": [
+                0,
+                6,
+                10
+            ],
+            "rubric": [
+                "Fridge storage of leftover vegetables",
+                "Air fryer chicken thigh time and temperature",
+                "Chinese-style recipe request"
+            ]
+        }
+    ],
+    "information_extraction": [
+        {
+            "question": "What temperature and how long did you recommend for boneless, skinless chicken thighs in the air fryer?",
+            "answer": "I recommended 190°C (375°F) as the best balance, cooking boneless, skinless thighs for 18–22 minutes total, flipping halfway at around 10 minutes.",
+            "difficulty": "easy",
+            "question_type": "numerical_precision",
+            "conversation_reference": "Turn 1,3: Assistant gives air fryer temperature and cooking times",
+            "key_facts_tested": [
+                "190°C (375°F)",
+                "18–22 minutes",
+                "flip halfway"
+            ],
+            "source_chat_ids": [
+                7
+            ],
+            "rubric": [
+                "LLM response should state: 190°C (375°F)",
+                "LLM response should state: 18–22 minutes"
+            ]
+        },
+        {
+            "question": "What internal temperature did you say I should aim for given that I like my food extra well done?",
+            "answer": "For extra well done, I said to aim for an internal temperature of 80–85°C (176–185°F), which is above the minimum safe temperature of 74°C (165°F).",
+            "difficulty": "medium",
+            "question_type": "numerical_precision",
+            "conversation_reference": "Turn 1,3: Assistant gives safe and well-done internal temperatures",
+            "key_facts_tested": [
+                "80–85°C (176–185°F) for extra well done",
+                "74°C (165°F) minimum safe temperature"
+            ],
+            "source_chat_ids": [
+                7
+            ],
+            "rubric": [
+                "LLM response should state: 80–85°C",
+                "LLM response should state: 74°C (165°F) minimum safe"
+            ]
+        }
+    ],
+    "instruction_following": [
+        {
+            "question": "Can you give me a recipe for garlic butter shrimp?",
+            "instruction_being_tested": "Whenever you recommend a recipe, always list the steps at the very top, then the title, then the ingredients at the bottom.",
+            "expected_compliance": "Response should present the cooking steps first, followed by the recipe title, with the ingredients listed at the bottom.",
+            "compliance_indicators": [
+                "steps appear first, before the title and ingredients",
+                "title appears after the steps",
+                "ingredients appear at the very bottom"
+            ],
+            "non_compliance_signs": [
+                "ingredients listed first",
+                "title placed at the top",
+                "steps placed after ingredients"
+            ],
+            "difficulty": "medium",
+            "instruction_type": "format_instruction",
+            "source_chat_ids": [
+                8
+            ],
+            "rubric": [
+                "LLM response should contain: steps listed at the very top",
+                "LLM response should contain: title after the steps and ingredients at the bottom"
+            ]
+        }
+    ],
+    "knowledge_update": [
+        {
+            "question": "What cuisine do I currently consider my favorite?",
+            "answer": "Chinese cuisine",
+            "difficulty": "easy",
+            "update_type": "preference_change",
+            "tests_retention_of": "the user's updated favorite cuisine",
+            "conversation_references": [
+                "My favorite cuisine is Japanese.",
+                "I tried Chinese food for the first time just now. This is definitely my new favorite cuisine."
+            ],
+            "potential_confusion": "LLM might incorrectly recall the original Japanese preference instead of the updated Chinese preference",
+            "source_chat_ids": {
+                "original_info": [
+                    0
+                ],
+                "updated_info": [
+                    10
+                ]
+            },
+            "rubric": [
+                "LLM response should state: Chinese"
+            ]
+        }
+    ],
+    "multi_session_reasoning": [
+        {
+            "question": "Given my preference for extra well done food, how should I adjust the standard air fryer chicken thigh cooking I asked about?",
+            "answer": "Because you like your food extra well done, instead of stopping at the minimum safe internal temperature of 74°C (165°F), you should aim for 80–85°C, and you can either raise the heat to 200°C (390–400°F) for the last 2–3 minutes or add 2–4 extra minutes at the end rather than cooking at high heat the whole time so it does not dry out.",
+            "difficulty": "medium",
+            "reasoning_type": "preference_application",
+            "sessions_required": 2,
+            "conversation_references": [
+                "I always like my food extra well done so i dont risk any undercooked illnesses",
+                "For your preference of extra well done, aim for 200°C for the last 2–3 minutes, or internal temp 80–85°C"
+            ],
+            "reasoning_steps": [
+                "Identify the user's stated preference for extra well done food.",
+                "Recall the standard safe target of 74°C (165°F) and the extra-well-done target of 80–85°C.",
+                "Apply the preference to recommend the higher internal temperature and the extra-time technique to avoid drying out."
+            ],
+            "source_chat_ids": [
+                6,
+                7
+            ],
+            "rubric": [
+                "LLM response should state: aim for 80–85°C",
+                "LLM response should state: add a few extra minutes at the end or raise heat for the last 2–3 minutes"
+            ]
+        }
+    ],
+    "preference_following": [
+        {
+            "question": "Can you give me cooking instructions for a pork roast?",
+            "preference_being_tested": "I always like my food extra well done so I don't risk any undercooked illnesses.",
+            "expected_compliance": "Response should recommend cooking the pork to a well done / higher-than-minimum internal temperature and reassure about food safety, rather than suggesting medium or rare doneness.",
+            "compliance_indicators": [
+                "recommends a well done / higher internal temperature",
+                "addresses food safety and avoiding undercooking",
+                "avoids suggesting medium-rare or rare doneness"
+            ],
+            "non_compliance_signs": [
+                "suggests medium-rare or rare doneness",
+                "stops at only the minimum safe temperature without acknowledging the preference",
+                "ignores the user's stated concern about undercooked food"
+            ],
+            "difficulty": "medium",
+            "preference_type": "doneness preference",
+            "source_chat_ids": [
+                6
+            ],
+            "rubric": [
+                "LLM response should contain: recommends cooking to well done / higher internal temperature",
+                "LLM response should contain: avoids suggesting rare or medium-rare doneness"
+            ]
+        }
+    ],
+    "summarization": [
+        {
+            "question": "Can you give me a summary of everything we covered about cooking with my leftover ingredients and chicken thighs?",
+            "ideal_summary": "Across our conversation you started by asking how long your leftover potatoes, carrots, and onion cubes would last in the fridge, and I explained that cut raw potatoes keep about 1–2 days, cut carrots about 3–5 days, and chopped onions about 7–10 days, along with spoilage signs to watch for. Since you liked Japanese food at first, I suggested Japanese dishes for the leftovers—first a Japanese curry, then, after you said you'd already had curry, alternatives like vegetable miso soup, a butter-soy sauté, and a Japanese potato salad. You then asked about air fryer chicken thighs, and I recommended 190°C (375°F) for 18–22 minutes for boneless and 25–32 minutes for bone-in, aiming for 80–85°C internally to suit your preference for extra well done food. After you asked me to always put recipe steps first, the title next, and ingredients at the bottom, and told me Chinese food was your new favorite, I gave you a Chinese soy-garlic air fryer chicken thigh recipe and a matching Chinese-style roasted vegetable recipe for your leftovers.",
+            "difficulty": "medium",
+            "summarization_type": "chronological_development",
+            "bullet_points_covered": 5,
+            "conversation_sessions": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                12
+            ],
+            "key_elements_tested": [
+                "fridge storage timelines",
+                "Japanese recipe suggestions",
+                "air fryer chicken thigh guidance",
+                "recipe formatting instruction",
+                "Chinese recipe suggestions"
+            ],
+            "synthesis_required": "Combining the storage advice, evolving cuisine preferences, recipe suggestions, and cooking guidance into a coherent narrative of the conversation",
+            "source_chat_ids": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                12
+            ],
+            "rubric": [
+                "LLM response should contain: how long the leftover potatoes, carrots, and onions last in the fridge",
+                "LLM response should contain: Japanese recipe suggestions such as curry and miso soup",
+                "LLM response should contain: air fryer chicken thigh time and temperature guidance",
+                "LLM response should contain: a Chinese-style soy-garlic recipe for the chicken and vegetables"
+            ]
+        }
+    ],
+    "temporal_reasoning": [
+        {
+            "question": "If I cut the raw potatoes on the same day we talked and they last about 2 days in the fridge, and the chopped onions last about 10 days, how many more days do the onions keep compared to the potatoes?",
+            "answer": "The onions keep about 8 more days than the potatoes, since cut raw potatoes last about 2 days and chopped onions last about 10 days (10 - 2 = 8).",
+            "difficulty": "easy",
+            "temporal_type": "duration_calculation",
+            "time_points": [
+                "Cut raw potatoes: about 1–2 days",
+                "Chopped onions: about 7–10 days"
+            ],
+            "conversation_references": [
+                "Turn 1,1: Fridge storage timelines for the leftover vegetables"
+            ],
+            "calculation_required": "10 days - 2 days = 8 days",
+            "source_chat_ids": {
+                "first_event": [
+                    1
+                ],
+                "second_event": [
+                    1
+                ]
+            },
+            "rubric": [
+                "LLM response should state: about 8 more days",
+                "LLM response should state: potatoes ~2 days and onions ~10 days"
+            ]
+        }
+    ]
+}
