@@ -1,0 +1,38 @@
+[project]
+name = "lcm-mem"
+version = "0.1.0"
+description = "Latent Composition Memory: latent composition predictor + provenance-tracked memory store for LLM agents"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "torch>=2.4",
+    "sentence-transformers>=3.0",
+    "datasets>=2.20",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "scikit-learn>=1.5",
+    "networkx>=3.3",
+    "pydantic>=2.7",
+    "typer>=0.12",
+    "rich>=13.7",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+faiss = ["faiss-cpu>=1.8"]
+ner = ["spacy>=3.7"]
+wandb = ["wandb>=0.17"]
+dev = ["pytest>=8.2", "hypothesis>=6.100", "pytest-timeout>=2.3"]
+
+[project.scripts]
+lcm = "lcm_mem.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lcm_mem"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+timeout = 300

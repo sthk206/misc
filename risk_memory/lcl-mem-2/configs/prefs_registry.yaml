@@ -1,0 +1,40 @@
+# B.1 versioned preference-key registry. Unknown keys are REJECTED at write
+# time — this keeps S2 auditable and editable rather than a junk drawer.
+version: 1
+keys:
+  layout.chart_order:
+    type: list
+    description: Ordered list of currency pairs to show first in reports
+    consumer: report_builder      # consumed mechanically via template variables
+    item_allowed: [EURUSD, USDJPY, GBPUSD, AUDUSD, USDCHF, USDCAD, EURJPY, EURGBP]
+  layout.sections_collapsed:
+    type: list
+    description: Report sections to collapse by default
+    consumer: report_builder
+    item_allowed: [news, stress, greeks, counterparty]
+  thresholds.dod_flag_ccy_pair:
+    type: number
+    description: Day-over-day move (in %) above which a currency pair is flagged
+    consumer: report_builder
+    min: 0.0
+    max: 50.0
+  thresholds.stale_hedge_days:
+    type: number
+    description: Days after which an unadjusted hedge is called out
+    consumer: report_builder
+    min: 1
+    max: 90
+  tone.verbosity:
+    type: enum
+    description: Report narrative verbosity
+    consumer: tone
+    allowed: [terse, standard, detailed]
+  tone.lead_with:
+    type: enum
+    description: What the morning report opens with
+    consumer: tone
+    allowed: [biggest_move, pnl_summary, open_risks]
+  alerts.notify_on_restatement:
+    type: bool
+    description: Whether to surface atom restatements prominently
+    consumer: report_builder

@@ -1,0 +1,9 @@
+# Phase 0: MuSiQue triple extraction
+rewrite_model: gpt-4o-mini      # model names are config-driven, never hardcoded
+out_dir: data/processed
+max_examples: null              # null = full dataset; set small (e.g. 200) for smoke runs
+val_frac: 0.05
+test_frac: 0.05
+llm_cache: cache/llm_cache.sqlite
+dry_run: false
+max_llm_calls_budget: 100000    # per-experiment budget cap

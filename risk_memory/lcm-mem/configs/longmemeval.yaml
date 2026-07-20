@@ -1,0 +1,18 @@
+# Phase 5: LongMemEval-S
+data_path: data/raw/longmemeval_s.json
+embedder: intfloat/e5-base-v2
+extract_model: gpt-4o-mini
+judge_model: gpt-4o-mini
+limit: null                     # set small for smoke runs
+llm_cache: cache/llm_cache.sqlite
+dry_run: false
+compose:
+  scorer: predictor             # predictor | mean_pool | cross_encoder | llm_score | random
+  ckpt_path: models/phase1_mlp_cosine.pt
+  model: gpt-4o-mini
+  k_dense: 20
+  max_llm_calls: 5
+  max_depth: 3
+  t_answerable: 0.82
+  min_pair_score: 0.1
+  confidence_decay: 0.85

@@ -1,0 +1,13 @@
+# Phase 1 kill experiment
+data_dir: data/processed
+emb_dir: data/embeddings
+ckpt_dir: models
+embedder: intfloat/e5-base-v2
+methods: [mean_pool, learned_pool, mlp, attn]
+losses: [cosine, infonce]
+query_ablation: true
+include_cross_encoder: true
+n_pruning_items: 200
+seed: 0
+lr: 1.0e-4
+batch_size: 256

@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.egg-info/
+cache/
+data/raw/
+data/processed/
+data/embeddings/
+models/
+results/*.json
+wandb/
+.pytest_cache/
+.DS_Store
