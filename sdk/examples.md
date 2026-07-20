@@ -164,3 +164,93 @@ module.exports = {
 ```
 
 A fixed, ordered pipeline you trigger on demand — distinct from a skill because it's not "load when relevant," it's "run this exact sequence when I say /release."
+
+
+# Auto Memory
+```
+# Project Memory
+
+## Architecture
+
+This project uses:
+
+- FastAPI
+- SQLAlchemy 2.0
+- PostgreSQL
+- Redis caching
+
+## Development Notes
+
+The user prefers:
+
+- pytest over unittest
+- dependency injection
+- small PRs
+
+## Known Issues
+
+The staging database often has stale migrations.
+Run:
+
+alembic upgrade head
+```
+# Subagent Memory
+```
+# Security Reviewer Memory
+
+Previous findings:
+
+1. JWT refresh tokens previously had no expiration.
+2. Admin routes use role-based permissions.
+3. Password hashing uses bcrypt.
+
+Team preferences:
+
+- Always check authorization separately from authentication.
+- Report vulnerabilities with severity ratings.
+```
+
+# .claude.json
+```json
+{
+  "trustedProjects": [
+    "/Users/alice/work/api-server",
+    "/Users/alice/work/mobile-app"
+  ],
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ]
+    },
+    "postgres": {
+      "type": "http",
+      "url": "http://localhost:8080/mcp"
+    }
+  },
+  "claudeAiConnectors": {
+    "enabled": true
+  },
+  "permissions": {
+    "allow": [
+      "mcp__github__*"
+    ]
+  }
+}
+```
+
+# plugins
+```
+└── backend-engineering_plugin/
+    ├── plugin.json
+    ├── skills/
+    │   └── api-review/
+    │       └── SKILL.md
+    ├── agents/
+    │   └── security-reviewer.md
+    ├── hooks/
+    │   └── format-on-edit.sh
+    └── .mcp.json
+```
