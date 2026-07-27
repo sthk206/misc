@@ -1,177 +1,161 @@
 # Task: Migrate CLI agent to web-callable service (POC v1)
 
-You are migrating an existing CLI agent built on the Claude Agent SDK (Python) so it can be driven from our web backend. Work in phases. **Make exactly one git commit per phase**, with the commit message format `poc-v1 phase N: <summary>`. Run the phase's smoke script before committing. If anything in the existing code contradicts these instructions, stop and ask me before proceeding — do not silently deviate.
+You are migrating the existing CLI agent (Claude Agent SDK, Python) so it can be driven from our web backend. Work in phases. **Make exactly one git commit per phase**, message format `poc-v1 phase N: <summary>`. Run the phase's smoke script before committing. If the code contradicts these instructions, stop and ask me — do not silently deviate.
 
-## Existing code — read this first, before writing anything
+## Existing code — read all of this in Phase 0 before writing anything
 
-- `src/agents/for_migration/` — the working CLI agent. It calls the SDK's `query()` inside a run function, loads plugins, and currently uses a **PreToolUse hook that blocks on terminal `input()`** for tool approval. Do NOT rewrite the agent logic; reuse its config/plugin loading and the hook structure. Your job is the web wrapper around it.
-- `src/routes/agent.py` — route stubs for the agent endpoints: `/chat`, `/interrupt`, `/approve`, `/reject`, `/pending-approvals`. **`POST /chat` already returns a `StreamingResponse`; keep that pattern — the SSE stream IS the chat response.**
-- `src/routes/agent_config.py` — `/skills`, `/tools`, `/bundle`. **All three are OUT OF SCOPE. Do not modify this file.**
-- Auth: an existing `get_current_user` dependency (bearer header or `?token=` query param; dev mode accepts the master API key and returns a synthetic user stub). **Reuse it on every endpoint; do not modify it.**
-- Use whatever web framework the existing routes use (uvicorn-served ASGI).
-- Terminology: Bash is a **tool**, not a skill. Don't conflate SDK tools with the `/skills` concept elsewhere in the repo.
+- `src/agents/for_migration/` — the working CLI agent. `graph.py` builds options and iterates `query(prompt=user_input, options=options)` (string prompt, `resume=self.session_id`, `permission_mode="acceptEdits"`, `cwd=PROJECT_DIR`, `setting_sources=["project"]`). Approval is `bash_approval_hook` (PreToolUse) which delegates via `await asyncio.to_thread(callback.request_approval, command)` to an abstract `AgentCallback`; the CLI implementation (`src/cli/callbacks.py`, `CLICallback`) uses questionary. `main.py` also starts a LiteLLM proxy (port 4000), a logging proxy (port 4001), Phoenix OTEL tracing, and a SQLite **ConversationStore** for session metadata.
+- `src/routes/agent.py` — route stubs under `/api/v1/agent/`: `/chat` (returns a `StreamingResponse` directly), `/interrupt`, `/approve`, `/reject`, `/pending-approvals`, plus an existing `GET /slash-commands` (keep it working, no changes needed).
+- Schemas/DTOs — **the frontend already uses these contracts; do not rename anything.** `AgentChatRequestDTO` uses `workspace_id` + `message`. Approval schemas use `call_id` + `justification`. `workspace_id` is a path param for `/interrupt` and `/pending-approvals`, a body field for `/chat`, `/approve`, `/reject`. The persistent identifier is **workspace_id** throughout — never introduce `session_id`, `prompt`, `request_id`, or `updated_input`.
+- `src/routes/project.py` — the existing workspace routes. This is where "list previous conversations" lives; modify these, do NOT add a new `GET /sessions`.
+- `ConversationStore` — existing store with `thread_id`, `user_id`, `title`, `created_at`, `updated_at`. This is the session/workspace source of truth for v1 (no filesystem listing, no new tables).
+- Auth: `get_current_user` (`dependencies.py`, SSO/JWT + DB). **Assume it works; do not modify it and do not build a dev-mode bypass — out of scope.**
+- `src/routes/agent_config.py` (`/skills`, `/tools`, `/bundle`) — **out of scope, do not modify.**
+- Installed SDK: check the actual package in the venv. `include_partial_messages` exists — see `.venv/lib/python3.12/site-packages/claude_agent_sdk/types.py:976-1017`. Verify hook/option signatures there rather than guessing.
 
 ## Fixed design decisions (do not revisit)
 
-1. Use bare `query()` per turn with `resume=<session_id>` — NOT a persistent `ClaudeSDKClient`.
-2. **Plain string prompt** (no streaming input mode). Approval happens in the **PreToolUse hook**, exactly like the CLI does today, with the blocking `input()` swapped for `await future`. This is verified working with plain `query()`. `can_use_tool` is dropped for v1 (revisit when per-user permission profiles or UI command-editing are needed).
-3. Routes stay **flat** (`/chat`, `/approve`, ...) with `session_id` in the request body (or query param for GETs). No `/sessions/{sid}/...` nesting.
-4. **`POST /chat` returns the SSE `StreamingResponse` directly** — no separate `GET /stream` endpoint for v1. The turn itself runs as a detached task; the response generator only drains the event queue (see Phase 5 for why this split is mandatory).
-5. **No database. The filesystem is the session store.** Each user gets their own working directory (`/workspaces/{user_id}`), passed as `cwd` to the SDK. Transcripts therefore land in `~/.claude/projects/<encoded-user-cwd>/<session-id>.jsonl`, partitioned per user by construction:
-   - `GET /sessions` = list that directory, sorted by mtime desc.
-   - Authorization is structural: resuming someone else's session id fails because the SDK resolves it under the caller's own project dir. (Verified explicitly in Phase 0 before anything is built on it.)
-   - Transcript exists ⇔ session exists. No rows to drift out of sync.
-6. Because session ids from the client land in filesystem paths, **input validation is load-bearing**: `re.fullmatch(r"[0-9a-fA-F-]{36}", session_id)` on every endpoint that accepts one, 400 otherwise. `user_id` is always server-derived from `get_current_user`, never accepted from the client.
-7. Approval round-trip via `asyncio.Future`, keyed **per approval request** (`dict[request_id, Future]` on the session runtime object), never per session — parallel tool calls can mean multiple approvals outstanding.
-8. Approval timeout is in scope NOW (not deferred): 300s per approval, plus a 1800s outer bound per turn, plus `max_turns`.
-9. The PreToolUse hook does two jobs, in order: (a) deterministic path guard — deny file writes resolving outside the caller's workspace, no human involved; (b) the human approval round-trip for tools that need it (e.g. Bash).
-10. v1 interrupt handles the approval-blocked case cleanly; mid-tool interrupt is a dirty `task.cancel()` and that's accepted for v1.
-11. Server must run single-worker (`uvicorn --workers 1`) — futures and queues live in process memory.
-12. Session status (`running` / `interrupted`) is in-memory runtime state only, not persisted. A restart loses live turns but not transcripts; accepted for v1.
+1. Per-turn `query()` with a **string prompt** and `resume=<thread_id>`. No streaming input mode, no `ClaudeSDKClient`, and **no `can_use_tool` anywhere** — approval stays in the existing PreToolUse hook design.
+2. The web approval mechanism is a new **`AgentCallback` subclass** (`WebCallback`): same interface the CLI callback implements, but `request_approval` round-trips to the browser via an `asyncio.Future` instead of questionary. The hook itself and `permission_mode="acceptEdits"` stay as they are.
+3. `cwd` stays `PROJECT_DIR` — the agent's `.claude/`, `CLAUDE.md` (risk-analyst persona, render-html skill, etc.) resolve from it. Do NOT move cwd per user.
+4. Artifact isolation: per-user output directory **appended on top of `TEMP_OUTPUT_DIR`** (e.g. `{TEMP_OUTPUT_DIR}/{user_id}/`), passed **per subprocess/turn** — never by mutating the process-global `.env` value, which is shared by every concurrent user by construction. The `CLAUDE.md` "## Output Location" instruction stays as the soft nudge; a small PreToolUse path guard is the enforcement backstop.
+5. **Ownership checks are mandatory.** Because cwd is shared, all transcripts live in one project dir — nothing structural stops user A resuming user B's `thread_id`. Every endpoint that accepts a `workspace_id` must verify the ConversationStore row's `user_id` matches `current_user`, else 404 (not 403 — don't leak existence). This is the IDOR fix on a risk-intelligence platform; it is not optional.
+6. Approval round-trip via `asyncio.Future`, keyed **per approval request** (`dict[call_id, Future]` on the workspace runtime) — parallel tool calls can have multiple approvals outstanding.
+7. Timeouts are in scope NOW: 300s per approval, 1800s outer bound per turn, `max_turns` set.
+8. **One-route SSE**: `POST /chat` returns the `StreamingResponse` directly (matching the existing stub) — the SSE stream IS the chat response. No separate `GET /stream`. Internally, events still flow through a per-workspace queue so `/pending-approvals` can recover state after a dropped stream.
+9. v1 interrupt handles the approval-blocked case cleanly; mid-tool interrupt is a dirty `task.cancel()` and that's accepted.
+10. Single worker (`uvicorn --workers 1`) — futures and queues are per-process.
+11. Workspace status (`running`/`interrupted`) is in-memory runtime state only; ConversationStore holds the durable metadata.
+12. LiteLLM is required infrastructure (Phase 1), not an external dependency to assume away.
 
-## SDK gotchas to respect (these are known failure modes, not suggestions)
+## Known failure modes to respect
 
-- PreToolUse hooks fire on matching tool calls regardless of approval UI; return an **explicit** allow/deny decision from the hook. Verify against the installed SDK how a hook expresses allow/deny (hook output types), and mirror whatever the existing CLI hook returns.
-- Capture the SDK session id from **every** message that carries one and keep the latest — resume can produce a new id, so always update what you report/track.
-- A denial does not end the turn — the model may try another tool and trigger another approval. That's what the `abandoned` flag is for (see Phase 4).
-- After a successful approval resolution or timeout, `finally: pending.pop(request_id, None)`.
-- Guard `/approve` / `/reject` against double-clicks: `if fut and not fut.done()` before `set_result`, or you get `InvalidStateError`.
-- Moving `cwd` off the project root means project settings/skills won't load — they resolve from `<cwd>/.claude/` with no parent fallback. Each user workspace needs a `.claude` symlink back to the project root's `.claude` (Phase 1).
-- `include_partial_messages=True` if available with this configuration, for token-level streaming to the UI; if it requires anything incompatible with the string-prompt setup, note it and fall back to message-level streaming.
-- Consult the installed SDK's actual types/signatures (`claude_agent_sdk` package) rather than guessing — verify hook signatures and `ClaudeAgentOptions` fields against the installed version.
+- The `.env`-global output dir is the classic collision: two users, `Write("report.csv")`, one file. Hence decision 4.
+- A hook denial does not end the turn — the model may try another tool and fire another approval. That's what the `abandoned` flag is for (Phase 2): first timeout arms it, every subsequent approval fails instantly, so an abandoned workspace costs one 300s window, not one per tool.
+- After resolution or timeout: `finally: pending.pop(call_id, None)`.
+- Double-click guard on `/approve` and `/reject`: `if fut and not fut.done()` before `set_result`, else you get `InvalidStateError`.
+- Capture the SDK session id (`thread_id`) from **every** message that carries one and upsert the ConversationStore row — resume can produce a new id; always store the latest.
+- The existing hook wraps `callback.request_approval` in `asyncio.to_thread` because `CLICallback` is sync (questionary). `WebCallback` must NOT go through a worker thread — it's pure async on the server loop. The sanctioned fix is a dispatch branch in `bash_approval_hook`:
+  ```python
+  if inspect.iscoroutinefunction(callback.request_approval):
+      result = await callback.request_approval(command)
+  else:
+      result = await asyncio.to_thread(callback.request_approval, command)
+  ```
+  `CLICallback` stays sync and unchanged; `WebCallback.request_approval` is `async def` and awaits its Future natively — no `run_coroutine_threadsafe`, no parked executor threads.
+- SSE heartbeat `: ping` every ~20s or proxies will kill the stream mid-turn.
 
 ---
 
-## Phase 0 — Recon + verify the isolation assumption
+## Phase 0 — Recon + verification (no product code)
 
-**Goal: confirm the load-bearing assumption before building on it.** The filesystem design rests on `resume` being scoped to the current `cwd`'s project dir. That follows from where transcripts are stored, but it must be tested, not inferred.
+1. Read everything under "Existing code" above: `graph.py`, the callback abstraction, both route files, `project.py`, ConversationStore, all DTOs. 
+2. Confirm in the installed SDK: `include_partial_messages` (types.py:976-1017), the exact PreToolUse hook signature, and `ClaudeAgentOptions` fields for `env`/`cwd`/`resume`/`max_turns`.
+3. Trace how `main.py` starts the LiteLLM proxy (`_start_litellm_proxy`), the logging proxy, and what `_fix_additional_properties` does — Phase 1 replicates these.
+4. Write `docs/poc-v1-findings.md`: the confirmed DTO field names, hook signature, callback interface, how the sync/async bridge in the hook works today, and the LiteLLM/logging-proxy startup shape.
 
-1. Read `src/agents/for_migration/`, both route files, and note the installed SDK version and relevant type signatures (especially the existing PreToolUse hook's return shape).
-2. Write `scripts/verify_resume_scoping.py`:
-   - Run a trivial turn with `cwd=/tmp/scope_test_a`, capture the session id.
-   - Attempt `resume=<that id>` with `cwd=/tmp/scope_test_b`.
-   - Assert it **fails** (does not resume A's conversation). Print clearly PASS/FAIL.
-   - Also record the exact directory-encoding scheme the SDK uses for `~/.claude/projects/<encoded-cwd>/` (needed by Phase 2's listing code) — print the observed path.
-3. **If cross-cwd resume succeeds, STOP and report to me** — the isolation design changes and we'd need an explicit ownership check instead.
+**Commit** (findings doc only).
 
-**Commit:** the script + a short `docs/poc-v1-findings.md` with the result and the observed encoding scheme.
+## Phase 1 — LiteLLM + model-routing route
 
-## Phase 1 — Per-user workspaces + validation helpers
+**Goal: the web service can route model calls the same way the CLI did.**
 
-**Goal: the path structure that everything else hangs off.**
+1. Start the LiteLLM proxy from the web service lifecycle (lifespan/startup), replicating `_start_litellm_proxy`'s logic.
+2. Implement the `openai/chat/completions` route to replace the old logging proxy: auth + forwarding to LiteLLM, **plus** request/response logging, **plus** the `_fix_additional_properties` schema fix carried over from the old proxy. Point the agent's SDK base URL at this route.
+3. Phoenix tracing: wire it if it's a small lift in the web context; otherwise note it in findings as deferred and move on. Ask me if unsure.
 
-1. `workspace_for(user) -> Path`: returns `/workspaces/{user_id}` (base dir configurable), creating it on first use, and creating the symlink `workspace/.claude -> PROJECT_ROOT/.claude` if missing. This also means relative file writes land in the user's own directory rather than the shared project root.
-2. `validate_session_id(s)`: the UUID regex check from design decision 6, raising 400. Used by every session-taking endpoint from here on.
-3. `project_dir_for(user) -> Path`: maps the user's workspace to its `~/.claude/projects/<encoded>` transcript directory using the encoding scheme observed in Phase 0.
-
-**Smoke** `scripts/smoke_phase1.py`: call `workspace_for` for two fake users; assert separate dirs, symlink resolves, and `validate_session_id` rejects `../../etc`, accepts a uuid4.
+**Smoke** `scripts/smoke_phase1.py`: hit the completions route with a trivial request; assert a valid completion returns, the request/response got logged, and a payload that needs the `_fix_additional_properties` fix passes through correctly.
 
 **Commit.**
 
-## Phase 2 — GET /sessions (list from disk)
+## Phase 2 — WorkspaceRuntime + WebCallback
 
-**Goal: previous conversations visible on load, no schema.**
+**Goal: the approval round-trip, testable without HTTP or the binary.**
 
-1. `GET /sessions` (auth required): list `project_dir_for(current_user)/*.jsonl`, sorted by mtime desc. Return `[{session_id, updated_at}]` — id from filename, timestamp as the display title for v1 (no jsonl parsing). Empty dir / missing dir → `[]`.
-
-**Smoke** `scripts/smoke_phase2.py` (httpx): drop two dummy `.jsonl` files into user A's project dir with different mtimes; list as A → ordered correctly; list as B (different token) → empty.
-
-**Commit.**
-
-## Phase 3 — Turn runner plumbing (no approvals, no HTTP)
-
-**Goal: a `run_turn(runtime, prompt)` coroutine that streams events to a queue, with resume working.**
-
-1. In-memory registry: `runtime: dict[session_id, SessionRuntime]` where `SessionRuntime` holds:
-   - `out: asyncio.Queue` — event queue (events accumulate whether or not anyone is draining; this is what makes ordering safe and `/pending-approvals` possible)
-   - `pending: dict[request_id, asyncio.Future]` and `pending_payloads: dict[request_id, dict]` (used from Phase 4)
-   - `abandoned: bool`, `task: asyncio.Task | None`, `status: str` (`idle`/`running`/`interrupted`/`error` — in-memory only)
-2. Build `ClaudeAgentOptions` from the existing CLI agent's config/plugin loading: `cwd=workspace_for(user)`, plain string prompt, `max_turns` set, `resume=session_id` when continuing an existing session, partial-message streaming if compatible (see gotchas).
-3. `run_turn`: iterate `query()`, forward events to `out` (text/partials, tool use, results, final result), and capture the SDK session id from every message that carries one. For a brand-new session, emit a `session_started {session_id}` event on `out` as soon as the id is captured, and re-key the runtime under it.
-4. Outer bound: `await asyncio.wait_for(<the loop>, timeout=1800)`; on timeout push an error event. Always update `status` and clear `runtime.task` in a `finally`.
-
-**Smoke** `scripts/smoke_phase3.py`: drive `run_turn` directly (no HTTP) with a no-tool prompt; print events; assert a transcript file appeared in the user's project dir; run a second turn with `resume` and assert the model sees turn-1 context. (Header note: requires the Claude Code binary + API access.)
-
-**Commit.**
-
-## Phase 4 — Approval round-trip in the PreToolUse hook
-
-**Goal: the CLI's blocking-`input()` hook becomes an awaited Future, with no leak path.**
-
-1. Adapt the existing PreToolUse hook. Structure, in order:
+1. In-memory registry `runtimes: dict[workspace_id, WorkspaceRuntime]` with:
+   - `out: asyncio.Queue` (events accumulate regardless of listeners — this is what makes `/pending-approvals` recovery possible)
+   - `pending: dict[call_id, asyncio.Future]` + `pending_payloads: dict[call_id, dict]`
+   - `abandoned: bool`, `task: asyncio.Task | None`, `status: str`
+2. `WebCallback(AgentCallback)` — same interface as `CLICallback`. `request_approval(command)`:
    ```
-   # (a) deterministic path guard — no human involved
-   if tool writes a file and resolved path is outside runtime.workspace:
-       return deny("outside workspace")          # backstop; relative writes already land in user cwd
-
-   # (b) human approval
-   if runtime.abandoned: return deny("Session abandoned")   # instant, no wait
-   rid = uuid4(); fut = loop.create_future()
-   runtime.pending[rid] = fut; runtime.pending_payloads[rid] = request_event
-   await runtime.out.put(approval_request event: {rid, tool, input})
+   if runtime.abandoned: return deny  # instant
+   call_id = uuid4(); fut = <future on the server loop>
+   pending[call_id] = fut; pending_payloads[call_id] = approval event
+   put approval event on out
    try:
-       decision = await asyncio.wait_for(fut, timeout=300)
-       return allow if decision.approved else deny("Rejected by user")
-   except TimeoutError:
+       decision = wait for fut, timeout=300
+   except timeout:
        runtime.abandoned = True; runtime.status = "interrupted"
-       return deny("Approval timed out — session interrupted.")
+       return deny("Approval timed out — workspace interrupted.")
    finally:
-       runtime.pending.pop(rid, None); runtime.pending_payloads.pop(rid, None)
+       pending.pop / pending_payloads.pop
    ```
-   Use the same allow/deny return shape the CLI hook already uses. Keep the CLI's logic for *which* tools require approval.
-2. Keep the existing CLAUDE.md save-location instruction as-is.
+   Approve resolutions carry allow; reject/interrupt carry deny (+ `justification` per the existing schema). `request_approval` is `async def`, awaiting `asyncio.wait_for(fut, timeout=300)` directly on the server loop — plain single-threaded async, no bridging.
+3. Apply the ONE sanctioned edit to `bash_approval_hook`: the `inspect.iscoroutinefunction` dispatch branch from "Known failure modes" above. Nothing else in the hook changes; `CLICallback` and `permission_mode="acceptEdits"` stay untouched.
 
-**Smoke** `scripts/smoke_phase4.py`: prompt that triggers a Bash approval; mode A auto-approves via the future after printing the request; mode B never resolves and (with the timeout overridden to ~10s via parameter) asserts the deny lands, `abandoned` flips, and the coroutine returns. Also assert a write aimed at `/tmp/outside.txt` gets denied by the guard.
-
-**Commit.**
-
-## Phase 5 — HTTP: POST /chat as the SSE stream
-
-**Goal: start a turn and watch it over HTTP.** The stream is the chat response — keep the existing `StreamingResponse` pattern.
-
-1. `POST /chat` — body `{session_id?, prompt}`, auth + `validate_session_id` when an id is supplied:
-   - 409 if `runtime.task` is live for that session.
-   - Spawn the turn as a **detached task** pushing to `runtime.out`; the response generator only drains the queue and formats SSE. **This split is mandatory:** if the turn ran inside the response generator itself, ASGI would cancel it on client disconnect — every tab close would become a dirty mid-tool cancel. With the split, a disconnect kills only the drain loop; the turn keeps running and the Phase 4 timeout remains the cleanup mechanism.
-   - New session: the first SSE event is `session_started {session_id}` (Phase 3 emits it) — the client learns its id from the stream itself, no handshake needed.
-   - Emit a `: ping` heartbeat every ~20s while the queue is idle (proxies kill idle connections).
-   - End the stream after the final result/error event.
-2. Accepted v1 limitation this buys: **no mid-turn reconnection.** If the connection drops, the turn continues server-side but the user is blind until it finishes. `/pending-approvals` (Phase 6) still lets a refreshed client discover and answer an outstanding approval — just without live event replay. Note this in the Phase 7 README.
-
-**Smoke** `scripts/smoke_phase5.py` (httpx): POST /chat with a no-tool prompt, parse SSE from the response body, capture `session_started`, read to completion; POST again with that id and confirm resumed context; bogus session_id format → 400; disconnect test — start a turn, close the response mid-stream, verify via subprocess count that the turn is NOT killed and completes (or times out) on its own.
+**Smoke** `scripts/smoke_phase2.py` (no binary needed): drive the hook's dispatch with both callback types — a dummy sync callback (asserts the `to_thread` branch still works, i.e. CLI path unbroken) and the `WebCallback` (await `request_approval` as a task, resolve the future from another task, assert allow flows back). Timeout case: never resolve, timeout overridden to ~5s via parameter; assert deny returns, `abandoned` flips, and a follow-up `request_approval` denies instantly.
 
 **Commit.**
 
-## Phase 6 — HTTP: /approve, /reject, /pending-approvals, /interrupt
+## Phase 3 — Turn runner
 
-**Goal: close the loop.**
+**Goal: `run_turn(runtime, user, message)` streams events to the queue, resumes correctly, cannot leak.**
 
-1. `POST /approve` / `POST /reject` — body `{session_id, request_id}`: ownership is structural + validated id; `fut = runtime.pending.get(request_id)`; `if fut and not fut.done(): fut.set_result(...)`; else 409/410. (No `updated_input` in v1 — hook-based approval doesn't support command editing; revisit with can_use_tool later.)
-2. `GET /pending-approvals?session_id=` — returns `pending_payloads` values. This is the recovery path for the Phase 5 no-reconnect limitation: after a refresh, the client polls this and can still answer.
-3. `POST /interrupt` — body `{session_id}`:
-   - If any pending futures: resolve each undone one with the reject decision, reason "Cancelled by user" (clean path — turn ends through the SDK, transcript stays valid/resumable). Do NOT set `abandoned` — the user is still here.
-   - Else if `runtime.task` is live: `task.cancel()` (dirty mid-tool cancel, accepted for v1).
-   - Mark `status = "interrupted"`, emit an `interrupted` event on the queue (reaches the stream if still attached).
+1. Build the agent exactly as `graph.py` does (`cwd=PROJECT_DIR`, `permission_mode="acceptEdits"`, `setting_sources=["project"]`, plugins), with three injections: the `WebCallback`, `include_partial_messages=True`, and the per-user output dir from decision 4 (create the dir on first use; pass it per-turn via options/env override, not global `.env` mutation).
+2. String prompt; `resume=thread_id` when the workspace has one.
+3. Iterate `query()`: forward events to `out` (partial text, tool use, results, final); capture `thread_id` from every message carrying one and upsert ConversationStore (`thread_id`, `user_id`, `title` = first ~60 chars of the first message, timestamps).
+4. Add a second PreToolUse matcher (path guard): deny writes resolving outside the caller's output dir. Backstop only; existing bash approval hook stays.
+5. `max_turns`; outer `asyncio.wait_for(..., 1800)` → error event on timeout. `finally`: update `status`, clear `runtime.task`.
 
-**Smoke** `scripts/smoke_phase6.py` (httpx): full loop — /chat with a Bash-triggering prompt, read the stream until `approval_request`, POST /approve from a second connection, read to completion; second run: /interrupt while blocked on approval, then /chat again on the same session and confirm resume works; third check: refresh scenario — trigger an approval, drop the stream, poll /pending-approvals, approve, confirm the turn completes.
+**Smoke** `scripts/smoke_phase3.py` (needs binary + Phase 1 running): direct `run_turn` with a no-tool message; assert events stream, a ConversationStore row appears with the thread_id, and turn 2 with `resume` sees turn-1 context. Assert the artifact output dir for the user was created.
+
+**Commit.**
+
+## Phase 4 — Workspace listing + ownership
+
+1. `get_workspace_authorized(workspace_id, current_user)` — loads the ConversationStore row; 404 on missing or `user_id` mismatch. Every workspace-taking endpoint from here on goes through it (decision 5).
+2. Modify the existing `src/routes/project.py` routes so listing returns the current user's workspaces from ConversationStore ordered by `updated_at` desc (`workspace_id`/`thread_id`, `title`, timestamps) — matching whatever response shape those routes already promise the frontend.
+
+**Smoke** `scripts/smoke_phase4.py` (httpx): seed rows for users A and B; list as A → only A's, ordered; A hitting B's workspace_id → 404.
+
+**Commit.**
+
+## Phase 5 — POST /chat (one-route SSE)
+
+1. Wire the existing stub: validate DTO (`workspace_id?`, `message`), auth; existing workspace → ownership check + 409 if `runtime.task` is live; no `workspace_id` → new workspace (row created once the thread_id is captured).
+2. Spawn the turn task (keep the handle), return the `StreamingResponse` whose generator drains `runtime.out` as SSE events, heartbeat every 20s, and closes after the final result event. For new workspaces, emit the `workspace_id`/`thread_id` as an early SSE event so the client learns it.
+3. Client disconnect does NOT cancel the turn — it keeps running; the Phase 2 timeout is the reclaim path, and `/pending-approvals` + `/approve` (Phase 6) are the recovery path. Confirm `/slash-commands` still works untouched.
+
+**Smoke** `scripts/smoke_phase5.py` (httpx): stream a no-tool chat to completion (new workspace, capture id from the early event); second POST on the same workspace → resumed context; concurrent second POST while running → 409; someone else's workspace_id → 404.
+
+**Commit.**
+
+## Phase 6 — /approve, /reject, /pending-approvals, /interrupt
+
+All through `get_workspace_authorized`, all using the **existing** schema shapes (path-param vs body, `call_id`, `justification`).
+
+1. `/approve` / `/reject`: `fut = runtime.pending.get(call_id)`; `if fut and not fut.done(): set_result(...)`; else 409/410.
+2. `/pending-approvals` (path param): return `pending_payloads` values — this is the recovery mechanism when the chat stream died mid-approval.
+3. `/interrupt` (path param): resolve every undone pending future with deny("Cancelled by user") — clean turn end through the SDK, transcript stays resumable; do NOT set `abandoned` (the user is still here). Else if `runtime.task` is live: `task.cancel()` (dirty, accepted). Set `status="interrupted"`, emit an event.
+
+**Smoke** `scripts/smoke_phase6.py` (httpx): chat with a Bash-triggering message; read the stream to the approval event; approve with a `call_id` + `justification`; stream completes. Run 2: interrupt while approval-blocked; then chat the same workspace again and assert resume works. Run 3: kill the stream connection mid-approval, fetch `/pending-approvals`, approve, verify via a fresh turn that the prior turn completed.
 
 **Commit.**
 
 ## Phase 7 — Hardening, observability, docs
 
-1. Run script / Makefile target starting `uvicorn --workers 1`, with a loud comment explaining why multi-worker breaks approvals (futures/queues are per-process).
-2. Background task logging every 30s: `len(runtime)`, total pending futures, and claude subprocess count (psutil or `pgrep -c claude`).
-3. Grep the loaded plugins for `@tool` / `create_sdk_mcp_server`; if any handler makes blocking calls, list them in the README as event-loop risks (fixing them is out of scope — just flag).
-4. `README-poc-v1.md`: architecture sketch, endpoint list, and known v1 limitations:
-   - no mid-turn reconnection — the stream is tied to the POST /chat response; recovery is /pending-approvals only
-   - no UI command-editing on approval (hook-based; needs can_use_tool)
-   - dirty mid-tool cancel can leave a dangling tool_use and break resume for that session
-   - in-memory runtime lost on restart (transcripts survive only if the volume does)
+1. Run script/Makefile: `uvicorn --workers 1`, loud comment on why multi-worker breaks approvals.
+2. Every 30s log: `len(runtimes)`, total pending futures, claude subprocess count (psutil or `pgrep -c claude`).
+3. Grep plugins for `@tool` / `create_sdk_mcp_server`; flag blocking handlers in the README (fixing = out of scope).
+4. `README-poc-v1.md`: architecture sketch, endpoint list, limitations:
+   - one-route SSE → no re-attach to a live stream (recovery = `/pending-approvals` + `/approve`; final output lands in the transcript/artifacts)
+   - dirty mid-tool cancel can leave a dangling tool_use and hurt resume for that workspace
+   - in-memory runtimes lost on restart (ConversationStore rows survive)
+   - shared cwd → all transcripts in one project dir; isolation rests entirely on the ownership check + per-user output dirs
    - single worker only
-   - in dev mode, all master-key tokens map to one synthetic user → one shared workspace
-   - no disconnect grace timer (timeout is the only reclaim path)
-   - leak-check procedure: `watch -n2 'pgrep -c claude'` while triggering approvals and closing tabs unanswered — count should climb, then drop within the timeout window.
+   - leak check: `watch -n2 'pgrep -c claude'` while triggering approvals and killing streams unanswered — count climbs, then drops within the timeout window.
 
-**Smoke:** rerun `smoke_phase6.py`; confirm the subprocess count log returns to baseline afterward.
+**Smoke:** rerun `smoke_phase6.py`; confirm subprocess count returns to baseline.
 
 **Commit.**
 
@@ -179,7 +163,7 @@ You are migrating an existing CLI agent built on the Claude Agent SDK (Python) s
 
 ## Ground rules
 
-- Ask me before adding dependencies beyond httpx/psutil/sse-starlette (or equivalents already in the repo).
-- No changes to `agent_config.py`, `get_current_user`, or the core agent logic in `src/agents/for_migration/` beyond what's needed to inject options/hooks.
-- If the installed SDK's API differs from what's described above (names, signatures), adapt to the installed version and note the difference in the commit message.
-- Phase 0's result gates everything: do not proceed past it on a FAIL without checking with me.
+- Stick to existing schemas and route shapes everywhere — the frontend contract is fixed.
+- No new dependencies beyond httpx/psutil (or repo equivalents) without asking.
+- No changes to `agent_config.py`, `get_current_user`, `/slash-commands`, or core agent logic in `for_migration/` beyond the hook dispatch branch (Phase 2) and the three injections (Phase 3) — ask first if you think you need more.
+- If the installed SDK differs from what's described, adapt to the installed version and note it in the commit message.
