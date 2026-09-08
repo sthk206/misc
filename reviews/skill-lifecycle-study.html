@@ -1,0 +1,479 @@
+<title>The Skill Lifecycle Study, Explained</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F7F5F1; --surface:#FFFFFF; --ink:#232A35; --muted:#5A6478;
+  --line:#DDD7CB; --accent:#2C5E8A; --accent-ink:#FFFFFF; --accent-soft:#EAF0F6;
+  --warn:#C2410C; --warn-soft:#FBEDE5; --code-bg:#EFECE5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+    --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+    --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+  --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+  --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--ground); color:var(--ink); font-family:"Source Serif 4",Georgia,serif;
+  font-size:1.125rem; line-height:1.68; margin:0;}
+.wrap{max-width:46rem; margin:0 auto; padding:0 1.25rem 5rem;}
+header.masthead{border-bottom:2px solid var(--ink); padding:2.5rem 0 1.5rem; margin-bottom:2rem;}
+.series{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 1rem;}
+h1{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:2.1rem; line-height:1.15;
+  margin:0 0 .75rem; text-wrap:balance;}
+.dek{font-size:1.15rem; color:var(--muted); margin:0 0 1rem; font-style:italic;}
+.meta{font-family:"IBM Plex Mono",monospace; font-size:.78rem; color:var(--muted);}
+nav.toc{background:var(--surface); border:1px solid var(--line); padding:1.1rem 1.4rem; margin:2rem 0;}
+nav.toc p{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.8rem;
+  text-transform:uppercase; letter-spacing:.1em; margin:0 0 .5rem; color:var(--muted);}
+nav.toc ol{margin:0; padding-left:1.2rem; font-size:.95rem; line-height:1.9;}
+nav.toc a{color:var(--accent); text-decoration:none;}
+nav.toc a:hover, nav.toc a:focus{text-decoration:underline;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin:3rem 0 .25rem;}
+h2{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:1.5rem; line-height:1.2;
+  margin:.1rem 0 1rem; text-wrap:balance;}
+h3{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:1.1rem; margin:1.8rem 0 .6rem;}
+p{margin:0 0 1.1rem;}
+a{color:var(--accent);}
+strong{font-weight:600;}
+.callout{border:1px solid var(--line); background:var(--surface); padding:1.1rem 1.4rem; margin:1.6rem 0;}
+.callout .label{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.75rem;
+  text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:.5rem;}
+.example{border-left:4px solid var(--accent); background:var(--accent-soft);}
+.example .label{color:var(--accent);}
+.hostile{border-left:4px solid var(--warn); background:var(--warn-soft);}
+.hostile .label{color:var(--warn);}
+.landing{background:var(--accent-soft); border:2px solid var(--accent);}
+.landing .label{color:var(--accent);}
+.fidelity{border-left:4px solid var(--muted); background:var(--surface);}
+.fidelity .label{color:var(--muted);}
+.walkthrough{border-top:2px solid var(--accent); border-bottom:2px solid var(--accent);
+  padding:1.5rem 0 .5rem; margin:2rem 0;}
+.beat{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent); margin:2rem 0 .3rem;}
+code{font-family:"IBM Plex Mono",monospace; font-size:.88em; background:var(--code-bg);
+  padding:.12em .35em; border-radius:3px;}
+pre{background:var(--code-bg); padding:1rem 1.2rem; overflow-x:auto; font-family:"IBM Plex Mono",monospace;
+  font-size:.85rem; line-height:1.55; margin:1.2rem 0; border-radius:4px;}
+pre code{background:none; padding:0;}
+table{width:100%; border-collapse:collapse; font-size:.92rem; margin:0;
+  font-variant-numeric:tabular-nums;}
+th{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.78rem; text-transform:uppercase;
+  letter-spacing:.06em; text-align:left; padding:.5rem .7rem; border-bottom:2px solid var(--ink);
+  color:var(--muted);}
+td{padding:.5rem .7rem; border-bottom:1px solid var(--line);}
+.table-wrap{overflow-x:auto; margin:1.2rem 0;}
+.math-block{overflow-x:auto; margin:1.4rem 0; text-align:center; font-size:1.05rem;}
+.fn{font-size:.82rem; color:var(--muted); border-top:1px solid var(--line); margin-top:3rem; padding-top:1rem;}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{fontCache:'global'}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+<div class="wrap">
+<header class="masthead">
+  <p class="series">AutoSkill · Deep Dive 05</p>
+  <h1>From Raw Experience to Skill Consumption: A Systematic Study of Model-Generated Agent Skills</h1>
+  <p class="dek">Ask a frontier model which of two skills will make an agent perform better and it is right 46.4% of the time — worse than a coin. On the pairs where the performance gap is largest, it is right 15.8% of the time, which means it is reliably picking the worse one. The skill that reads better is usually the skill that performs worse, and this paper works out exactly which three properties break the tie.</p>
+  <p class="meta">Huang, Xu, Yang, Gong, Yang, Tian, Wang, Lv, Gao, Dai, Liu, Qiu, Yang, Chen, Zheng &amp; Luo · Fudan University, Microsoft Research &amp; SJTU · arXiv 2605.23899 · 22 May 2026</p>
+</header>
+
+<nav class="toc">
+<p>Contents</p>
+<ol>
+<li><a href="#question">The question: does any of this actually work?</a></li>
+<li><a href="#framework">The framework, and the two metrics that disentangle it</a></li>
+<li><a href="#pipeline">The extraction pipeline, in the paper's own prompts</a></li>
+<li><a href="#matrix">Does it work? The delta matrix</a></li>
+<li><a href="#walkthrough">The method end to end, on one example</a></li>
+<li><a href="#drivers">What drives utility: experience in, surface form out</a></li>
+<li><a href="#trap">The plausibility trap</a></li>
+<li><a href="#rubric">From diagnosis to intervention: three dimensions that predict</a></li>
+<li><a href="#consumption">Why the same skill helps one model and hurts another</a></li>
+<li><a href="#hostile">Where a hostile reviewer attacks first</a></li>
+<li><a href="#landing">What this means for AutoSkill</a></li>
+</ol>
+</nav>
+
+<p class="eyebrow" id="question">01</p>
+<h2>The question: does any of this actually work?</h2>
+
+<p>Three papers into this series, the machinery for generating skills automatically is well established. What has not been established is whether the resulting artifacts are any good, in a way that generalises past the benchmark each method was demonstrated on.</p>
+
+<p>The reason is a gap in what everyone measures. Existing benchmarks look at <em>consumption</em>: given a skill, does the agent do better? SkillsBench uses task-seeded, human-authored skills; SWE-Skills-Bench and Skills-in-the-Wild draw from public repositories. All of them leave the <em>extraction</em> stage outside the loop — the skill arrives from somewhere, and the study begins. Meanwhile the extraction literature proliferates methods, each under its own setup, each demonstrated in isolation.</p>
+
+<p>This paper closes both halves at once by running the full pipeline — experience generation, skill extraction, skill consumption — as a controlled experiment, systematically varying who extracts, who consumes, and in what domain. Its three questions are worth stating plainly, because the structure of the paper follows them exactly. Do model-generated skills reliably help? What actually drives whether they help? And can the answer to the second question be turned into a concrete improvement to extraction itself?</p>
+
+<p>The answers, in order: mostly but not reliably; not what you would guess; and yes.</p>
+
+<p class="eyebrow" id="framework">02</p>
+<h2>The framework, and the two metrics that disentangle it</h2>
+
+<p>Let $M$ be a <strong>target model</strong> that both generates experience and consumes skills, and $E$ a possibly different <strong>extractor model</strong>. The lifecycle has three stages.</p>
+
+<p>In <em>experience generation</em>, the target $M$ executes tasks from a training split $Q_{\mathcal{D}}^{\text{train}}$ in domain $\mathcal{D}$, producing an experience pool $\mathcal{T}_{M,\mathcal{D}} = \{(\text{task}_i, \text{trajectory}_i, \text{outcome}_i)\}$ containing both successful and failed runs. In <em>skill extraction</em>, the extractor distils that pool into a skill set $\mathcal{S}_{E,M,\mathcal{D}} = E(\mathcal{T}_{M,\mathcal{D}})$. In <em>skill consumption</em>, the same target $M$ is given $\mathcal{S}_{E,M,\mathcal{D}}$ and evaluated on a held-out split $Q_{\mathcal{D}}^{\text{test}}$.</p>
+
+<p>Notice the deliberate constraint: the experience comes from $M$'s own interaction logs and is fed back to $M$. Holding the target fixed and varying only the extractor makes this a controlled comparison of how different extraction procedures convert one model's experience into downstream gains, rather than a confounded comparison of models.</p>
+
+<p>The unit of measurement is a performance delta:</p>
+
+<div class="math-block">
+$$\Delta(E, M, \mathcal{D}) = \mathrm{Perf}\big(M \mid \mathcal{S}_{E,M,\mathcal{D}},\ Q_{\mathcal{D}}^{\text{test}}\big) - \mathrm{Perf}\big(M \mid Q_{\mathcal{D}}^{\text{test}}\big)$$
+</div>
+
+<p>where $\mathrm{Perf}$ is the domain's own task metric and both terms use the same held-out split. Positive means improvement; negative means <em>negative transfer</em>, the skill actively hurting.</p>
+
+<p>Averaging that delta along its two axes gives the paper's two named metrics. <strong>Extraction efficacy</strong> is the extractor-side view — for a fixed extractor, how reliably does it convert different targets' experience pools into helpful skills:</p>
+
+<div class="math-block">
+$$\mathrm{EE}(E, \mathcal{D}) = \frac{1}{|\mathcal{M}|}\sum_{M \in \mathcal{M}} \Delta(E, M, \mathcal{D})$$
+</div>
+
+<p><strong>Target evolvability</strong> is the target-side view — for a fixed target, how much does it improve when different extractors distil skills from its own experience and hand them back:</p>
+
+<div class="math-block">
+$$\mathrm{TE}(M, \mathcal{D}) = \frac{1}{|\mathcal{E}|}\sum_{E \in \mathcal{E}} \Delta(E, M, \mathcal{D})$$
+</div>
+
+<p>Both are reported per domain, since task metrics and difficulty are not comparable across domains, and the individual $\Delta$ cells are retained so interactions beyond the averages stay visible.</p>
+
+<p>The experimental grid: five domains — ALFWorld for embodied interaction, SpreadsheetBench for productivity software, SWE-bench-Verified for software engineering, SEAL-0 for web search, BFCL-v4's multi-turn subset for tool calling — crossed with six target models spanning three families and several scales, and five extractors. Qwen3.5-9B serves as a target but is excluded as an extractor because it could not reliably follow the structured extraction protocol, which is itself a small finding about who can do this job. Each domain splits 1:1 into experience-generation and held-out test, and every reported entry is averaged over three independent evaluation runs.</p>
+
+<p class="eyebrow" id="pipeline">03</p>
+<h2>The extraction pipeline, in the paper's own prompts</h2>
+
+<p>Because the study is about extractor capability rather than pipeline engineering, the extraction framework is deliberately minimal: no domain-specific heuristics, no filtering rules, no optimisation tricks. The only structure imposed is a two-stage decomposition borrowed from Trace2Skill with its sub-agent fleet, conflict resolution and skill-deepening mechanisms stripped away.</p>
+
+<p><strong>Per-trajectory analysis.</strong> The extractor processes each trajectory $\tau_i$ independently, producing a pattern set containing up to $K$ success or failure patterns:</p>
+
+<div class="math-block">
+$$E : \tau_i \longmapsto u_i = \{p_1, \ldots, p_k\}, \qquad U = \{u_1, \ldots, u_n\}$$
+</div>
+
+<p>The prompt behind this is reproduced in the appendix and is worth reading closely, because its definition of "pattern" is doing real work:</p>
+
+<pre><code>What is a pattern?  A pattern is a high-level behaviour that is (1) transferable
+across a broad class of tasks, (2) actionable enough to follow, (3) non-obvious
+— going beyond common sense, and (4) self-contained — understandable without the
+original trajectory.
+
+Per-type guidance (success).  Ask: "What did this agent do RIGHT that other agents
+facing similar tasks should also do?"
+Per-type guidance (failure).  Ask: "What should an agent AVOID doing when facing
+similar tasks?"
+
+Quality requirements.  Each pattern must be (i) high-level and domain-general,
+(ii) maximally broad in coverage, (iii) information-dense with a concrete
+description, and (iv) free of task-specific details (no specific file names,
+identifiers, error messages, or API calls).
+</code></pre>
+
+<p>Requirement (iv) is the same leakage control SkillCommit enforces and the same exclusivity the SKILL-USE benchmark demands, arriving here as a prompt constraint. Since trajectories are processed independently, this phase is fully parallelisable.</p>
+
+<p><strong>Hierarchical consolidation.</strong> Pattern sets are merged in a tree-structured reduction with configurable group size $G$: at each level the extractor merges $G$ pattern sets by deduplicating, generalising and reconciling overlapping patterns, until one set remains.</p>
+
+<div class="math-block">
+$$U^{(0)} = U, \qquad U^{(\ell+1)} = \big\{\textsc{Merge}_E\big(u^{(\ell)}_{G(j-1)+1}, \ldots, u^{(\ell)}_{Gj}\big)\big\}_j, \qquad \text{until } |U^{(L)}| = 1$$
+</div>
+
+<p>The merge prompt's five guidelines are deduplicate, generalise ("a single well-generalised pattern is worth more than several narrow ones"), preserve type (success and failure patterns stay separate, never converted between), preserve quality, and prioritise.</p>
+
+<p><strong>Skill synthesis.</strong> The consolidated pattern set is converted into a skill via structured tool calls against a writable store, with schema validation. The schema follows the Agent Skills open standard: <code>name</code>, <code>description</code>, <code>body</code> in Markdown, and optional <code>references</code> and <code>scripts</code>. The synthesis prompt's first instruction is the one I would steal outright: <em>"Integrate both polarities: a good skill includes both what TO DO (from success patterns) and what to AVOID (from failure patterns)."</em></p>
+
+<p>The default hyperparameters, from the appendix: at most <strong>3 modes per trajectory</strong>, merge group size <strong>$G = 10$</strong>, maximum <strong>3,000 characters per skill</strong>, <strong>one skill per extraction</strong> in the main experiments, and temperature <strong>1.0</strong>. Reasoning effort is set to medium for the API models. At evaluation, a single skill is inlined directly into the target's system prompt under a template whose closing line reads <em>"This skill is an optional aid, not a mandatory procedure. Use your own judgment."</em></p>
+
+<p class="eyebrow" id="matrix">04</p>
+<h2>Does it work? The delta matrix</h2>
+
+<p>Model-generated skills improve downstream performance in <strong>75% of entries</strong>. They degrade it in the other 25%.</p>
+
+<p>That second number is the paper's first real finding, and the domain breakdown sharpens it: negative transfer is not uniformly distributed. SpreadsheetBench and SWE-bench-Verified have the lowest negative rates at 13%; <strong>ALFWorld is the most fragile domain, with 47% of its cells negative</strong> — nearly a coin flip on whether extracting a skill from an agent's own experience makes it better or worse at embodied planning.</p>
+
+<p>Two structural findings come out of the matrix, and both cut against intuition.</p>
+
+<p><strong>A better executor is not necessarily a better extractor.</strong> Extractor-side performance does not follow model scale or baseline task strength. On SpreadsheetBench the lightweight Gemini-3.1-Flash-Lite achieves the highest extraction efficacy at $\mathrm{EE} = +5.86$, while GPT-5.4 ranks last at $+1.67$ <em>despite having the strongest baseline among the targets</em>. Skill extraction is a distinct capability from task execution: the extractor has to convert one specific target's trajectories into guidance that <em>that target</em> can actually exploit. Choosing an extractor is therefore a compatibility problem between extractor, target and domain, not a matter of picking the strongest model.</p>
+
+<p><strong>Skill utility is target-dependent.</strong> Within a single domain, the same set of extractors produces very different gains across targets. On ALFWorld, GPT-5.4 benefits from all five extractors, with $\mathrm{TE} = +4.93$; meanwhile Gemini-3.1-Flash-Lite ($-1.59$), Qwen3.5-35B ($-1.34$) and Qwen3.5-9B ($-1.69$) all have <em>negative</em> target evolvability in the same domain. What a target can extract from its own experience, and what it can execute from the resulting guidance, jointly bound how much it can improve.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Domain</th><th>Best EE (extractor)</th><th>Worst EE</th><th>Best TE (target)</th><th>Worst TE</th></tr></thead>
+<tbody>
+<tr><td>ALFWorld</td><td>+1.62 (Gemini-3.1-Pro)</td><td>−0.66 (GPT-5.4)</td><td>+4.93 (GPT-5.4)</td><td>−1.69 (Qwen3.5-9B)</td></tr>
+<tr><td>SpreadsheetBench</td><td>+5.86 (Gemini-3.1-FL)</td><td>+1.67 (GPT-5.4)</td><td>+9.66 (GPT-5.4)</td><td>+1.46 (Qwen3.5-9B)</td></tr>
+<tr><td>SWE-bench-Verified</td><td>+3.11 (Gemini-3.1-FL)</td><td>+0.91 (Qwen3.5-35B)</td><td>+2.91 (GPT-5.4-mini)</td><td>+0.37 (Qwen3.5-9B)</td></tr>
+<tr><td>SEAL-0</td><td>+4.85 (GPT-5.4-mini)</td><td>−0.12 (Gemini-3.1-Pro)</td><td>+5.32 (Gemini-3.1-FL)</td><td>−1.04 (Gemini-3.1-Pro)</td></tr>
+<tr><td>BFCL-v4</td><td>+4.25 (GPT-5.4-mini)</td><td>+1.84 (Qwen3.5-35B)</td><td>+5.15 (GPT-5.4-mini)</td><td>+1.12 (Qwen3.5-9B)</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Read the EE columns across rows and no extractor wins twice in a row. Read the TE columns and Qwen3.5-9B is worst in four of five domains — the smallest target extracts the least usable experience and executes the resulting guidance least reliably, compounding at both ends.</p>
+
+<div class="walkthrough">
+<p class="eyebrow" id="walkthrough">05</p>
+<h2>The method end to end, on one example</h2>
+
+<p class="beat">Beat 1 · Setup and splits</p>
+
+<p>The domain $\mathcal{D}$ is Priya's daily paper digest. There are 100 archived days, each a frozen record of what the arXiv API returned. Following the paper's protocol they split 1:1: $Q_{\mathcal{D}}^{\text{train}}$ is 50 days for experience generation, $Q_{\mathcal{D}}^{\text{test}}$ is 50 held-out days. The task metric is the deterministic checker — every cited arXiv id appears in that day's fetch, the digest has its four parts, no paper is repeated from the previous week — so $\mathrm{Perf}$ is the percentage of days passing all three.</p>
+
+<p>The target $M$ is the model behind the digest agent. Its no-skill baseline on $Q_{\mathcal{D}}^{\text{test}}$ is <strong>62.00%</strong> — 31 of 50 days clean. Two extractors are compared: $E_1$, a larger model from a different family, and $E_2$, a small one.</p>
+
+<p class="beat">Beat 2 · Stage 1 — experience generation</p>
+
+<p>Run $M$ on all 50 training days with no skill. It succeeds on 32 and fails on 18, giving the experience pool $\mathcal{T}_{M,\mathcal{D}}$ with 50 entries of the form $(\text{task}_i, \text{trajectory}_i, \text{outcome}_i)$. Note that the pool is <em>not</em> filtered to successes: both strata go to the extractor, and section six is about why the ratio matters.</p>
+
+<p class="beat">Beat 3 · Stage 2a — per-trajectory analysis</p>
+
+<p>Each of the 50 trajectories goes to $E_1$ independently under the per-trajectory prompt, which caps extraction at 3 modes per trajectory. Two representative outputs, in the prompt's required <code>{type, pattern, description}</code> form:</p>
+
+<pre><code>From a FAILED trajectory (day 41, empty result set):
+  {"type": "failure",
+   "pattern": "Treating an empty collection as an error state to narrate",
+   "description": "When a query returns no items, the agent invented a
+    plausible item rather than reporting the empty result. An agent should
+    treat an empty result as a valid terminal outcome with its own output
+    path, not as a gap to fill from prior knowledge."}
+
+From a SUCCESSFUL trajectory (day 38, cross-listed duplicate):
+  {"type": "success",
+   "pattern": "Consulting prior outputs before selection",
+   "description": "The agent read the previous days' outputs before ranking
+    and excluded an item it had already covered, avoiding a repeat. Selection
+    steps that draw from a recurring source should be conditioned on the
+    record of what was already emitted."}
+</code></pre>
+
+<p>Both obey quality requirement (iv): no file names, no identifiers, no error messages, no API calls. That constraint is why the descriptions read as abstractly as they do — and it is also, as the plausibility section will show, part of how a skill can end up sounding excellent and performing badly.</p>
+
+<p class="beat">Beat 4 · Stage 2b — hierarchical consolidation</p>
+
+<p>With merge group size $G = 10$, the reduction over 50 pattern sets runs</p>
+
+<div class="math-block">
+$$|U^{(0)}| = 50 \ \xrightarrow{\ \textsc{Merge}_E\ }\ |U^{(1)}| = 5 \ \xrightarrow{\ \textsc{Merge}_E\ }\ |U^{(2)}| = 1$$
+</div>
+
+<p>so $L = 2$ levels and six merge calls in total. At level one the five surviving sets each cover ten days' worth of patterns; the merge prompt's <em>preserve type</em> guideline keeps success and failure patterns from collapsing into each other, which matters here because "consult prior outputs" (success) and "don't fabricate on empty" (failure) would otherwise generalise into a single mushy rule about "handling data availability".</p>
+
+<p class="beat">Beat 5 · Stage 2c — skill synthesis, and stage 3 — consumption</p>
+
+<p>The consolidated set is converted into one skill of at most 3,000 characters, integrating both polarities per the synthesis prompt. It is injected under the single-skill template — inlined into $M$'s system prompt, closing with "this skill is an optional aid, not a mandatory procedure" — and evaluated on the 50 held-out days.</p>
+
+<p>$E_1$'s skill: $M$ passes 37 of 50, so $\mathrm{Perf}(M \mid \mathcal{S}_{E_1}) = 74.00\%$ and</p>
+
+<div class="math-block">
+$$\Delta(E_1, M, \mathcal{D}) = 74.00 - 62.00 = +12.00\ \text{pp}$$
+</div>
+
+<p>$E_2$'s skill, extracted from the identical pool: $M$ passes 29 of 50, so $\mathrm{Perf}(M \mid \mathcal{S}_{E_2}) = 58.00\%$ and</p>
+
+<div class="math-block">
+$$\Delta(E_2, M, \mathcal{D}) = 58.00 - 62.00 = -4.00\ \text{pp}$$
+</div>
+
+<p>That second cell is negative transfer — one of the 25% — and it is worth being clear about what happened. $E_2$ over-generalised the deduplication pattern into "avoid covering topics already covered", which the agent then applied to whole research areas rather than to specific papers, causing it to skip legitimately new work. The skill is not nonsense. It is a plausible generalisation that the target executes badly.</p>
+
+<p>With one target and two extractors, the two metrics are:</p>
+
+<div class="math-block">
+$$\mathrm{EE}(E_1, \mathcal{D}) = +12.00, \quad \mathrm{EE}(E_2, \mathcal{D}) = -4.00, \quad \mathrm{TE}(M, \mathcal{D}) = \frac{12.00 + (-4.00)}{2} = +4.00$$
+</div>
+
+<p>The target-side average is positive and the target-side average conceals a coin flip. That is the shape of the whole paper's headline result in one cell.</p>
+
+<p class="beat">Beat 6 · The plausibility trap, run on these two skills</p>
+
+<p>The gap is $\delta = |\Delta_{E_1} - \Delta_{E_2}| = 16.0$ pp, well into the $\delta \ge 5$ band. Here are the two skills as the judge sees them — text only, no outcomes:</p>
+
+<pre><code>SKILL A  (Δ = +12.0)                    SKILL B  (Δ = −4.0)
+─────────────────────────────────       ─────────────────────────────────
+1. Empty is a terminal state.           1. Understand the user's interests
+   A zero-item result from the             thoroughly before ranking, and
+   collection query is a valid             prioritise relevance above all
+   outcome with its own output             other considerations.
+   path. NEVER synthesise an item
+   to fill it.                          2. Be systematic. Work through the
+                                           steps in order and do not skip
+2. Never emit an identifier that           any of them.
+   did not appear in this run's
+   retrieved set. Assert this          3. Avoid redundancy. Do not cover
+   before writing.                        material that has already been
+                                           covered.
+3. Distinguish an empty collection
+   from a failed retrieval of one     4. Ensure the output is complete,
+   member. The first stops the           well-structured and accurate,
+   run; the second drops that item        and reads clearly.
+   and takes the next-ranked one.
+                                        5. Verify your work before
+4. Rate-limited source: at most one        finishing.
+   request per interval; batching
+   is required, not optional.
+</code></pre>
+
+<p>Skill B is more fluent, more complete-sounding, more professional, and covers more ground. Skill A is blunt, oddly specific, and in places reads like a bug report. On pairs like this the unguided GPT-5.4 judge — nine independent votes, presentation order randomised — picks the higher-$\Delta$ skill <strong>15.8%</strong> of the time. It picks B.</p>
+
+<p class="beat">Beat 7 · The same judge, given three dimensions</p>
+
+<p>Now re-run the identical comparison with the validated rubric appended, scoring each candidate on its three dimensions and aggregating into a single preference:</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Validated dimension</th><th>Skill A</th><th>Skill B</th></tr></thead>
+<tbody>
+<tr><td><strong>Failure Mechanism Encoding</strong> — identifies <em>why</em> agents fail, not just <em>that</em> they fail</td><td>✓ names the empty-collection-versus-failed-member distinction as the mechanism</td><td>✗ "avoid redundancy" names an outcome, not a mechanism</td></tr>
+<tr><td><strong>Actionable Specificity</strong> — step-level procedures referencing domain objects and tools</td><td>✓ "assert before writing", "one request per interval"</td><td>✗ "be systematic", "work through the steps in order"</td></tr>
+<tr><td><strong>High-Risk Action Blacklist</strong> — forbids specific harmful action patterns</td><td>✓ "NEVER synthesise an item", "never emit an identifier not in the retrieved set"</td><td>✗ no prohibitions at all</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Three of three against zero of three. On $\delta \ge 5$ pairs, the rubric-guided judge picks correctly <strong>74%</strong> of the time, against 15.8% unguided. Same model, same pairs, same prompt scaffold — the only change is that the judge has been told which three properties to look at.</p>
+
+<p class="beat">Beat 8 · Closing the loop — the meta-skill</p>
+
+<p>The final move is to stop using the rubric to <em>judge</em> skills and start using it to <em>write</em> them. The three dimensions become a compact Extraction Quality Guidance block appended to the extractor's per-trajectory and skill-synthesis prompts. Re-running $E_2$ on the same pool with that block attached produces a skill that names the mechanism instead of the outcome — "an empty collection and a failed retrieval of one member require different responses" rather than "avoid redundancy" — and the negative transfer in that cell shrinks or reverses.</p>
+
+<p>The paper's measured version of this: the validated 3-dimension rubric improves <strong>all nine</strong> cells it was tested on, by $+1.55$ pp on average, while the naive 7-dimension plausibility rubric — clarity, completeness, conciseness, logical structure, formatting, tone, generality — <em>hurts</em>, at $-0.59$ pp on average, reducing accuracy in six of nine cells. Telling the extractor to write clear, complete, well-formatted skills makes the skills worse.</p>
+
+<div class="callout fidelity">
+<span class="label">Fidelity note</span>
+<p>The three-stage framework, both metric definitions, the two-stage extraction decomposition and its equations, the prompt excerpts, the hyperparameters ($K=3$ modes, $G=10$, 3,000 characters, one skill, temperature 1.0), the injection template's wording, the 46.4% / 15.8% / 73.8% / 74% judge accuracies, the nine-vote majority protocol, the $\delta > 0.5$ pp pair-construction threshold, the three validated dimensions and the $+1.55$ / $-0.59$ meta-skill results are all the paper's. The digest domain, the 100-day split, every $\mathrm{Perf}$ and $\Delta$ value, and the text of skills A and B are my construction — the study has no digest-like domain, and its five domains are all established benchmarks with published metrics. Skills A and B are modelled on the paper's own contrastive cases (Tables 14 and 15), where the higher-$\Delta$ skill names domain-specific failure mechanisms with executable remedies and the lower-$\Delta$ skill offers process-level directives such as "resolve the contract before coding" and "edit minimally". One thing the paper does not specify: whether the judge sees skills of comparable length, so the possibility that the unguided judge is partly responding to verbosity rather than fluency is not ruled out.</p>
+</div>
+</div>
+
+<p class="eyebrow" id="drivers">06</p>
+<h2>What drives utility: experience in, surface form out</h2>
+
+<p>Having established that skills sometimes help and sometimes hurt, the paper goes stage by stage looking for the cause.</p>
+
+<p><strong>Experience composition matters, and the optimal mix is domain-specific.</strong> Fixing the extractor at GPT-5.4-mini, five experience pools are sampled from the same source trajectories with success ratios of 100%, 75%, 50%, 25% and 0%. SpreadsheetBench favours more successful trajectories; SWE-bench-Verified peaks with a mostly successful pool; <strong>ALFWorld performs best with failure-heavy pools</strong>. The explanation offered is that domain behaviour shapes the informational value of each stratum: in ALFWorld, failed attempts reveal invalid actions and dead-end states, which is genuinely more informative than another successful trajectory.</p>
+
+<p>One result holds across all three domains, though: <strong>all-failure pools are consistently worst.</strong> Successful trajectories are the foundation, because they supply positive procedural signal that narrows the agent's exploration space, rather than merely indicating what to avoid. Failures sharpen a skill; they cannot found one.</p>
+
+<p><strong>Surface form does not matter at all.</strong> This is the finding I would flag hardest for our own reviewer design. The strongest extractor's SpreadsheetBench skill is rewritten into four canonical formats — ordered list, unordered list, checklist, and flowing prose — with a verification pass confirming content preservation, and each is evaluated on the same test set for three rounds. A Friedman test finds <strong>no detectable format effect on any target</strong> (all $p > 0.34$, all $\sigma$-ratios below 1, meaning the format effect is smaller than run-to-run noise). Swapping the <em>extractor</em>, by contrast, produces significant effects on five of six targets ($p < 0.005$) with $\sigma$-ratios well above 1 — up to 4.53.</p>
+
+<p>Variance is driven by <em>what a skill says, not how it looks</em>. Every structural checker that scores headings, bullet discipline and section ordering is measuring a dimension this experiment could not detect.</p>
+
+<p class="eyebrow" id="trap">07</p>
+<h2>The plausibility trap</h2>
+
+<p>If content matters, can we identify better skills by reading them? The paper probes this with a GPT-5.4 judge as a human proxy. For a pair of skills extracted within the same $(M, \mathcal{D})$, the judge sees only the two skill texts plus a one-sentence description of the domain, and picks the one it deems higher quality. No rubric, no criteria — deliberately, so the judge must fall back on its own implicit notion of skill quality. Nine independent votes per pair with randomised presentation order, over 151 pairs constructed by enumerating all same-group extractor pairs whose $|\Delta|$ gap exceeds 0.5 pp.</p>
+
+<p><strong>Overall accuracy is 46.4%</strong> — indistinguishable from random, and nominally below it.</p>
+
+<p>Then the part that turns a null result into a finding. Accuracy <em>decreases</em> as the true gap grows:</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Pair difficulty</th><th>Unguided judge</th><th>Rubric-guided judge</th></tr></thead>
+<tbody>
+<tr><td>All pairs</td><td>46%</td><td>55%</td></tr>
+<tr><td>$\delta \ge 2$ pp</td><td>37%</td><td>64%</td></tr>
+<tr><td>$\delta \ge 3$ pp</td><td>24%</td><td>74%</td></tr>
+<tr><td>$\delta \ge 5$ pp</td><td><strong>16%</strong></td><td><strong>74%</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>At $\delta \ge 5$ pp the judge picks the better skill 15.8% of the time. That is not noise around chance; that is a <em>systematic inversion</em>. The bigger the real difference in downstream utility, the more reliably the judge picks the wrong one — because the property it is tracking (textual plausibility) is anti-correlated with the property that matters (downstream utility) precisely where the two come apart most.</p>
+
+<p>The qualitative diagnosis, from the paper's contrastive case tables, is exact. The higher-$\Delta$ skill names concrete failure mechanisms with executable remedies — precomputing static values because host engines do not evaluate formula strings in headless execution; reverse iteration when deleting rows to avoid index-shifting; dynamic addressing that searches for anchor data rather than hardcoding cell references. The lower-$\Delta$ skill offers process-level directives: "resolve the contract before coding", "edit minimally and safely", "choose the simplest method". Every one of those is reasonable. None of them prevents the specific errors that dominate the domain. And a language model asked which document is better-written will pick the reasonable, general, well-organised one every time.</p>
+
+<p>I want to be precise about what this does and does not establish, because it is the single most citable result in this paper. It does <em>not</em> establish that LLM judges are useless for skill review. It establishes that <strong>an LLM judge without utility-grounded criteria is anti-predictive on exactly the comparisons that matter most</strong>, and that the failure is structural rather than a matter of judge capability — the judge is doing what it was asked, and what it was asked has come apart from what we want.</p>
+
+<p class="eyebrow" id="rubric">08</p>
+<h2>From diagnosis to intervention: three dimensions that predict</h2>
+
+<p>The recovery is the best-engineered part of the paper.</p>
+
+<p>The naive move is to ask an LLM for skill-quality criteria. That yields a <strong>plausibility rubric</strong> of seven dimensions: clarity, completeness, conciseness, logical structure, formatting quality, tone neutrality, and generality. By construction these describe what a model <em>believes</em> distinguishes a good skill — surface qualities of the text — with no grounding in observed utility. It is, near enough, the checklist most people would write.</p>
+
+<p>Instead the authors run an automated rubric-discovery pipeline over the high-gap pairs: analyse each pair to extract the differences along which the higher-$\Delta$ skill outperforms the lower, then iteratively merge and consolidate those differences into seven candidate dimensions — the <strong>raw rubric</strong>. Then, crucially, they <em>test</em> which of those raw dimensions actually predict utility, measuring each dimension's <em>better-rate</em>: the proportion of pairs where the higher-$\Delta$ skill receives the more favourable judgment on that dimension alone.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Raw rubric dimension</th><th>Better-rate</th><th>Kept?</th></tr></thead>
+<tbody>
+<tr><td><strong>Actionable Specificity</strong> — step-level procedures referencing domain objects and tools</td><td>66.0%</td><td>yes</td></tr>
+<tr><td><strong>Failure Mechanism Encoding</strong> — identifies why agents fail, not just that they fail</td><td>65.5%</td><td>yes</td></tr>
+<tr><td><strong>High-Risk Action Blacklist</strong> — forbids specific harmful action patterns</td><td>64.6%</td><td>yes</td></tr>
+<tr><td>Environment/Tool Semantics — encodes how tools and objects actually behave</td><td>63.2%</td><td>no</td></tr>
+<tr><td>Boundary Condition Coverage — addresses specific edge cases</td><td>63.0%</td><td>no</td></tr>
+<tr><td>Benchmark-Aligned Priorities — addresses what evaluation actually measures</td><td>56.2%</td><td>no</td></tr>
+<tr><td>Strategy Switching Conditions — specifies when to change approach</td><td>47.5%</td><td>no</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The three survivors sit at 64–66%; the discarded ones trail off to 47.5%, which is chance. Note that the cut is not dramatic — 63.2% and 63.0% are not far below 64.6% — so "the validated rubric" is three dimensions that clear a bar rather than three that stand alone. The honest reading is that these are the three most reliable of a set of related, partially-redundant signals.</p>
+
+<p>Feeding the validated rubric back into the same pairwise protocol raises judge accuracy from 46.4% to <strong>73.8%</strong>, and on the hardest $\delta \ge 5$ pairs from 15.8% to a majority. The same judge that preferred fluent-but-worse skills becomes a reliable utility predictor.</p>
+
+<p>And then the rubric is used generatively, as a <strong>meta-skill</strong>: a compact generation-time prior appended to the extractor's system prompt. Against the original un-guided extractor and against the plausibility-rubric version, across nine domain–target cells: the plausibility rubric averages $-0.59$ pp and hurts six of nine cells; the validated rubric averages $+1.55$ pp and <strong>improves all nine</strong>, with the largest gains on SpreadsheetBench at $+2.33$ to $+3.69$ pp.</p>
+
+<p>That closed loop — measure utility, discover candidate dimensions from high-gap pairs, validate which ones predict, then feed the validated ones back as a generation prior — is a methodology I would use directly, and it is more valuable than any individual number in it.</p>
+
+<p class="eyebrow" id="consumption">09</p>
+<h2>Why the same skill helps one model and hurts another</h2>
+
+<p>The last analysis stage asks a demand-side question: given an identical skill, how much benefit does each consumer derive?</p>
+
+<p>Holding the extractor fixed at GPT-5.4, two contrasting SpreadsheetBench skills are selected — a <em>strong-pool</em> skill distilled from the strongest target's experience and a <em>weak-pool</em> skill from the weakest — and both are applied to all six targets. Two patterns emerge. With the skill text held fixed, per-target gains differ sharply: the strong-pool skill ranges from $+1.8$ on Gemini-3.1-Pro to $+9.5$ on Qwen3.5-35B. And the strong-pool skill improves every target, while the weak-pool skill produces clear negative transfer on some ($-2.0$ on GPT-5.4) and only modest gains on others — echoing the experience-composition finding from the other end.</p>
+
+<p>The behavioural analysis of <em>why</em> is the most interesting appendix in the paper. Across targets, skill consumption <strong>reshapes the default policy rather than triggering new explicit skill calls</strong>. That is a genuinely surprising mechanism claim and it deserves unpacking.</p>
+
+<p>For GPT-5.4, the consumed skill moves the model away from writing spreadsheet formulas as its final answer and toward computing the result in Python and writing back the value. That is a strategy correction: it does not give the model a new ability, it makes it choose a more reliable solution among ones it already had. Its tool use becomes more grounded — bounded write-back, anchor-based addressing, simple checks after writing.</p>
+
+<p>For Qwen3.5-9B the same shift is less consistently helpful. The model moves from pandas-style round-trip rewriting toward openpyxl in-place editing, which preserves workbook structure better but makes the solution process more complex — and on fine-grained tasks it makes more execution mistakes, so <em>the gain in structural fidelity comes with a drop in robustness</em>. Its exploratory behaviour changes too: it inspects the workbook more before acting, but in failure cases that extra exploration leads to longer, more complicated reasoning with the final result still wrong.</p>
+
+<p>So consumption ability is a per-target property that bounds achievable gains, and a skill's effect is mediated through a policy change the target may or may not be able to execute well. Two models given identical guidance are not running the same experiment.</p>
+
+<p class="eyebrow" id="hostile">10</p>
+<h2>Where a hostile reviewer attacks first</h2>
+
+<div class="callout hostile">
+<span class="label">The strongest objections</span>
+<p><strong>Single-skill, single-injection design.</strong> The main experiments extract exactly one skill per cell and inline it into the system prompt. The authors are explicit that this favours interpretability over coverage — it isolates the skill's effect from retrieval policies and scaffolding — but it means skill selection, composition and interference are entirely untested, and those are first-order concerns at library scale. They name this as future work rather than a gap, which is fair but does not change what the evidence covers.</p>
+<p><strong>The plausibility-trap result depends on one judge protocol.</strong> One judge model (GPT-5.4), one prompt, 151 pairs from one study's outputs. The 15.8% inversion is dramatic enough that the direction is unlikely to be an artifact, but the magnitude may be. The paper also does not report whether paired skills were length-matched, so verbosity is not ruled out as a confound for the unguided judge.</p>
+<p><strong>The validated rubric's three dimensions are separated from the discarded ones by very little.</strong> Better-rates of 66.0 / 65.5 / 64.6 against 63.2 / 63.0 for the next two. With 151 pairs those gaps are within plausible sampling error of each other, so "three validated dimensions" is a defensible cut rather than a discovered boundary. The downstream meta-skill result is what carries the claim, not the ranking itself.</p>
+<p><strong>Extractor temperature is 1.0.</strong> Skills are generated at full sampling temperature, and the study reports one extraction per cell. Run-to-run variance <em>in the extracted skill itself</em> is therefore unmeasured, even though evaluation is averaged over three runs. Some of the extractor-versus-extractor variance the paper attributes to capability could be sampling noise in a single draw.</p>
+<p><strong>The format experiment's target list differs from the main study's.</strong> It includes GPT-5.2 and GPT-5.4-nano, which are not among the six main targets. The conclusion is robust across six models either way, but the sets are not the same and the paper does not say why.</p>
+</div>
+
+<p>What survives is nearly everything that matters. The EE/TE decomposition is a clean instrument. The 25% negative-transfer rate is a straightforward count. The plausibility trap's <em>direction</em> — that fluency and utility come apart, and come apart most where the stakes are highest — is supported by both the quantitative inversion and the qualitative case analysis, and it matches the independent evidence from SkillsBench and SkillCommit that surface-plausible skills degrade performance. And the closed diagnostic loop is a method, not a number, so it does not depend on any of the individual figures replicating.</p>
+
+<p class="eyebrow" id="landing">11</p>
+<h2>What this means for AutoSkill</h2>
+
+<div class="callout landing">
+<span class="label">Adoptable, with conditions</span>
+<p><strong>The plausibility trap is the motivating negative result for execution-gated authoring.</strong> If a frontier model asked to compare two skills is right 46.4% of the time overall and 15.8% of the time on the highest-stakes pairs, then a reviewer agent making accept/reject calls on the text alone is not merely imprecise — it is anti-predictive where it matters most. This is the sentence that justifies the entire admission harness, and it is stronger than "reviewers are unreliable" because it identifies the direction and the mechanism.</p>
+<p><strong>The validated rubric is the specification for our reviewer's criteria.</strong> Failure Mechanism Encoding, Actionable Specificity, High-Risk Action Blacklist — 46.4% to 73.8% is what grounding an LLM judge in utility-validated dimensions buys. Our reviewer should score exactly these three, and the rubric-discovery pipeline that produced them is the method we would use to derive our own domain's dimensions once we have enough graded pairs.</p>
+<p><strong>Drop structural formatting checks from the reviewer.</strong> The format-normalisation experiment finds no detectable effect of ordered list versus checklist versus prose on any target, with effect sizes below run-to-run noise, while swapping the extractor moves five of six targets significantly. Any lint rule scoring headings, bullet discipline or section ordering is measuring something this study could not detect. Spend the reviewer's budget on content dimensions instead.</p>
+</div>
+
+<p>Four further consequences, and the first one changes an experiment design.</p>
+
+<p><strong>Experiment 1 now has a specified predictor set, and a specified null.</strong> The reviewer-validity experiment asks whether cheap signals predict execution-verified reliability. This paper hands us both arms: the three validated dimensions as the predictors worth testing, and the plausibility rubric's seven dimensions as the null they must beat. That is a much sharper experiment than "do reviewer verdicts correlate with outcomes" — it is "does a utility-grounded rubric beat a plausibility rubric at predicting our own $G_m$", with a published effect size to compare against. It also gives us a pre-registered prediction: the plausibility arm should perform at or below chance on high-gap pairs.</p>
+
+<p><strong>The meta-skill result changes what the authoring agent's prompt should contain.</strong> The validated rubric improved all nine cells when used as a generation-time prior, while the plausibility rubric hurt. Translated: the AutoSkill authoring agent should be instructed to write skills that name failure mechanisms, give step-level procedures referencing real objects and tools, and forbid specific harmful actions — and should <em>not</em> be instructed to write clear, complete, well-formatted skills. Most authoring prompts say the latter. Ours should not.</p>
+
+<p><strong>The experience-composition finding shapes what the sandbox collects.</strong> Skills extracted from all-failure pools are consistently worst; successful trajectories are the foundation. Our sandbox naturally over-collects failures, because that is what an expert intervenes on. If we feed the authoring agent only the runs the expert corrected, we are constructing exactly the pool composition this study finds worst. The sandbox should retain successful runs too, and the optimal ratio is domain-specific enough that it is worth measuring on our own domain rather than assumed.</p>
+
+<p><strong>"Better executor is not necessarily better extractor" is now the third independent statement of the same principle</strong>, after SkillGen's transfer study and SKILL-USE's harness dependence. Choosing the authoring model is a compatibility question between author, consumer and domain — not a matter of picking the strongest available model — and it has to be settled empirically for our runtime. The corollary for the platform is that we can author with one model and deploy with a cheaper one, but only after measuring that specific pair.</p>
+
+<p>Two warnings. <strong>The 25% negative-transfer rate is our risk budget without a gate.</strong> One in four extractor–target pairings actively degraded performance, and in the most fragile domain nearly half did — and that is with an automatic extractor on established benchmarks. A human author is not obviously safer here; the plausibility trap suggests a person reviewing skill text would fall into the same hole a model does, since fluent-and-wrong is exactly what reads well to a human too. And <strong>skill consumption reshapes the default policy rather than adding a capability.</strong> The mechanism is that the model chooses a different strategy among ones it already had, and whether that trade lands depends on the target's ability to execute the new strategy. For us that means a skill validated under one runtime model has no guarantee of transferring when the platform upgrades its model — which is the same conclusion SKILL-USE reaches about harnesses, arriving here about models, and it argues for re-verification on model change being a scheduled event rather than an exception.</p>
+
+<p class="fn">Z. Huang, J. Xu, Y. Yang, Z. Gong, Q. Yang, M. Tian, X. Wang, C. Lv, X. Gao, Q. Dai, B. Liu, K. Qiu, X. Yang, D. Chen, X. Zheng and C. Luo, "From Raw Experience to Skill Consumption: A Systematic Study of Model-Generated Agent Skills," arXiv:2605.23899v1 [cs.AI], 22 May 2026. Fudan University, Microsoft Research and Shanghai Jiao Tong University. Code at aka.ms/SkillLens. Section, table and appendix references are to that version, whose appendices A–H are included in the copy read for this report.</p>
+</div>

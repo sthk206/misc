@@ -1,0 +1,442 @@
+<title>SkillCommit, Explained</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F7F5F1; --surface:#FFFFFF; --ink:#232A35; --muted:#5A6478;
+  --line:#DDD7CB; --accent:#2C5E8A; --accent-ink:#FFFFFF; --accent-soft:#EAF0F6;
+  --warn:#C2410C; --warn-soft:#FBEDE5; --code-bg:#EFECE5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+    --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+    --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+  --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+  --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--ground); color:var(--ink); font-family:"Source Serif 4",Georgia,serif;
+  font-size:1.125rem; line-height:1.68; margin:0;}
+.wrap{max-width:46rem; margin:0 auto; padding:0 1.25rem 5rem;}
+header.masthead{border-bottom:2px solid var(--ink); padding:2.5rem 0 1.5rem; margin-bottom:2rem;}
+.series{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 1rem;}
+h1{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:2.1rem; line-height:1.15;
+  margin:0 0 .75rem; text-wrap:balance;}
+.dek{font-size:1.15rem; color:var(--muted); margin:0 0 1rem; font-style:italic;}
+.meta{font-family:"IBM Plex Mono",monospace; font-size:.78rem; color:var(--muted);}
+nav.toc{background:var(--surface); border:1px solid var(--line); padding:1.1rem 1.4rem; margin:2rem 0;}
+nav.toc p{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.8rem;
+  text-transform:uppercase; letter-spacing:.1em; margin:0 0 .5rem; color:var(--muted);}
+nav.toc ol{margin:0; padding-left:1.2rem; font-size:.95rem; line-height:1.9;}
+nav.toc a{color:var(--accent); text-decoration:none;}
+nav.toc a:hover, nav.toc a:focus{text-decoration:underline;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin:3rem 0 .25rem;}
+h2{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:1.5rem; line-height:1.2;
+  margin:.1rem 0 1rem; text-wrap:balance;}
+h3{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:1.1rem; margin:1.8rem 0 .6rem;}
+p{margin:0 0 1.1rem;}
+a{color:var(--accent);}
+strong{font-weight:600;}
+.callout{border:1px solid var(--line); background:var(--surface); padding:1.1rem 1.4rem; margin:1.6rem 0;}
+.callout .label{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.75rem;
+  text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:.5rem;}
+.example{border-left:4px solid var(--accent); background:var(--accent-soft);}
+.example .label{color:var(--accent);}
+.hostile{border-left:4px solid var(--warn); background:var(--warn-soft);}
+.hostile .label{color:var(--warn);}
+.landing{background:var(--accent-soft); border:2px solid var(--accent);}
+.landing .label{color:var(--accent);}
+.fidelity{border-left:4px solid var(--muted); background:var(--surface);}
+.fidelity .label{color:var(--muted);}
+.walkthrough{border-top:2px solid var(--accent); border-bottom:2px solid var(--accent);
+  padding:1.5rem 0 .5rem; margin:2rem 0;}
+.beat{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent); margin:2rem 0 .3rem;}
+code{font-family:"IBM Plex Mono",monospace; font-size:.88em; background:var(--code-bg);
+  padding:.12em .35em; border-radius:3px;}
+pre{background:var(--code-bg); padding:1rem 1.2rem; overflow-x:auto; font-family:"IBM Plex Mono",monospace;
+  font-size:.85rem; line-height:1.55; margin:1.2rem 0; border-radius:4px;}
+pre code{background:none; padding:0;}
+table{width:100%; border-collapse:collapse; font-size:.92rem; margin:0;
+  font-variant-numeric:tabular-nums;}
+th{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.78rem; text-transform:uppercase;
+  letter-spacing:.06em; text-align:left; padding:.5rem .7rem; border-bottom:2px solid var(--ink);
+  color:var(--muted);}
+td{padding:.5rem .7rem; border-bottom:1px solid var(--line);}
+.table-wrap{overflow-x:auto; margin:1.2rem 0;}
+.math-block{overflow-x:auto; margin:1.4rem 0; text-align:center; font-size:1.05rem;}
+.fn{font-size:.82rem; color:var(--muted); border-top:1px solid var(--line); margin-top:3rem; padding-top:1rem;}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{fontCache:'global'}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+<div class="wrap">
+<header class="masthead">
+  <p class="series">AutoSkill · Deep Dive 04</p>
+  <h1>SkillCommit: Evolving Agent Skills through Behaviorally Validated Scope Expansion</h1>
+  <p class="dek">Two patches that read alike can encode contradictory procedures, and two that read nothing alike can share a mechanism exactly. Every system that consolidates a skill library on semantic similarity is therefore merging the wrong things — and this paper has the ledger to prove it breaks as many cases as it fixes.</p>
+  <p class="meta">He &amp; Yang · Nanjing University &amp; HKUST (Guangzhou) · arXiv 2608.15165 · 15 August 2026</p>
+</header>
+
+<nav class="toc">
+<p>Contents</p>
+<ol>
+<li><a href="#mistake">The mistake this paper is about</a></li>
+<li><a href="#stage1">Stage 1: patch induction, and the two gates inside it</a></li>
+<li><a href="#stage2">Stage 2: behavioral compatibility, and the formula that decides it</a></li>
+<li><a href="#stage3">Stage 3: consolidation, and the three transitions</a></li>
+<li><a href="#walkthrough">The method end to end, on one example</a></li>
+<li><a href="#results">The results, and the ledger that matters</a></li>
+<li><a href="#ablations">Which stage does the work</a></li>
+<li><a href="#transfer">Transfer across scale and family</a></li>
+<li><a href="#hostile">Where a hostile reviewer attacks first</a></li>
+<li><a href="#landing">What this means for AutoSkill</a></li>
+</ol>
+</nav>
+
+<p class="eyebrow" id="mistake">01</p>
+<h2>The mistake this paper is about</h2>
+
+<p>An agent that learns from experience accumulates a lot of small, specific lessons. It failed on one case, worked out why, and wrote down a fix. Do that a few hundred times and you have a library of narrow patches that is expensive to store, expensive to search, and increasingly redundant. The obvious next move — the one every system in this space makes — is to <em>consolidate</em>: find the patches that are about the same thing and merge them into one higher-level skill that covers all of them.</p>
+
+<p>The question is how you decide that two patches are "about the same thing", and the answer everyone reaches for is semantic similarity, either as embedding distance or as an LLM's judgment that they look related. This paper's contribution is to show that this answer is wrong in both directions, and then to build the machinery that gets it right.</p>
+
+<p>The paper's opening figure makes the point better than an argument would. Two patches, both about auditing team salary caps, both plainly about the same topic. One aggregates the acquiring team's salary, applies the incoming rule, and tests an apron bound. The other transforms the outgoing salary, applies a sign-and-trade exception, and tests salary matching. Different salary basis, different rule, different constraint — merging them produces a skill that will do the wrong arithmetic on both. That is <strong>semantically similar, behaviorally incompatible</strong>.</p>
+
+<p>The other direction is the same figure's second panel. One patch is about cumulative cash payments: carry forward the running total, accumulate each payment, compare against the annual cap, mark the first breach. Another is about draft picks: reconstruct pick ownership, replay trades chronologically, scan for consecutive empty drafts, locate the earliest invalid deal. Nothing about cash resembles anything about draft picks. But the procedure is identical — maintain state, update sequentially, test a constraint, find the first violation. That is <strong>semantically dissimilar, behaviorally identical</strong>, and no embedding will ever put them in the same cluster.</p>
+
+<p>So the criterion has to be behavioral. The paper's framing, which it takes from the transfer-of-learning literature in cognitive science, is that knowledge generalises beyond its original context only when the learner identifies the <em>structure</em> shared across experiences rather than the surface resemblance. Operationally that becomes a rule with teeth: <strong>every broader claim about a skill's applicability must be backed by replay evidence.</strong> Not by an embedding, not by a model's opinion, but by actually re-running the frozen executor on the instances the claim covers and checking whether it still succeeds.</p>
+
+<p>SkillCommit implements that as three stages, each of which validates a different scope expansion: from a failed trajectory to a validated patch, from a patch to a behaviorally compatible group, and from a group to an active higher-level skill. The paper's own framing of its novelty is precise and worth quoting in paraphrase: other systems introduce validation at <em>particular</em> stages, but none uniformly governs all three successive expansions.</p>
+
+<p class="eyebrow" id="stage1">02</p>
+<h2>Stage 1: patch induction, and the two gates inside it</h2>
+
+<p>When the executor fails on a source instance $x_i$, producing a failed trajectory $\tau_i^-$, a <strong>teacher</strong> model is given three things the executor never sees: the instance, the verified ground-truth answer, and the failed trajectory. The teacher runs the same underlying model as the executor but under a separate prompt with access to privileged feedback — a distinction worth holding onto, because it means the capability difference between teacher and student is entirely a difference in <em>information</em>, not in model.</p>
+
+<p>The teacher produces a reference trajectory $\tau_i^+$ that reaches the correct answer, diagnoses the discrepancy between $\tau_i^-$ and $\tau_i^+$, and from that contrast writes a candidate patch $c_i$: concise procedural guidance in the form of behavioral constraints, decision rules, and checkable intermediate steps.</p>
+
+<p>Two gates then apply, and they are the interesting part.</p>
+
+<p>The first is <strong>leakage control</strong>. Candidates containing the final answer, or a solution specific to $x_i$, are discarded before validation ever happens. Without this the whole enterprise degenerates: the teacher, which knows the answer, writes it into the patch, the patch trivially "solves" the source instance, and you have built an expensive lookup table. This is the same discipline SKILL-USE enforces from the other side with its masked-skill check, and it is worth noticing that two independent papers converged on it — a skill must not contain the answers to the cases it was written for.</p>
+
+<p>The second is <strong>source-replay validation</strong>. The candidate patch is admitted only after the <em>frozen</em> executor, given the original task context $x_i$ plus the candidate patch and nothing else, actually solves the instance. The resulting answer is scored by the task verifier, which retains access to the ground truth. If the executor succeeds, the patch is admitted as a source-validated instance-specific patch. If not, the rejected patch, the new replay trajectory, and the verifier's feedback go back to the skill author, which tries again. The cycle repeats for at most $K = 3$ attempts.</p>
+
+<p>The word doing the work there is <em>frozen</em>. The executor is not retrained, not prompted differently, not helped. The only thing that changed between the failure and the success is the patch text, so if the outcome flips, the patch is what flipped it. That is a clean causal attribution, and it is the same logic SkillGen applies at the whole-skill level with paired rollouts — here applied per patch, at the moment of creation.</p>
+
+<p>The empirical result is that this works most of the time: <strong>88.0% of failed instances yield a validated patch within three attempts, and 91.8% of the successful patches are obtained within the first two trials.</strong> The second number matters more than the first for anyone budgeting the loop — the third attempt buys very little, so $K = 3$ is close to the point of diminishing returns rather than an arbitrary cap.</p>
+
+<p class="eyebrow" id="stage2">03</p>
+<h2>Stage 2: behavioral compatibility, and the formula that decides it</h2>
+
+<p>Now the patches accumulate, and the question is whether a new one can be folded into something that already exists.</p>
+
+<p>Semantic similarity does get used here — but only as a <em>shortlist</em>. The incoming patch $q_t$ and the structured description of each active skill are embedded with the same sentence encoder, ranked by cosine similarity, and the top $R = 4$ candidates are retained. The paper is explicit that this is a retrieval step and not a decision step: similarity narrows the field to a bounded set of plausible candidates, and everything after that is replay.</p>
+
+<p>For each retrieved skill $p$, the framework collects behavioral evidence <em>beyond both memories' currently validated scopes</em>, in both directions. The existing skill $p$ is replayed on the incoming source instance $x_t$; the incoming patch $q_t$ is replayed on the set of instances $\mathcal{W}(p)$ that $p$ already covers. Writing $\rho(m, x) \in \{0, 1\}$ for whether the frozen executor solves instance $x$ when guided only by memory $m$, the behavioral compatibility is</p>
+
+<div class="math-block">
+$$C(p, q_t) = \frac{\rho(p, x_t) + \sum_{x_j \in \mathcal{W}(p)} \rho(q_t, x_j)}{1 + |\mathcal{W}(p)|}$$
+</div>
+
+<p>In words: run each memory on the other's territory, count how often the executor still succeeds, and divide by the number of trials. The numerator has one term for the forward direction and $|\mathcal{W}(p)|$ terms for the reverse; the denominator normalises by the total. The pair passes the screen when $C(p, q_t) \ge \gamma$ for a predefined threshold $\gamma \in [0,1]$.</p>
+
+<p>Two design choices inside that formula deserve attention. It is <strong>bidirectional</strong> — a patch that happens to work on the skill's cases but whose own case the skill cannot handle scores at most $|\mathcal{W}(p)| / (1 + |\mathcal{W}(p)|)$, so one-way transfer is penalised rather than rewarded. And it is <strong>graded rather than binary</strong>, which lets $\gamma$ tune how much partial transfer counts as compatibility. The paper does not report a sensitivity analysis over $\gamma$, which is the most obvious gap in an otherwise careful design.</p>
+
+<p>Passing the numeric screen is necessary but not sufficient. Because partial behavioral transfer can arise from different strategies that happen to overlap, a <strong>pattern author</strong> then assesses whether $p$ and $q_t$ can be explained by a <em>shared procedural mechanism</em>. Only if both the compatibility score and the mechanism assessment support consolidation does the author propose an expanded version of $p$ whose scope includes the incoming source — and even then the proposal is only a candidate until stage three replays it.</p>
+
+<p>If no existing skill passes, SkillCommit tries to form a new one from <strong>residual patches</strong>: source-validated patches not yet incorporated into any higher-level skill. It retrieves semantically related residuals, evaluates their pairwise compatibility by cross-instance replay, and then searches for an <strong>anchor patch</strong> whose procedure transfers to the source instances of every other patch in a candidate group. An eligible group must contain the incoming patch $q_t$ and at least $m$ members. By default only the anchor is required to transfer to every member; requiring reverse transfer as well is available as a stricter option. Among eligible groups, the one with the broadest semantic coverage wins, with a deterministic ordering used only to break ties. If no group qualifies, $q_t$ stays residual and no new skill is created.</p>
+
+<p>That last clause is the same discipline SkillGen has at its gate, in a different costume: <strong>not consolidating is an acceptable outcome.</strong> The library is allowed to stay large and specific rather than being forced into abstractions that replay does not support.</p>
+
+<p class="eyebrow" id="stage3">04</p>
+<h2>Stage 3: consolidation, and the three transitions</h2>
+
+<p>Whether the previous stage found a compatible existing skill or assembled a group of residuals, the result is a <em>candidate</em>, and stage three decides its fate.</p>
+
+<p>The candidate skill is induced with three named components — an applicability condition, executable procedural guidance, and an exclusion condition — represented in the skill as <code>when</code>, <code>repair</code>, and <code>avoid_when</code>. The exclusion condition is the part most systems omit and the reason this design can express "this procedure applies here but explicitly not there", which is what makes a narrowed scope representable at all.</p>
+
+<p>The pattern author writing this abstraction operates under a deliberate information restriction: <strong>it is not given the source questions, the answers, the teacher trajectories, or any provenance information.</strong> For forming a new skill it sees only the anonymised patch texts in the proposed group; for an expansion it additionally sees the current skill description. The stated purpose is to encourage mechanism-level abstraction rather than instance memorisation, and it is a neat trick — you cannot memorise cases you were never shown.</p>
+
+<p>Then the decisive step. Let $\mathcal{S}$ denote the proposed source set. <strong>Full-scope source replay</strong> runs the candidate on <em>every</em> source instance in $\mathcal{S}$ with the frozen executor. If it succeeds on all of them, the candidate is fully supported. Otherwise the pattern author refines it — using the previous version, the replay trajectories, and verifier feedback, while ground-truth answers and instance identities stay hidden — producing a new version that is replayed on the same source set. This continues for at most $L$ attempts, and <em>all</em> candidate versions with their replay outcomes are retained for auditing.</p>
+
+<p>Three transitions follow:</p>
+
+<p><strong>Commit.</strong> The candidate replays successfully on every source in its proposed scope. If it expands an existing skill, the new version replaces the active one <em>while previous versions are preserved for traceability</em>. If it was induced from residuals, it becomes a new active skill.</p>
+
+<p><strong>Split.</strong> Replay succeeds on only a subset. SkillCommit selects the candidate version with the strongest replay support; if that version's supported set contains at least $m$ instances, its scope is restricted to exactly those sources and it is replayed once more on the reduced scope. A successfully revalidated split is committed as an independent higher-level skill. The paper sets $m$ to 2 or 3 depending on the dataset.</p>
+
+<p><strong>Reject.</strong> If no candidate version yields a replay-supported subset of at least $m$ sources, or the narrowed candidate fails revalidation, the candidate is discarded. The existing hierarchy is unchanged and the constituent patches remain available as instance-specific skills — nothing is lost, the library simply stays less compact.</p>
+
+<p>Read together, the three transitions are a monotonicity guarantee: a skill's scope only ever widens to instances where replay has actually confirmed the behaviour, and a failed abstraction costs you compactness rather than correctness.</p>
+
+<div class="walkthrough">
+<p class="eyebrow" id="walkthrough">05</p>
+<h2>The method end to end, on one example</h2>
+
+<p>SkillCommit is an online system: instances arrive one at a time, failures become patches, and patches occasionally become skills. So the digest agent enters this walkthrough part-way through its life, with a library that has already accumulated something.</p>
+
+<p class="beat">Beat 1 · The starting state</p>
+
+<p>Priya's agent has been running for two months. Its library holds one active higher-level skill and three residual patches:</p>
+
+<pre><code>ACTIVE SKILL  p = "guard the fetch result"
+  when:       the arXiv fetch step has just returned
+  repair:     treat a zero-entry result as valid; write the no-papers line and stop
+  avoid_when: entries were returned
+  W(p) = { day 12  zero entries overnight
+           day 33  unencoded query, empty feed with HTTP 200
+           day 57  malformed category string, empty feed }
+
+RESIDUAL PATCHES
+  r1 (day 44)  abstract fetch returned 503; retry once after 3s, then drop the
+               paper and take the next-ranked one
+  r2 (day 52)  the Atom entry's summary field was empty; take the next-ranked paper
+</code></pre>
+
+<p>Today is day 61. The top-ranked paper was withdrawn between the morning fetch and the abstract retrieval, so the abstract request 404s. The agent writes a digest with an empty "problem" section and a fabricated "why it matters". The deterministic verifier fails it.</p>
+
+<p class="beat">Beat 2 · Stage 1 — patch induction and its two gates</p>
+
+<p>The teacher receives $x_{61}$, the verified ground truth for that day, and the failed trajectory $\tau_{61}^-$. It produces a reference trajectory $\tau_{61}^+$ that detects the 404 and moves to the second-ranked paper, diagnoses the discrepancy, and drafts a candidate patch.</p>
+
+<p>The first draft trips the leakage gate:</p>
+
+<pre><code>c_61 (attempt 1)  — DISCARDED, contains an instance-specific solution
+  "On 2026-05-31, arXiv:2605.02211 was withdrawn. Use arXiv:2605.02198 instead."
+</code></pre>
+
+<p>Attempt two is generic and survives to replay:</p>
+
+<pre><code>c_61 (attempt 2)  — candidate
+  behavioral constraint:  every field of the digest must be sourced from a
+                          document actually retrieved in this run
+  decision rule:          if the abstract request for the selected paper returns
+                          a non-2xx status, discard that paper and select the
+                          next-ranked candidate
+  checkable step:         before writing, assert that the abstract text is
+                          non-empty
+</code></pre>
+
+<p>Source-replay validation: the frozen executor is given $x_{61}$ plus $c_{61}$ and nothing else. It fetches, ranks, hits the 404, drops the paper, takes the second-ranked one, and produces a digest the verifier accepts. Validated on attempt 2 of $K = 3$ — which is where 91.8% of successful patches land. Call the admitted patch $q_t$.</p>
+
+<p class="beat">Beat 3 · Stage 2 — the shortlist, and then the replay that overrules it</p>
+
+<p>Embed $q_t$'s patch text and each active skill's structured description with the same encoder, rank by cosine, keep the top $R = 4$. There is only one active skill, and it ranks first: "guard the fetch result" and "handle a failed retrieval" are, in embedding space, obviously about the same thing. Both concern missing data at a fetch step; both talk about what to do when the expected document is not there. Every semantic-consolidation method in the comparison would merge them here.</p>
+
+<p>Now the cross-replay, in both directions.</p>
+
+<p><em>Forward</em> — replay the existing skill $p$ on the incoming source instance $x_{61}$. Skill $p$'s applicability condition is "the arXiv fetch step has just returned", and its exclusion condition explicitly fires when entries were returned. On day 61 entries <em>were</em> returned; the failure is two steps downstream. The executor guided only by $p$ reproduces the original failure. So $\rho(p, x_{61}) = 0$.</p>
+
+<p><em>Reverse</em> — replay the incoming patch $q_t$ on each instance in $\mathcal{W}(p)$. On day 12 the fetch returned zero entries, so there is no selected paper whose abstract could 404; $q_t$'s decision rule never fires and the executor fabricates as before, giving $\rho(q_t, x_{12}) = 0$. Day 33 and day 57 are the same story arrived at differently — an empty feed with a 200 status, and an empty feed from a malformed category — and in both the rule never fires. So $\rho(q_t, x_{33}) = \rho(q_t, x_{57}) = 0$.</p>
+
+<p>Substituting into the compatibility score, with $|\mathcal{W}(p)| = 3$:</p>
+
+<div class="math-block">
+$$C(p, q_t) = \frac{\rho(p, x_{61}) + \rho(q_t, x_{12}) + \rho(q_t, x_{33}) + \rho(q_t, x_{57})}{1 + 3} = \frac{0 + 0 + 0 + 0}{4} = 0.00$$
+</div>
+
+<p>Zero, against any threshold $\gamma \in [0,1]$ one might choose. The mechanism check never even runs, because the numeric screen has already failed. <strong>The two patches are about missing data in the same way that auditing the acquiring team's salary and auditing the prior team's salary are about salary caps</strong> — the topic is shared and the procedure is not. One is a branch on an empty <em>collection</em>; the other is a branch on a failed <em>retrieval of one member</em> of a non-empty collection. Merging them would produce a skill whose applicability condition covers both and whose repair is correct for neither.</p>
+
+<p>So no expansion. $q_t$ falls through to residual grouping.</p>
+
+<p class="beat">Beat 4 · Stage 2 continued — forming a new skill from residuals</p>
+
+<p>SkillCommit retrieves semantically related residual patches — $r_1$ (the 503 retry) and $r_2$ (the empty summary field) — and evaluates cross-instance transfer to find an anchor whose procedure covers every member's source instance.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Anchor candidate</th><th>$\rho(\cdot, x_{44})$</th><th>$\rho(\cdot, x_{52})$</th><th>$\rho(\cdot, x_{61})$</th><th>Transfers to all?</th></tr></thead>
+<tbody>
+<tr><td>$r_1$ — retry once, then drop and take next</td><td>1</td><td>1</td><td>1</td><td>yes</td></tr>
+<tr><td>$r_2$ — take next-ranked paper</td><td>0</td><td>1</td><td>1</td><td>no</td></tr>
+<tr><td>$q_t$ — drop on non-2xx, take next</td><td>0</td><td>0</td><td>1</td><td>no</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>$r_1$ is the anchor: its retry-then-fall-through procedure recovers the transient 503 on day 44, and its fall-through half also covers the empty summary on day 52 and the withdrawal on day 61. Neither of the others transfers upward, because dropping immediately loses the paper on day 44 where the failure was transient. The eligible group is $\{r_1, r_2, q_t\}$ with three members, which clears $m$ at either 2 or 3.</p>
+
+<p class="beat">Beat 5 · Stage 3 — induction, full-scope replay, and a split</p>
+
+<p>The pattern author receives the three anonymised patch texts and nothing else — no dates, no source questions, no answers, no trajectories — and induces:</p>
+
+<pre><code>CANDIDATE SKILL  "recover from a failed document retrieval"
+  when:       a per-paper document request has been issued and did not return
+              usable content
+  repair:     retry once after 3 seconds; if it fails again, discard that paper
+              and select the next-ranked candidate; assert non-empty content
+              before writing
+  avoid_when: the failure is in the collection-level fetch rather than in a
+              request for one selected paper
+  proposed scope S = { x_44, x_52, x_61 }
+</code></pre>
+
+<p>Note that <code>avoid_when</code> encodes the very boundary the cross-replay discovered in beat three. The exclusion condition is not decoration; it is where the negative evidence goes.</p>
+
+<p>Full-scope source replay on all three sources with the frozen executor:</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Source</th><th>Failure</th><th>Replay outcome</th></tr></thead>
+<tbody>
+<tr><td>$x_{44}$</td><td>abstract request returned 503</td><td>pass — retry succeeds</td></tr>
+<tr><td>$x_{52}$</td><td>Atom summary field empty, HTTP 200</td><td><strong>fail</strong> — request returned usable status, so <code>when</code> never fires</td></tr>
+<tr><td>$x_{61}$</td><td>abstract request returned 404</td><td>pass — discard and fall through</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Two of three. The candidate is not fully supported, so the pattern author refines — still without seeing the instances — broadening the applicability condition from "did not return usable content" toward "returned content that fails the non-empty assertion". Suppose that version passes $x_{52}$ but now fires spuriously on $x_{44}$'s successful retry, so it too replays 2 of 3. After $L$ attempts no version covers all three.</p>
+
+<p>This is the <strong>split</strong> transition. Take the candidate version with the strongest replay support — the original, supported on $\{x_{44}, x_{61}\}$ — check that $|\{x_{44}, x_{61}\}| = 2 \ge m$, restrict the scope to exactly those two sources, and replay once more on the reduced scope. It passes, and commits as an independent higher-level skill with $\mathcal{W} = \{x_{44}, x_{61}\}$. The patch $r_2$ returns to residual status and remains available as an instance-specific skill.</p>
+
+<p>The library after day 61 has two active skills and one residual, and every scope claim in it has been replayed.</p>
+
+<p class="beat">Beat 6 · What a semantic consolidator would have done instead</p>
+
+<p>Trace the same day through a system that merges on similarity. Embedding retrieval ranks "guard the fetch result" first for $q_t$ — correctly, as a retrieval step. An LLM asked whether the two are related says yes, obviously, they are both about handling a missing paper. The merged skill's applicability condition becomes something like "the expected paper is not available", and its repair becomes some blend of "write the no-papers line" and "take the next-ranked candidate".</p>
+
+<p>Replay that merged skill against $\mathcal{W}(p)$, which nobody in that pipeline does. On day 12, zero entries and no next-ranked candidate to fall through to, the blended rule now sometimes tries to select a paper from an empty list. The three days that skill $p$ had <em>already validated</em> are no longer reliably handled. In the paper's vocabulary, the merge helped one case and hurt three — and because aggregate accuracy on a test set nets those against each other, the damage is invisible unless someone counts them separately.</p>
+
+<p>Which is exactly what the paper's central table does, and it is the subject of the next section.</p>
+
+<div class="callout fidelity">
+<span class="label">Fidelity note</span>
+<p>The three stages, the leakage and source-replay gates, $K = 3$, the shortlist at $R = 4$, the compatibility formula and its bidirectionality, the anchor-patch search with minimum group size $m$, the <code>when</code>/<code>repair</code>/<code>avoid_when</code> schema, the pattern author's information restriction, full-scope replay, the $L$-attempt refinement loop and the commit/split/reject transitions are all the paper's. The digest agent's patches, instances and replay outcomes are my construction — SkillCommit's benchmarks are single-answer reasoning tasks (airline and NBA rule application, legal exemption classification, logic and cipher puzzles), none of which resembles a multi-step artifact pipeline. Two values I could not take from the paper: $\gamma$, the compatibility threshold, is never given a numeric value in the main text, and $L$ is likewise unspecified; the paper points to an appendix for per-dataset settings that is not present in this copy. I have therefore avoided asserting a specific $\gamma$ and relied on $C = 0$, which fails any threshold.</p>
+</div>
+</div>
+
+<p class="eyebrow" id="results">06</p>
+<h2>The results, and the ledger that matters</h2>
+
+<p>SkillCommit is evaluated on three benchmark families. From RuleArena, the Airline subset (200 cases split 100 induction / 100 held-out test) and the NBA subset (215 cases split 170 / 45). From OpenExempt, the Exemption Classification and Exemption Valuation tasks of the Advanced Competency suite (210 induction / 105 held-out each). From KOR-Bench, the Logic and Cipher tasks (175 induction / 75 held-out each), chosen to test knowledge-orthogonal abstract reasoning. RuleArena and KOR-Bench are scored by strict accuracy; OpenExempt by macro-F1, which credits both coverage of applicable items and avoidance of unsupported predictions.</p>
+
+<p>The baselines are No Skill plus four experience-learning methods: ExpeL, which extracts reusable insights from accumulated experience; ReasoningBank, which stores and retrieves reasoning memories; ACE, which iteratively evolves an external playbook through reflection and curation; and Trace2Skill, which hierarchically distils trajectory-level lessons into a reusable skill document. All methods share the same frozen executor, base task prompt, output parser, verifier and per-instance generation limit within each configuration.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Author → user</th><th>Method</th><th>Air.</th><th>NBA</th><th>EV</th><th>EC</th><th>Logic</th><th>Cipher</th><th>Avg</th></tr></thead>
+<tbody>
+<tr><td rowspan="3">DeepSeek-V4-Flash<br>→ itself</td><td>No Skill</td><td>72.00</td><td>28.89</td><td>76.86</td><td>86.33</td><td>72.00</td><td>73.33</td><td>68.24</td></tr>
+<tr><td>Best baseline</td><td>88.00</td><td>53.33</td><td>87.32</td><td>95.65</td><td>80.00</td><td>78.67</td><td>73.09</td></tr>
+<tr><td><strong>SkillCommit</strong></td><td><strong>96.00</strong></td><td><strong>71.11</strong></td><td><strong>94.28</strong></td><td><strong>96.01</strong></td><td><strong>82.67</strong></td><td><strong>85.33</strong></td><td><strong>87.57</strong></td></tr>
+<tr><td rowspan="3">Qwen3.6-35B-A3B<br>→ itself</td><td>No Skill</td><td>51.00</td><td>26.67</td><td>29.02</td><td>47.46</td><td>53.33</td><td>76.00</td><td>47.25</td></tr>
+<tr><td>Best baseline</td><td>55.00</td><td>31.11</td><td>38.42</td><td>45.71</td><td>73.33</td><td>82.67</td><td>49.19</td></tr>
+<tr><td><strong>SkillCommit</strong></td><td><strong>85.00</strong></td><td><strong>66.67</strong></td><td><strong>72.46</strong></td><td><strong>79.46</strong></td><td><strong>74.67</strong></td><td><strong>85.33</strong></td><td><strong>77.27</strong></td></tr>
+<tr><td rowspan="3">Qwen3.6-35B-A3B<br>→ Qwen3.5-9B</td><td>No Skill</td><td>55.00</td><td>15.56</td><td>9.97</td><td>15.61</td><td>60.00</td><td>65.33</td><td>36.91</td></tr>
+<tr><td>Best baseline</td><td>55.00</td><td>31.11</td><td>26.31</td><td>34.57</td><td>62.67</td><td>74.67</td><td>41.61</td></tr>
+<tr><td><strong>SkillCommit</strong></td><td><strong>81.00</strong></td><td><strong>60.00</strong></td><td><strong>54.28</strong></td><td><strong>62.41</strong></td><td><strong>76.00</strong></td><td><strong>84.00</strong></td><td><strong>69.62</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Across all 18 task-configuration pairs, SkillCommit improves over No Skill and achieves the best result on <em>every</em> task, raising the unweighted mean from 50.80% to 78.15%. The six-task averages increase by 19.33 and 30.02 points in the two matched configurations. It exceeds the strongest competing method by 14.48, 28.08 and 28.01 average points across the three configurations.</p>
+
+<p>Those are large numbers, and I would treat them with the usual caution about a method's authors evaluating their own method against re-implemented baselines. But the result that survives that caution — and the one I would actually cite — is the next one, because it is a <em>decomposition</em> rather than an aggregate.</p>
+
+<p>Across the 72 task-level results produced by the four competing skill methods, <strong>31 fall below No Skill and another six merely match it.</strong> More than half of the time, adding a learned skill library made things no better or worse. That alone is a striking replication of the SkillsBench negative result in a different setting.</p>
+
+<p>The instance-level ledger says why. Taking matched DeepSeek-V4-Flash runs on RuleArena and counting, for each method, how many cases it repairs that No Skill misses (help) and how many cases it breaks that No Skill solves (hurt):</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Method</th><th colspan="3">Airline</th><th colspan="3">NBA</th></tr>
+<tr><th></th><th>help</th><th>hurt</th><th>net</th><th>help</th><th>hurt</th><th>net</th></tr></thead>
+<tbody>
+<tr><td>ExpeL</td><td>24</td><td>8</td><td>+16</td><td>14</td><td>3</td><td>+11</td></tr>
+<tr><td>ReasoningBank</td><td>3</td><td>9</td><td>−6</td><td>2</td><td>1</td><td>+1</td></tr>
+<tr><td>ACE</td><td>3</td><td>24</td><td>−21</td><td>3</td><td>13</td><td>−10</td></tr>
+<tr><td>Trace2Skill</td><td>2</td><td>24</td><td>−22</td><td>7</td><td>7</td><td>0</td></tr>
+<tr><td><strong>SkillCommit</strong></td><td><strong>24</strong></td><td><strong>0</strong></td><td><strong>+24</strong></td><td><strong>21</strong></td><td><strong>2</strong></td><td><strong>+19</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Read the ACE and Trace2Skill rows carefully, because they are the paper's whole argument in one line. ACE repairs three Airline cases and breaks twenty-four. Trace2Skill repairs two and breaks twenty-four. These are not methods that fail to learn anything — they are methods that learn something and then apply it outside the context where it was valid, overwriting substantially more correct behaviour than they correct. The paper's diagnosis is exact: globally evolving a playbook without regression-testing its updates does this, and hierarchically distilling trajectory-level lessons generalises them beyond their behaviourally supported scope.</p>
+
+<p>And note ExpeL, which is the interesting middle case. It repairs 24 Airline failures — <em>matching SkillCommit exactly</em> — but overturns eight correct ones, cutting its net gain to +16. So the distinction the paper is drawing is not whether a method can extract a useful lesson. ExpeL extracts the same lessons. The distinction is <strong>whether each expansion of that lesson's scope is supported by replay evidence.</strong></p>
+
+<p class="eyebrow" id="ablations">07</p>
+<h2>Which stage does the work</h2>
+
+<p>The ablation design is better than the usual leave-one-out, because it pairs every removal with a corresponding isolation: the <em>w/o</em> variants measure a stage's marginal contribution given the rest of the pipeline, while the <em>only</em> variants run that stage alone through its actual interface.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Condition (RuleArena NBA)</th><th>Success</th><th>$\Delta$ (pp)</th></tr></thead>
+<tbody>
+<tr><td><strong>SkillCommit (full)</strong></td><td><strong>71.11</strong></td><td>0.00</td></tr>
+<tr><td>No Skill</td><td>28.89</td><td>−42.22</td></tr>
+<tr><td>w/o Feedback-Guided Patch Induction</td><td>53.33</td><td>−17.78</td></tr>
+<tr><td>w/o Behavioral Compatibility Grouping</td><td>66.67</td><td>−4.44</td></tr>
+<tr><td>w/o Source-Preserving Consolidation</td><td>66.67</td><td>−4.44</td></tr>
+<tr><td>Feedback-Guided Patch Induction only</td><td>64.44</td><td>−6.67</td></tr>
+<tr><td>Behavioral Compatibility Grouping only</td><td>60.00</td><td>−11.11</td></tr>
+<tr><td>Source-Preserving Consolidation only</td><td>57.78</td><td>−13.33</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><strong>Patch induction supplies the dominant gain</strong> — removing it costs 17.78 points, four times either other stage. But the authors make a subtler point about <em>why</em>, and it is the most useful sentence in the section. The "without patch induction" condition still receives a parsable first-pass teacher patch; what it loses is the source-replay validation and refinement. Meanwhile "patch induction only", which deploys source-validated instance patches directly with no grouping or consolidation, reaches 64.44. So the gain is attributable to <strong>validating and refining the proposed patch, not to generating additional memory text.</strong> Most of the immediate accuracy improvement comes from converting a plausible proposal into guidance the frozen executor has demonstrated it can actually enact.</p>
+
+<p>The two later stages each cost 4.44 points to remove, and their roles are distinct. Compatibility grouping <em>screens where a patch can be reused</em>: its removal shows semantic retrieval alone does not recover the benefit of cross-instance behavioural evidence, and in isolation it reaches only 60.00 because it operates on unvalidated first-pass patches. Consolidation acts as a <em>preservation gate rather than a repair mechanism</em>: full-scope replay prevents an authored abstraction from discarding validated behaviour, and alone it reaches only 57.78 — the weakest isolated result — because a replay gate applied to semantic groups of unvalidated patches has nothing good to preserve.</p>
+
+<p>That ordering is worth internalising. Validation at the point of creation is where the performance is. Validation at the points of grouping and abstraction is where the <em>protection</em> is, and it only pays once the first stage has produced something worth protecting.</p>
+
+<p class="eyebrow" id="transfer">08</p>
+<h2>Transfer across scale and family</h2>
+
+<p>Because the library is text, it can be authored by one model and used by another — the practical scenario being that skills are constructed once by a capable model and then executed repeatedly by a cheaper one.</p>
+
+<p><strong>In-family, across scale.</strong> A library authored by Qwen3.6-35B-A3B and deployed to a frozen Qwen3.5-9B executor raises that model's four-task average from 48.97 without skills to 75.25. Transfer is substantial but not lossless: matched 35B execution stays higher on Airline (85.00 vs 81.00), NBA (66.67 vs 60.00) and Cipher (85.33 vs 84.00), while the smaller user does slightly <em>better</em> on Logic (76.00 vs 74.67).</p>
+
+<p><strong>Cross-family and cross-scale.</strong> Skills authored by GPT-5.4 and executed by Qwen3.5-9B raise the same average from 48.97 to 69.75, improving on every task. Transfer is weaker than in-family reuse on Airline (67.00 vs 81.00), Logic (70.67 vs 76.00) and Cipher (81.33 vs 84.00), producing a <strong>5.50-point average gap</strong>, while NBA ties at 60.00.</p>
+
+<p>The authors' reading is that the task-dependent degradation reflects residual mismatch in how different model families express and execute procedural knowledge, even when the underlying mechanism is reusable — but that the absence of a uniform cross-family penalty, and the tie on NBA, suggest sufficiently explicit decision procedures can survive changes in author family. That is the right level of confidence for this evidence. The one thing the transfer study cannot establish, and the authors say so, is equivalent skill quality between the two author models, since both libraries are ultimately executed by the same smaller user and may hit a common user-side ceiling.</p>
+
+<p class="eyebrow" id="hostile">09</p>
+<h2>Where a hostile reviewer attacks first</h2>
+
+<div class="callout hostile">
+<span class="label">The strongest objections</span>
+<p><strong>Replay cost is never priced.</strong> Every scope claim requires re-running the frozen executor: $K$ attempts per patch, $1 + |\mathcal{W}(p)|$ replays per compatibility check across $R = 4$ shortlisted skills, and $|\mathcal{S}|$ replays per consolidation attempt across up to $L$ refinement rounds. As $\mathcal{W}(p)$ grows, compatibility checking grows with it. The paper reports no token counts, wall-clock figures or cost curves, so the economics of running this at library scale are entirely untested — a striking omission for a method whose whole thesis is "replay everything".</p>
+<p><strong>Key thresholds are unreported in this copy.</strong> $\gamma$ is introduced as "a predefined threshold" and never given a value in the main text; $L$ is likewise unspecified. Both are pointed at an appendix that is not present in the PDF I read. With no sensitivity analysis over $\gamma$, the boundary between "compatible" and "incompatible" — the paper's central distinction — is a hand-set number.</p>
+<p><strong>It requires a ground-truth teacher and a verifier.</strong> Stage 1 depends on a verified answer to contrast against, and every replay depends on a verifier that can score the result. The method simply does not apply where outputs are unverifiable — narrative commentary, judgment calls, anything without a checkable answer.</p>
+<p><strong>The benchmarks are single-answer reasoning tasks.</strong> Airline and NBA rule application, legal exemption classification, logic and cipher puzzles. Every instance has one correct answer that a verifier can check. Multi-step artifact pipelines, where the output is a document with many partially-correct properties, are untested — and the compatibility formula's binary $\rho(m,x) \in \{0,1\}$ assumes exactly the single-answer setting.</p>
+<p><strong>The mechanism check is an unmeasured LLM call.</strong> After the numeric compatibility screen, a pattern author judges whether a shared procedural mechanism exists. No ablation isolates its contribution, so we cannot tell whether the numeric screen alone would do as well — which matters, because the mechanism check is the one part of the decision that is not replay evidence.</p>
+</div>
+
+<p>What survives is the principle and the ledger. The principle — every expansion of a scope claim requires replay evidence over the instances the claim covers — is right, cheaply stated, and independent of any threshold. And the helped/hurt table is a genuine empirical finding about other people's methods, not a claim about this one: whatever you think of SkillCommit's own numbers, ACE breaking 24 Airline cases while fixing 3 is a fact about ACE.</p>
+
+<p class="eyebrow" id="landing">10</p>
+<h2>What this means for AutoSkill</h2>
+
+<div class="callout landing">
+<span class="label">Adoptable, with conditions</span>
+<p><strong>The helped/hurt ledger is the citation for "desk deltas may be load-bearing".</strong> The platform's plan is to fork new desks from a small set of prebuilts, which guarantees a library of near-duplicates and an eventual temptation to consolidate them. This paper is the experimental evidence that consolidating on similarity — which is what any LLM asked "are these two the same?" will do — breaks validated behaviour at scale. Cite ACE at 3 helped / 24 hurt and Trace2Skill at 2 / 24 whenever that proposal comes up.</p>
+<p><strong>The fork-consolidation protocol is specified here.</strong> Shortlist by similarity, decide by cross-replay in both directions over each desk's frozen fixtures, then commit, split, or reject on full-scope replay. Validated scope $\mathcal{W}(p)$ becomes a field in the fork lineage metadata rather than an assumption, and previous versions are preserved on commit for traceability. That is a complete design for the consolidation section of the design doc.</p>
+<p><strong>The sandbox loop already is stage 1, with a human in the teacher's seat.</strong> A domain expert who sees a wrong report, says what should have happened, and re-runs is doing exactly what the teacher does: contrasting an observed failure against a known-correct reference and emitting procedural guidance. The two gates transfer directly — reject any edit that names a fixture-specific constant, and admit an edit only after the frozen runtime reproduces the corrected outcome from the edit alone. Framing the loop this way in the related-work chapter is honest and positions our contribution precisely: the mechanism is theirs, the teacher is a person, and the person owns desk semantics that no ground-truth answer key encodes.</p>
+</div>
+
+<p>Three further consequences.</p>
+
+<p>The first is a <strong>lint rule we get for free</strong>. Leakage control says a patch containing the instance-specific answer must be discarded before validation. Translated: no skill may contain a constant that only makes sense for one fixture — a hard-coded date, a specific account number, a magic threshold that came from one report. This is the same rule SKILL-USE arrives at from its exclusivity requirement, and having two independent papers converge on it makes it one of the few structural checks I would be confident putting in the reviewer before we have measured anything. It is also cheap: a regex over the skill text against the fixture corpus catches most of it.</p>
+
+<p>The second is that <strong>the <code>when</code> / <code>repair</code> / <code>avoid_when</code> schema is a better skill format than what we have</strong>, and specifically the third field is. Most skill formats — including the ByteDance baseline's — express applicability but not exclusion, so there is nowhere to record "this procedure explicitly does not apply here". The walkthrough showed why that matters: the boundary discovered by a failed compatibility check is real knowledge, and without an exclusion field it has no home and gets rediscovered every time. In the SoK's vocabulary this is making the applicability condition $C$ two-sided rather than one-sided, and it is a small schema change with a large effect on what the library can remember.</p>
+
+<p>The third is a <strong>scoping judgment</strong>. Consolidation is a scale problem: it matters when the fork count is large enough that near-duplicates are a real cost, which will not be true during an internship. So this belongs in the design doc as the specified protocol for a later phase, and in the report as future work with a concrete experiment attached — replay-gated consolidation versus semantic merging across forked desk skills, scored on a helped/hurt ledger rather than aggregate accuracy. Building it now would be premature; leaving it unspecified would mean someone later does the semantic merge that this paper shows destroys validated behaviour.</p>
+
+<p>Two warnings that bear on the harness rather than the library. <strong>Our outputs are not single answers.</strong> The compatibility formula's $\rho(m, x) \in \{0,1\}$ assumes a verifier that says solved or not solved; a generated report is a document with many partially-correct properties, and collapsing that to a bit is a modelling decision we would have to make and defend. The natural move is to define $\rho$ against the same deterministic contract the admission harness already uses — schema conformance plus golden-diff — so that "solved" means the same thing everywhere in the system. And <strong>replay cost compounds with fixture count</strong>. Since we already need repeated runs per fixture for the reliability reasons SKILL-USE establishes, and paired baseline rollouts for the net-effect reasons SkillGen establishes, adding cross-replay over validated scopes on top of both is the point where the harness's compute budget becomes a design constraint rather than an afterthought.</p>
+
+<p class="fn">Y. He and W. Yang, "SkillCommit: Evolving Agent Skills through Behaviorally Validated Scope Expansion," arXiv:2608.15165v1 [cs.AI], 15 August 2026. Nanjing University and HKUST (Guangzhou). Section references are to that version. The paper cites an Appendix A for prompt templates and an Appendix B for per-dataset settings; neither is present in the copy read for this report, so $\gamma$ and $L$ are quoted as unspecified.</p>
+</div>

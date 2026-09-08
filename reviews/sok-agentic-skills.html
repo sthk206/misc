@@ -1,0 +1,434 @@
+<title>SoK: Agentic Skills, Explained</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F7F5F1; --surface:#FFFFFF; --ink:#232A35; --muted:#5A6478;
+  --line:#DDD7CB; --accent:#2C5E8A; --accent-ink:#FFFFFF; --accent-soft:#EAF0F6;
+  --warn:#C2410C; --warn-soft:#FBEDE5; --code-bg:#EFECE5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+    --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+    --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+  --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+  --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--ground); color:var(--ink); font-family:"Source Serif 4",Georgia,serif;
+  font-size:1.125rem; line-height:1.68; margin:0;}
+.wrap{max-width:46rem; margin:0 auto; padding:0 1.25rem 5rem;}
+header.masthead{border-bottom:2px solid var(--ink); padding:2.5rem 0 1.5rem; margin-bottom:2rem;}
+.series{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 1rem;}
+h1{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:2.1rem; line-height:1.15;
+  margin:0 0 .75rem; text-wrap:balance;}
+.dek{font-size:1.15rem; color:var(--muted); margin:0 0 1rem; font-style:italic;}
+.meta{font-family:"IBM Plex Mono",monospace; font-size:.78rem; color:var(--muted);}
+nav.toc{background:var(--surface); border:1px solid var(--line); padding:1.1rem 1.4rem; margin:2rem 0;}
+nav.toc p{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.8rem;
+  text-transform:uppercase; letter-spacing:.1em; margin:0 0 .5rem; color:var(--muted);}
+nav.toc ol{margin:0; padding-left:1.2rem; font-size:.95rem; line-height:1.9;}
+nav.toc a{color:var(--accent); text-decoration:none;}
+nav.toc a:hover, nav.toc a:focus{text-decoration:underline;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin:3rem 0 .25rem;}
+h2{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:1.5rem; line-height:1.2;
+  margin:.1rem 0 1rem; text-wrap:balance;}
+h3{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:1.1rem; margin:1.8rem 0 .6rem;}
+p{margin:0 0 1.1rem;}
+a{color:var(--accent);}
+strong{font-weight:600;}
+.callout{border:1px solid var(--line); background:var(--surface); padding:1.1rem 1.4rem; margin:1.6rem 0;}
+.callout .label{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.75rem;
+  text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:.5rem;}
+.example{border-left:4px solid var(--accent); background:var(--accent-soft);}
+.example .label{color:var(--accent);}
+.hostile{border-left:4px solid var(--warn); background:var(--warn-soft);}
+.hostile .label{color:var(--warn);}
+.landing{background:var(--accent-soft); border:2px solid var(--accent);}
+.landing .label{color:var(--accent);}
+.fidelity{border-left:4px solid var(--muted); background:var(--surface);}
+.fidelity .label{color:var(--muted);}
+.walkthrough{border-top:2px solid var(--accent); border-bottom:2px solid var(--accent);
+  padding:1.5rem 0 .5rem; margin:2rem 0;}
+.beat{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent); margin:2rem 0 .3rem;}
+code{font-family:"IBM Plex Mono",monospace; font-size:.88em; background:var(--code-bg);
+  padding:.12em .35em; border-radius:3px;}
+pre{background:var(--code-bg); padding:1rem 1.2rem; overflow-x:auto; font-family:"IBM Plex Mono",monospace;
+  font-size:.85rem; line-height:1.55; margin:1.2rem 0; border-radius:4px;}
+pre code{background:none; padding:0;}
+table{width:100%; border-collapse:collapse; font-size:.92rem; margin:0;
+  font-variant-numeric:tabular-nums;}
+th{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.78rem; text-transform:uppercase;
+  letter-spacing:.06em; text-align:left; padding:.5rem .7rem; border-bottom:2px solid var(--ink);
+  color:var(--muted);}
+td{padding:.5rem .7rem; border-bottom:1px solid var(--line);}
+.table-wrap{overflow-x:auto; margin:1.2rem 0;}
+.math-block{overflow-x:auto; margin:1.4rem 0; text-align:center; font-size:1.05rem;}
+.fn{font-size:.82rem; color:var(--muted); border-top:1px solid var(--line); margin-top:3rem; padding-top:1rem;}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{fontCache:'global'}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+<div class="wrap">
+<header class="masthead">
+  <p class="series">AutoSkill · Deep Dive 01</p>
+  <h1>SoK: Agentic Skills — Beyond Tool Use in LLM Agents</h1>
+  <p class="dek">A map of a field that did not know it was one. Its most useful contribution is not the taxonomy everyone will cite, but a four-part definition sharp enough to say exactly which part of a skill is broken — and an admission, in the closing pages, that nobody yet knows how to decide when a generated skill is safe to keep.</p>
+  <p class="meta">Jiang, Li, Deng, Ma, Wang, Wang &amp; Yu · University of Technology Sydney &amp; CSIRO Data61 · arXiv 2602.20867 · 24 February 2026</p>
+</header>
+
+<nav class="toc">
+<p>Contents</p>
+<ol>
+<li><a href="#what">What this paper is, and what a map is worth</a></li>
+<li><a href="#tuple">The four-tuple: what a skill actually is</a></li>
+<li><a href="#boundary">What a skill is not</a></li>
+<li><a href="#lifecycle">Seven stages, and the ones nobody implements</a></li>
+<li><a href="#patterns">Seven design patterns, and what each one costs</a></li>
+<li><a href="#taxonomy">Representation, scope, and the empty regions</a></li>
+<li><a href="#acquisition">Where skills come from, and how one gets chosen</a></li>
+<li><a href="#walkthrough">The framework end to end, on one example</a></li>
+<li><a href="#security">Six threats, four trust tiers, and what happened on ClawHub</a></li>
+<li><a href="#evidence">The evidence base, and how much weight it can carry</a></li>
+<li><a href="#hostile">Where a hostile reviewer attacks first</a></li>
+<li><a href="#landing">What this means for AutoSkill</a></li>
+</ol>
+</nav>
+
+<p class="eyebrow" id="what">01</p>
+<h2>What this paper is, and what a map is worth</h2>
+
+<p>A Systematization of Knowledge paper — SoK, a genre borrowed from the security community — does not report an experiment. It reads everything published on a topic and imposes an order on it: definitions, taxonomies, a shared vocabulary, and an argued list of what remains unsolved. The value is entirely in whether the order it imposes is the right one, which makes it a strange thing to evaluate. There is no accuracy number to check. There is only the question of whether, after reading it, you can say something you could not say before.</p>
+
+<p>The observation this one is built on is worth stating plainly, because everything else follows from it. LLM agents re-derive their procedures constantly. An agent that has successfully debugged a null-pointer exception a hundred times approaches the hundred-and-first as if it were novel, because whatever it worked out the previous hundred times lived in a context window that has since been discarded. The authors' phrase for what is missing is <em>procedural knowledge</em>: not facts about the world, which retrieval systems already handle, but knowledge of how to do a thing, in a form that survives the end of a session and can be loaded again on purpose.</p>
+
+<p>The artifact that carries that knowledge is what the field has started calling a <strong>skill</strong> — and the paper's first move is to notice that "skill" is being used for at least five incompatible things. A Voyager JavaScript function that a Minecraft agent wrote for itself is a skill. A markdown playbook in a <code>SKILL.md</code> file is a skill. A fine-tuned behavioural pattern baked into model weights is a skill. A plugin downloaded from a marketplace is a skill. These have almost nothing in common operationally, and papers about them cite each other as if they did.</p>
+
+<p>Methodologically, the survey is ordinary but honest about itself. The authors searched six databases — Google Scholar, Semantic Scholar, DBLP, the ACM Digital Library, IEEE Xplore, and arXiv — for keyword families like <em>agent skills</em>, <em>skill learning LLM</em>, and <em>procedural knowledge agents</em>, then followed citations forward and backward from a seed set of Voyager, ReAct, Reflexion, and SWE-agent. The window is January 2020 through February 2025, with one deliberate exception: SkillsBench, published February 2026, is included because it is the only source of quantitative evidence in the entire paper. Roughly 180 candidates became 65 retained papers, of which <strong>24 systems</strong> are analysed in depth in the mapping tables. Both taxonomies were built bottom-up from a feature matrix and revised through three passes until every system could be classified without forcing.</p>
+
+<p>Twenty-four systems is a small corpus for a taxonomy that is going to be cited as definitive, and the authors say so in their limitations section. Hold onto that number; it comes back in section eleven.</p>
+
+<p class="eyebrow" id="tuple">02</p>
+<h2>The four-tuple: what a skill actually is</h2>
+
+<p>The definition is the part of this paper that will still be useful in three years, so it is worth slowing down on. An agent interacts with an environment $E$ through an action space $A$, an observation space $O$, and a goal space $G$. At any moment it has an interaction history $H = (o_1, a_1, \ldots, a_{t-1})$ — the alternating record of what it saw and what it did. A skill library $\Sigma$ holds the skills available to it. Against that backdrop, Definition 1 says an agentic skill is a tuple:</p>
+
+<div class="math-block">
+$$S = (C, \pi, T, R)$$
+</div>
+
+<p>Four components, each of which answers a different question about the skill.</p>
+
+<p>$C$ is the <strong>applicability condition</strong>, a predicate $C : O \times G \to \{0,1\}$. It looks at what the agent is currently seeing and what it is currently trying to achieve, and returns yes or no: <em>is this skill the right thing to use right now?</em> This is the component that decides whether a skill fires at all. The authors note that implementations often compute a soft score $C : O \times G \to [0,1]$ and threshold it, and that they present the binary form as a simplifying convention.</p>
+
+<p>$\pi$ is the <strong>executable policy</strong>, a mapping $\pi : O \times H \to A \cup \Sigma$. Given what the agent sees and everything that has happened so far, it produces either a primitive action from $A$ or a call to another skill from $\Sigma$. That second option is the entire basis of composition: when $\pi$ returns a skill rather than an action, you have hierarchy. The definition is deliberately agnostic about how $\pi$ is implemented — it can be a prompt template, a Python function, a neural network, or a mixture.</p>
+
+<p>$T$ is the <strong>termination condition</strong>, $T : O \times H \times G \to \{0,1\}$, which says when the skill is finished — successfully or otherwise — relative to the goal. Without it, a caller has no way to know when control comes back.</p>
+
+<p>$R$ is the <strong>reusable callable interface</strong>, $R = (\textit{name}, \textit{params}, \textit{returns})$: the metadata and type contract by which the skill can be invoked programmatically by the agent, by another skill, or by an orchestrator.</p>
+
+<p>The argument that these four are the <em>right</em> four is made by subtraction, and it is the most persuasive paragraph in the paper. Remove $C$ and you have a policy that cannot select itself — something has to tell it when to run. Remove $T$ and you have a policy that cannot compose, because a caller does not know when to resume. Remove $R$ and you have internal knowledge that cannot be invoked programmatically. Remove $\pi$ and you have metadata describing a capability that does not exist. Each deletion breaks a distinct property, which is what a minimal schema is supposed to do.</p>
+
+<p>There is a lineage here worth knowing, because it will matter for how you read anything in this literature that talks about hierarchy. In reinforcement learning, the <em>options framework</em> of Sutton, Precup and Singh formalises a temporally extended action — "walk to the door" rather than "move left one step" — as a triple $(I, \pi, \beta)$: an initiation set $I$ of states where the option may start, a policy $\pi$ that runs while the option is active, and a termination function $\beta$ giving the probability of stopping in each state. Agentic skills map onto this almost exactly, with $C$ playing the role of $I$ and $T$ the role of $\beta$. The one addition is $R$. Options are selected implicitly by a higher-level policy that was trained to choose among them; nothing calls an option <em>by name</em>. Agentic skills are invoked explicitly, so they need a name and a signature, and that is why the tuple has four components rather than three.</p>
+
+<p>You will not need much more RL than that for this paper, and where the vocabulary reappears — <em>rollout</em> for one full run of the agent on one task, <em>trajectory</em> for the recorded sequence of what happened during it — the meaning is the everyday one.</p>
+
+<p class="eyebrow" id="boundary">03</p>
+<h2>What a skill is not</h2>
+
+<p>Having defined the thing, the paper spends a section drawing borders around it, comparing skills against four neighbours along five dimensions. The comparison is more useful than it sounds, because most confusion in this literature comes from calling one of these a skill.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Abstraction</th><th>Unit of reuse</th><th>Execution semantics</th><th>Verification surface</th><th>Governance surface</th></tr></thead>
+<tbody>
+<tr><td>Tool</td><td>Single API call</td><td>Stateless, single invocation</td><td>Input/output schema</td><td>Permission per tool</td></tr>
+<tr><td>Plan</td><td>Task decomposition</td><td>One-time reasoning scaffold</td><td>Step consistency</td><td>Ephemeral — none</td></tr>
+<tr><td>Episodic memory</td><td>Stored observation</td><td>Retrieval, no direct execution</td><td>Relevance, recency</td><td>Access control on store</td></tr>
+<tr><td>Prompt template</td><td>Text fragment</td><td>Injected into context window</td><td>Output quality</td><td>Template authorship</td></tr>
+<tr><td><strong>Agentic skill</strong></td><td><strong>Procedural module</strong></td><td><strong>Callable workflow with termination</strong></td><td><strong>Outcome correctness, safety</strong></td><td><strong>Trust tiers, provenance</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>A <strong>tool</strong> is an atomic call with a fixed interface and no internal decision-making — the analogy offered is a system call versus a library routine, and it is a good one. A <strong>plan</strong> is a reasoning artifact produced during a session and discarded at the end of it; a plan may <em>select</em> skills, but it is not one. <strong>Episodic memory</strong> stores what happened, which is declarative; skills store how to act, which is procedural. And a <strong>prompt template</strong> is a static text fragment with no applicability condition, no termination logic, and no callable interface — it can be part of a skill's $\pi$, but on its own it is one component out of four.</p>
+
+<p>That last distinction is the one that quietly does the most work later. Much of what the industry currently ships as a "skill" is, under this definition, a prompt template plus a name: it has $\pi$ and $R$, a vague natural-language gesture at $C$ in its description field, and no $T$ at all. The tuple gives you a precise way to say what is missing, which is exactly what section eight uses it for.</p>
+
+<p>The third framing the paper offers is cognitive. Anderson's ACT-R theory distinguishes declarative memory — facts and episodes — from procedural memory, the production rules encoding condition–action pairs, and observes that experts differ from novices less in what they know than in the richness of their procedural repertoire. The implication the authors draw is practical rather than decorative: the value of a skill is not convenience but <strong>reliability</strong>. A curated skill that has been verified across multiple contexts is more reliable than one generated ad hoc, for the same reason a tested library function is more reliable than inline code. That claim has an empirical shadow in SkillsBench, which we come to in section ten, and it is the intellectual foundation for everything the AutoSkill project is trying to build.</p>
+
+<p class="eyebrow" id="lifecycle">04</p>
+<h2>Seven stages, and the ones nobody implements</h2>
+
+<p>The paper's second organising device is a lifecycle: seven stages a skill passes through from first appearance to eventual retirement. <em>Discovery</em> identifies a recurring task pattern worth encapsulating. <em>Practice and refinement</em> improves the candidate through trial, reflection, and external feedback. <em>Distillation</em> extracts a stable, generalisable procedure and packages it into the $(C,\pi,T,R)$ tuple with metadata. <em>Storage</em> persists it in a library with indexing and versioning. <em>Retrieval and composition</em> selects skills at runtime and combines them. <em>Execution</em> runs the policy under sandboxing and permission controls. <em>Evaluation and update</em> monitors deployed performance and revises, replaces, or retires.</p>
+
+<p>The lifecycle is not linear, and the feedback edges are the interesting part: evaluation loops back to practice when a skill underperforms, retrieval loops back to storage when indexing fails to surface relevant skills, and execution loops back to discovery when runtime failures reveal a capability that does not yet exist.</p>
+
+<p>What makes the lifecycle worth having is its use as a diagnostic. Table 2 in the paper maps 24 systems against the seven stages, and the pattern in that table is stark once you look at the columns rather than the rows. Discovery, practice, distillation and storage are well covered. Evaluation is the sparsest column in the table, and where it is present it is usually a task-success signal borrowed from the benchmark the system was demonstrated on, not a property of the skill infrastructure itself. Nothing in the corpus systematically handles retirement.</p>
+
+<p>Two specific gaps the authors name are worth carrying forward. The first is that <strong>unsupervised discovery remains rare</strong>: every system in the corpus that claims autonomous skill learning still relies on a predefined curriculum, human demonstrations, or an explicit reward signal to tell it what is worth learning. The second is the distinction between <em>practice</em> and <em>distillation</em>, which sounds pedantic and is not. Practice improves a skill's reliability while leaving its form alone; distillation changes its representation — a verbose trajectory becoming a compact function, or prompt-level instructions becoming fine-tuned weights. Systems that conflate the two end up rewriting a skill's form when what was wrong was its reliability, which is a good way to lose behaviour that was working.</p>
+
+<p class="eyebrow" id="patterns">05</p>
+<h2>Seven design patterns, and what each one costs</h2>
+
+<p>The design patterns are the contribution most likely to get cited and the one I would treat most carefully. They describe how infrastructure manages skills — a system-level view, as opposed to the representation taxonomy in the next section, which describes what a skill intrinsically is. The authors arrange them along an autonomy axis, from human-controlled to fully autonomous.</p>
+
+<p><strong>Pattern 1, metadata-driven progressive disclosure.</strong> Skills are discovered through compact metadata — name, description, trigger conditions — that occupies minimal context. The full instructions load only when the skill is selected. This is Claude Code's model, and the Semantic Kernel plugin system does something similar. The benefit is scale: an agent can know about hundreds of skills while spending context on the few it activates. The risk is that everything now depends on metadata quality, because retrieval is matching against the description rather than the content. In tuple terms, this pattern is a bet that $C$ can be adequately approximated by an embedding match against $R$'s description field.</p>
+
+<p><strong>Pattern 2, code-as-skill.</strong> The skill is an executable program. Voyager generates JavaScript functions; CodeAct argues that representing agent actions as executable Python rather than structured JSON tool calls improves both expressiveness and verifiability. The advantage is determinism — same inputs, same outputs, and therefore ordinary software testing applies. The limitation is brittleness: code skills break when the underlying APIs, UI elements, or environmental conditions change.</p>
+
+<p><strong>Pattern 3, workflow enforcement.</strong> The skill imposes a hard-gated process: a test-driven-development skill that mandates writing tests before implementation and iterating until they pass, and does not let the agent skip or reorder. This trades flexibility for reliability and produces an audit trail. The authors make a subtle observation here — Pattern 3 operates at the <em>controller</em> level. It prescribes how the agent executes rather than constituting a reusable skill artifact itself, which means a workflow controller can host skills of other patterns.</p>
+
+<p><strong>Pattern 4, self-evolving skill libraries.</strong> The system evaluates its own trajectories and distils successful ones into new or refined skills. Voyager is the canonical instance. The central tension is quality control, and this is where the paper's one quantitative anchor first bites: SkillsBench reports that self-generated skills average <strong>−1.3 percentage points</strong> against a skill-free baseline, with only one of five tested configurations showing any improvement at all. Voyager and Eureka succeed in constrained environments with deterministic execution verification; the SkillsBench evidence says that success does not transfer to open-ended settings without such verification. Without oversight or robust verification, self-evolving libraries accumulate what the authors call <em>skill debt</em>.</p>
+
+<p><strong>Pattern 5, hybrid NL+code macros.</strong> Natural-language specification bundled with executable components in one package — Claude's skill system, which pairs markdown instructions with code blocks and references to external assets. Flexible and human-auditable, with the risk of <em>boundary ambiguity</em>: when the prose and the code disagree, the agent has to decide which to follow, and nothing tells it how.</p>
+
+<p><strong>Pattern 6, meta-skills.</strong> Skills whose purpose is to create, modify, or compose other skills. The authors are careful to distinguish this from Pattern 4: a meta-skill is a generative mechanism that fills the discovery gap, whereas a self-evolving library is a lifecycle arrangement. The named risk is <strong>recursive error amplification</strong> — a flawed meta-skill produces a flawed skill that is then used as input to further generation — and the authors' recommendation is quality gates at each generation step. This pattern is the closest thing in the taxonomy to what AutoSkill is.</p>
+
+<p><strong>Pattern 7, plugin/marketplace distribution.</strong> Versioned, distributable packages with dependency and compatibility metadata. Section nine is about what happens when this pattern meets no governance.</p>
+
+<p>Table 4 summarises the trade-offs across four dimensions — context cost, determinism, composability, governance — and the co-occurrence statistics under it are the most honest thing in the section. Systems in the corpus use a median of two patterns, range one to four. Five systems use exactly one pattern; twelve use exactly two; two systems (Claude Code and OpenClaw) use four. The most common pairing is Patterns 1+7, metadata plus marketplace, in four systems.</p>
+
+<p>I read those numbers as a warning about the taxonomy's discriminative power. If most systems occupy one of two or three combinations, a seven-category scheme is not carving the space very finely — it is mostly telling you whether a system is human-curated or self-evolving, which you knew. The authors get partway to this themselves, conceding that non-exclusivity "may limit the taxonomy's discriminative power for future systems that combine patterns in novel ways."</p>
+
+<p class="eyebrow" id="taxonomy">06</p>
+<h2>Representation, scope, and the empty regions</h2>
+
+<p>The second taxonomy is orthogonal to the first and operates at the level of the skill rather than the system. One axis is <strong>representation</strong> — how $\pi$ is encoded — with five categories ordered by increasing formality: natural language, code-as-skill, tool macros (a structured sequence of tool calls with parameterisation logic, sitting between interpreted prose and executed code), policy-based skills (a learned parameterised function, opaque but capable of capturing behaviour that resists explicit codification), and hybrid. The other axis is <strong>scope</strong> — what environment the skill operates over — with six categories: single-tool, multi-tool orchestration, web interaction, OS/desktop workflows, software engineering, and robotics.</p>
+
+<p>Two findings come out of the master table that maps all 24 systems onto pattern × representation × scope.</p>
+
+<p>The first is <strong>sparsity</strong>. Most systems cluster in one region: code-as-skill representation, self-evolving library pattern, in game or software-engineering environments. Large regions are empty — policy-based skills with marketplace distribution, natural-language skills under formal workflow enforcement. The authors are appropriately cautious about what emptiness means, noting these regions "may be inherently difficult (explaining the sparsity) or simply underexplored." That caution is right, and it also means the taxonomy cannot by itself tell you that an unoccupied cell is an opportunity.</p>
+
+<p>The second is that <strong>scope interacts with skill value in a non-obvious way</strong>. SkillsBench reports that skills yield the largest improvements in healthcare (+51.9 pp) and manufacturing (+41.9 pp), but only +4.5 pp in software engineering and +6.0 pp in mathematics. The hypothesis offered is that skills help most where the base model's pretraining data is sparse or insufficiently procedural, and least where the pretraining corpus is already saturated with the relevant procedures — there is a great deal of Python on the internet and comparatively little on how a particular hospital's intake workflow runs. The authors flag the obvious confounds: domain variance may also reflect differences in task construction, verifier strictness, and skill authoring quality across domains.</p>
+
+<p>If that hypothesis is even roughly right, it is the single most decision-relevant sentence in the paper for anyone deciding whether to build a skill platform for a particular domain, and I will come back to it in the closing section.</p>
+
+<p class="eyebrow" id="acquisition">07</p>
+<h2>Where skills come from, and how one gets chosen</h2>
+
+<p>Section 6 of the paper covers acquisition and orchestration, and two parts of it matter for us.</p>
+
+<p>Acquisition is presented as five modes ordered from most to least human involvement. <strong>Human authorship</strong> — a domain expert writes a procedure and registers it — scales poorly but produces high-reliability skills that are grounded in domain expertise and can be audited before deployment. <strong>Demonstration distillation</strong> extracts procedures from observed trajectories, whether human demonstrations, expert traces, or the agent's own successful completions; the hard part is generalisation, turning one specific instance into a skill that handles the broader class. <strong>Self-practice and exploration</strong> is Voyager's curriculum-driven loop, which enables continual learning without supervision but introduces quality risk: without external verification, agents may converge on locally optimal procedures, or on procedures that succeed by exploiting environment quirks rather than genuine task completion. <strong>Curriculum and feedback</strong> structures acquisition through progressively harder tasks with feedback from humans, AI judges, or reward models — and the authors note the trade-off crisply: human feedback is high-quality but expensive, AI judges are scalable but may miss subtle errors, reward models generalise but can be exploited through reward hacking. <strong>Meta-skills and self-evolving libraries</strong> is the fully autonomous end, and its named failure is the <em>quality ceiling problem</em>: without external grounding, the library cannot exceed the capability of the meta-skill itself, and errors in early generations propagate through subsequent ones.</p>
+
+<p>The orchestration half describes how a skill gets selected at runtime, and it contains a problem the paper explicitly leaves open. Two routing strategies dominate: <strong>embedding-based retrieval</strong>, where the task description is embedded and compared against skill description embeddings with the top-$k$ matches loaded into context, and <strong>LLM-mediated routing</strong>, where the agent reasons about which skill to invoke from metadata loaded through progressive disclosure. Hybrid strategies use embedding retrieval to narrow the candidate set and the agent's reasoning to pick the final skill, trading recall for precision.</p>
+
+<p>The open problem is <strong>skill conflict resolution</strong>. When two skills are simultaneously applicable — when $C_1(o,g) = 1$ and $C_2(o,g) = 1$ both hold — current systems break the tie with embedding similarity or ad hoc LLM judgment. There is no explicit conflict-resolution policy. The authors point at method specificity in hierarchical task networks and rule priority in production systems as principled analogues, and call it an open research problem. For a platform expecting many near-duplicate skills, this is not a footnote.</p>
+
+<div class="walkthrough">
+<p class="eyebrow" id="walkthrough">08</p>
+<h2>The framework end to end, on one example</h2>
+
+<div class="callout fidelity">
+<span class="label">A deviation, stated up front</span>
+<p>Every other report in this series runs the paper's algorithm on the digest agent and computes its gating arithmetic. This paper has no algorithm. A systematization's method <em>is</em> its framework, so what follows instantiates that framework — the tuple, the lifecycle, the patterns, the taxonomy, the trust tiers, the evaluation dimensions — against one concrete skill, in the paper's order and notation. Where I use a number it is one of the paper's own; where I extrapolate, the text says so.</p>
+</div>
+
+<p class="beat">Beat 1 · The starting state</p>
+
+<p>Priya has an agent that fetches new AI papers from arXiv each morning, picks the most relevant one, and writes her a short digest over coffee. Its behaviour is defined by a skill folder:</p>
+
+<pre><code>daily-paper-digest/
+  SKILL.md              # the procedure the agent follows
+  references/
+    arxiv-api.md        # how the arXiv Atom API works, query syntax, quirks
+  scripts/
+    fetch_arxiv.py      # deterministic fetch + XML parse -> papers.json
+</code></pre>
+
+<p>And the <code>SKILL.md</code> itself:</p>
+
+<pre><code>---
+name: daily-paper-digest
+description: Fetch today's new AI papers from arXiv, pick the most relevant one, and write a
+  short digest. Use when the user asks for their daily paper digest or "what's new today".
+---
+
+# Daily Paper Digest
+
+1. Call the arXiv API for papers submitted in the last 24 hours in cs.AI, cs.LG, and cs.CL.
+2. Rank the results by how well they match the user's interests in `interests.md`.
+3. Take the top paper. Fetch its abstract.
+4. Write a digest with four parts: the problem, what's new, why it matters, one example.
+5. Append the digest to `digests/YYYY-MM-DD.md`.
+</code></pre>
+
+<p>On a Sunday morning, arXiv has posted nothing in those three categories overnight. The agent runs step 1, gets an empty result set, and — because step 3 says "take the top paper" and nothing in the file says what to do when there is no top paper — writes Priya a confident digest of a paper that does not exist.</p>
+
+<p class="beat">Beat 2 · What the framework ingests</p>
+
+<p>The framework's input is the artifact itself: one skill folder, three files, and the observed behaviour. There are no trajectories to sample and no task split, because there is no loop. The first operation is to write the skill as a tuple.</p>
+
+<p class="beat">Beat 3 · Stage one — formalise as $S = (C, \pi, T, R)$</p>
+
+<p>$R = (\textit{name}, \textit{params}, \textit{returns})$ is the only component the file states explicitly, and it states it incompletely. The name is <code>daily-paper-digest</code>. There are no declared parameters and no declared return type; the skill's actual output is a side effect, an appended file at <code>digests/YYYY-MM-DD.md</code>. Under the paper's definition that is a partial $R$ — enough for a human to invoke, not enough for an orchestrator to type-check.</p>
+
+<p>$C : O \times G \to \{0,1\}$ exists only as prose in the description: "Use when the user asks for their daily paper digest or 'what's new today'." That is an applicability condition over the <em>request</em>, and it is not the applicability condition that failed on Sunday. What failed is a condition over the <em>observation</em>: the API returned zero entries, and the skill's steps 2 through 5 are not applicable to that observation at all. The file has no way of expressing this, because the entire body is $\pi$ and the only $C$ it has is a trigger phrase.</p>
+
+<p>$\pi : O \times H \to A \cup \Sigma$ is the numbered list, split across two representations — steps 2, 3 and 4 are natural-language judgment, step 1 is a call into <code>fetch_arxiv.py</code>. Note that $\pi$ here never returns an element of $\Sigma$: the skill never invokes another skill, so this is a flat, non-composing policy.</p>
+
+<p>$T : O \times H \times G \to \{0,1\}$ is <strong>absent</strong>. There is no statement of what completion means. Step 5 is the last line of the file, and "the file ended" is not a termination condition — it cannot distinguish success from a partial run, and it gives a caller nothing to test.</p>
+
+<p>The diagnosis falls straight out of the formalism, and this is the payoff of having it: the Sunday failure is not a bug in step 3. It is a <strong>missing $C$ over the observation space and a missing $T$</strong>. Section 2.1's argument by subtraction predicted exactly this shape of failure — "removing $C$ yields a policy that cannot self-select" — and the paper's own §8.4 discussion of negative-delta tasks names it as the general case: "a skill should activate only when its procedural knowledge is beneficial."</p>
+
+<p class="beat">Beat 4 · Stage two — place it on the lifecycle</p>
+
+<p>Seven stages, in the paper's order. <em>Discovery</em>: done by a human, Priya, who noticed she wanted a digest. <em>Practice/refinement</em>: none — the file has never been iterated against observed failures. <em>Distillation</em>: none. <em>Storage</em>: a folder on disk, with no index and no version. <em>Retrieval/composition</em>: metadata match against the description field, per Pattern 1. <em>Execution</em>: unsandboxed; the skill writes to the filesystem. <em>Evaluation/update</em>: <strong>none</strong>.</p>
+
+<p>Five of seven stages are absent or trivial, and the two missing ones are precisely the two the paper identifies as the sparsest column across all 24 surveyed systems. The digest agent is not unusually badly built; it is typical, in the specific way the corpus is typical.</p>
+
+<p class="beat">Beat 5 · Stage three — classify by pattern, and read the predicted risks</p>
+
+<p>The skill is <strong>Pattern 1</strong> (metadata-driven progressive disclosure: a description field decides whether the body loads) combined with <strong>Pattern 5</strong> (hybrid NL+code: prose instructions plus <code>fetch_arxiv.py</code> plus a reference document). Two patterns, which is the corpus median.</p>
+
+<p>Now read Table 3's weakness and risk columns for exactly those two rows, without knowing anything else about the agent. Pattern 1's weakness is "retrieval quality depends on metadata"; its primary risk is metadata poisoning. Pattern 5's weakness is "ambiguity at the NL/code boundary"; its primary risk is inconsistent interpretation.</p>
+
+<p>Both predictions land. The Sunday failure <em>is</em> the Pattern 1 weakness: the description is the whole of $C$, so a well-formed request retrieves the skill even when the observation makes it inapplicable. And the second standing failure mode of this agent — the example query <code>cat:cs.AI OR cat:cs.LG</code> with unencoded spaces, which makes arXiv return an empty feed with HTTP 200 — is the Pattern 5 weakness exactly: prose says one thing about the query, the script does another, and nothing arbitrates. A taxonomy that predicts an artifact's failure modes from its classification alone is doing real work, and this is the strongest evidence in the report that the pattern taxonomy is more than a filing system.</p>
+
+<p class="beat">Beat 6 · Stage four — representation × scope, and the trust tier</p>
+
+<p>On the intrinsic taxonomy the skill is <strong>hybrid representation</strong> at <strong>multi-tool orchestration</strong> scope: it sequences an HTTP fetch, a file read of <code>interests.md</code>, and a file append. Consulting the scope-value finding: this is closest to the paper's "office work" domain, and it is emphatically not software engineering or mathematics — which, if the pretraining-sparsity hypothesis holds, puts it in the band where curated skills should help more rather than less.</p>
+
+<p>On the trust model the skill sits at <strong>Tier 3</strong>, supervised execution, at best. It executes actions — a network call and a file write — and under Tier 3 each such action requires user approval or a constrained sandbox. In practice Priya runs it unattended every morning, which is <strong>Tier 4</strong>, autonomous execution, without the pre-configured permission boundaries and monitoring Tier 4 is supposed to require. The paper's rule is that tier should be <em>sticky and earned</em> — promoted only after a skill demonstrates reliable behaviour at Tier 3 over multiple invocations, demoted on a single safety violation. This skill was born at Tier 4.</p>
+
+<p class="beat">Beat 7 · The arithmetic the paper does supply</p>
+
+<p>There is no gate to compute, so the honest substitute is the paper's one quantitative instrument: the SkillsBench structural findings reported in §8.4, used as a predictive heuristic rather than a decision rule.</p>
+
+<p>The digest skill has <strong>three modules</strong> — <code>SKILL.md</code>, one reference document, one script. SkillsBench reports that focused skills with 2–3 modules yield the optimal improvement, <strong>+18.6 pp</strong>, while skills with 4 or more show diminishing returns at <strong>+5.9 pp</strong>. It also reports that "detailed" skills of moderate length improve by <strong>+18.8 pp</strong> whereas "comprehensive" exhaustive documentation <em>degrades</em> performance by <strong>−2.9 pp</strong>.</p>
+
+<p>Apply that to the obvious fix. The instinct on seeing the Sunday failure is to write more documentation: a reference file on empty-result handling, one on rate limiting, one on deduplication, one on output format. That takes the skill from three modules to seven and from "detailed" toward "comprehensive" — moving it, by the paper's own numbers, from the $+18.6$ band into the $+5.9$ band and from $+18.8$ toward $-2.9$. The framework's advice is the opposite of the instinct: fix the missing $C$ and $T$ <em>inside the existing file</em> and add nothing.</p>
+
+<p>I want to be explicit that this is extrapolation. Those percentage-point figures are averages over 86 tasks in eleven domains on a benchmark that has no digest-like task, and nothing in the paper licenses applying them to a specific skill. What survives the extrapolation is the direction, not the magnitude — and the direction is a genuine finding, because it contradicts what most authors do when a skill fails.</p>
+
+<p class="beat">Beat 8 · The next state, and what the baseline would have done</p>
+
+<p>The revised skill states its own applicability and termination:</p>
+
+<pre><code>---
+name: daily-paper-digest
+description: Fetch today's new AI papers from arXiv, pick the most relevant one, and write a
+  short digest. Use when the user asks for their daily paper digest or "what's new today".
+---
+
+# Daily Paper Digest
+
+Applies only when the fetch in step 1 returns at least one entry. If it returns zero
+entries, write "no new papers in cs.AI, cs.LG or cs.CL today" to today's digest file
+and stop — do not proceed to step 2.
+
+1. Run `scripts/fetch_arxiv.py`. It URL-encodes the query; do not hand-write the query
+   string. Zero entries is a valid result, not an error.
+2. Rank the results by how well they match the user's interests in `interests.md`.
+3. Take the top paper. Fetch its abstract.
+4. Write a digest with four parts: the problem, what's new, why it matters, one example.
+5. Append the digest to `digests/YYYY-MM-DD.md`.
+
+Done when today's digest file exists and contains either one digest or the no-papers line.
+</code></pre>
+
+<p>Three modules still. Slightly longer, not restructured. The added paragraph is $C$ over the observation space; the final line is $T$; the pointer in step 1 to the script as the sole owner of query construction resolves the Pattern 5 boundary ambiguity by declaring which side of the NL/code boundary wins.</p>
+
+<p>What would have happened without the framework? Priya reads the Sunday digest, sees a hallucinated paper, and patches the symptom: "if there are no papers, say so." That fixes Sunday. It does not touch the unencoded-query bug, which produces an <em>empty feed with HTTP 200</em> — the same zero-entry observation, arrived at for a different reason — and which will now silently report "no new papers today" every single day, forever, looking exactly like correct behaviour. The tuple predicted both defects from one root cause and fixed both in one edit. Symptom-patching fixes one and disguises the other. That divergence is what the framework buys, and it is worth more than the taxonomy it is usually cited for.</p>
+</div>
+
+<p class="eyebrow" id="security">09</p>
+<h2>Six threats, four trust tiers, and what happened on ClawHub</h2>
+
+<p>Section 7 is the most concrete part of the paper, and it earns its length because it is anchored in a real incident.</p>
+
+<p>The threat model names six categories. <strong>Poisoned skill retrieval</strong> crafts metadata so a malicious skill surfaces for benign queries — SEO poisoning for agents, exploiting Pattern 1. <strong>Malicious skill payloads</strong> put unauthorised actions in $\pi$: supply-chain attack for code skills, prompt injection for natural-language ones. <strong>Cross-tenant leakage</strong> is a skill authored by one team reaching another team's data in shared infrastructure. <strong>Skill drift exploitation</strong> is an attacker changing the environment a skill navigates so that behaviour changes without the skill file changing at all. <strong>Confused deputy via environmental injection</strong> is subtler and, I think, the most under-appreciated: the agent reads an untrusted web page or user document containing adversarial instructions that coerce it into misusing an otherwise benign privileged skill. The skill is uncompromised; the attack lives in the boundary between the observation space $O$ and skill invocation, which means skill-level trust verification cannot see it at all. And <strong>applicability condition poisoning</strong> manipulates $C$ so a skill returns $C(o,g)=1$ universally — an attack on the formal model itself.</p>
+
+<p>The defence proposed is a four-tier trust model. <strong>Tier 1</strong>, metadata only: the agent sees name and description, loads nothing. <strong>Tier 2</strong>, instruction access: natural-language instructions enter the context window and may influence reasoning. <strong>Tier 3</strong>, supervised execution: actions run, but each requires approval or a constrained sandbox. <strong>Tier 4</strong>, autonomous execution, subject to pre-configured permission boundaries and monitoring. Untrusted skills default to Tier 1; escalation is explicit and backed by provenance verification; tiers are sticky upward and a single safety violation triggers demotion.</p>
+
+<p>The authors flag a hole in their own scheme, which is to their credit. Tier 2 provides meaningful isolation <em>only</em> when the runtime enforces a read-only mode during instruction loading, with tool execution gated behind a separate approval channel. Without that architectural separation between reasoning and action, Tier-2 instructions can induce tool invocations through the agent's ordinary decision loop — which collapses Tier 2 into Tier 3 in practice. Most systems do not have that separation.</p>
+
+<p>Then the case study, which is what makes the section stick. The ClawHavoc campaign against OpenClaw's ClawHub skill registry is the first large-scale empirical evidence of skill supply-chain exploitation. Within weeks of the registry's launch, researchers identified <strong>1,184 malicious skills</strong>; a separate audit found that <strong>36.8% of all published skills contained at least one security flaw</strong>. Twelve publisher accounts were involved, with a single account responsible for 677 packages — 57% of all malicious listings. The platform's most-downloaded skill contained nine vulnerabilities including two critical ones, with its ranking artificially inflated through roughly four thousand faked downloads. A separate Snyk audit found 283 of 3,984 skills — 7.1% — exposing sensitive credentials in plaintext through LLM context windows and output logs. Over 135,000 exposed OpenClaw instances were detected across 82 countries. The primary payload harvested LLM API keys from <code>.env</code> files, cryptocurrency wallet keys across sixty-plus wallet types, browser-stored passwords and autofill data, SSH keys and Keychain credentials. Ninety-one percent of malicious skills included prompt-injection payloads that weaponised the agent itself as an accomplice.</p>
+
+<p>The analytical payoff comes in the subsection on why traditional scanners fail, and it is the best argument in the paper for why the four-tuple is worth having. Conventional malware scanning covers only a small subset of the tuple. It can partially inspect $\pi_{\text{code}}$, the executable part of the policy. It cannot assess the semantics of $R$'s metadata, so name-squatting and inflated download counts pass. It has no notion of $C$, so a skill with a maximally overbroad applicability predicate looks fine. It cannot read $\pi_{\text{NL}}$, so a <code>curl</code> command hidden in setup instructions, or a directive to ignore safety guidelines, is labelled benign because it is syntactically valid text. And it cannot reason about $T$, so a termination condition that exits early to evade logging, or fails to terminate in order to hold persistent background access, triggers nothing.</p>
+
+<p>Skill-native auditing tools have emerged in response, and the paper describes a three-layer architecture mapped onto the tuple: a rule engine with AST analysis auditing $\pi_{\text{code}}$ and $R$; LLM semantic analysis auditing $\pi_{\text{NL}}$ and $C$ for hidden intent and overbroad activation scope; and reputation scoring aggregating across all four components into a 0–100 band. On a controlled evaluation of 39 test cases, including four adversarial samples that VirusTotal had marked benign, the tools reported no false positives on the legitimate skills in that set. Thirty-nine cases is a demonstration, not a validation, and the paper does not claim otherwise.</p>
+
+<p class="eyebrow" id="evidence">10</p>
+<h2>The evidence base, and how much weight it can carry</h2>
+
+<p>Section 8 proposes five evaluation dimensions — correctness, robustness, efficiency, generalisation, safety — and argues a position I expect this project to test directly: <strong>deterministic evaluation harnesses are preferable to human or LLM grading</strong>, because they measure outcomes against ground-truth environment state at low cost and can be integrated into a development pipeline. The design principle is outcome-based verification: judge whether the intended outcome was achieved, not the elegance of the approach. The benchmark-to-dimension mapping table makes the coverage problem visible — no single benchmark covers all five dimensions, and safety is essentially uncovered across the eight benchmarks surveyed.</p>
+
+<p>Then comes the anchor case study, and it deserves scrutiny because nearly every quantitative claim in the paper routes through it. SkillsBench evaluates 86 tasks across 11 domains using 7 agent-model configurations over 7,308 trajectories, with each task assessed under three conditions — no skills, curated skills, self-generated skills — against deterministic verifiers.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Finding</th><th>Number</th></tr></thead>
+<tbody>
+<tr><td>Curated skills vs no skills</td><td>+16.2 pp (24.3% → 40.6%)</td></tr>
+<tr><td>Self-generated skills vs no skills</td><td>−1.3 pp average</td></tr>
+<tr><td>Best self-generated configuration</td><td>+1.4 pp (Claude Opus 4.6)</td></tr>
+<tr><td>Worst self-generated configuration</td><td>−5.6 pp (Codex + GPT-5.2)</td></tr>
+<tr><td>Skills with 2–3 modules</td><td>+18.6 pp</td></tr>
+<tr><td>Skills with 4+ modules</td><td>+5.9 pp</td></tr>
+<tr><td>"Detailed" skills</td><td>+18.8 pp</td></tr>
+<tr><td>"Comprehensive" skills</td><td>−2.9 pp</td></tr>
+<tr><td>Small model + skills vs large model bare</td><td>27.7% (Haiku 4.5) vs 22.0% (Opus 4.5)</td></tr>
+<tr><td>Tasks degraded by skills</td><td>16 of 84, worst −39.3 pp</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Three of these deserve comment beyond their face value.</p>
+
+<p>The self-generated result is the load-bearing one for this project, because it is the empirical case for admission gating. Skills that models write for themselves, without verification, make things <em>worse</em> on average. Not neutral — worse. Only one configuration out of five showed any gain, and it was +1.4 pp, well inside what I would expect from noise on 86 tasks.</p>
+
+<p>The "skills as compute equalisers" result is the one most likely to be over-read. Haiku 4.5 with curated skills reaching 27.7% against Opus 4.5 bare at 22.0% is a striking headline, and the paper is careful to frame it as suggesting skill libraries "may serve as a practical cost-reduction mechanism." That is the right hedge. It is one comparison, on one benchmark, at one point on the cost curve.</p>
+
+<p>The negative-delta tasks are the most useful for building a reviewer. Sixteen tasks out of eighty-four degrade with skills, worst case −39.3 pp, and the paper's diagnosis is that these are tasks "where the base model already performs well and skills introduce conflicting guidance." That is a failure of $C$: the skill fired when it should not have. It gives an authoring reviewer a concrete thing to check that has nothing to do with whether the skill is well written.</p>
+
+<p>Two arithmetic notes, because they matter for how carefully you cite this paper. First, 40.6 minus 24.3 is 16.3, not the 16.2 the paper states — a rounding artifact of the underlying numbers, harmless, but a reminder to quote the paper's figure rather than recompute it. Second, and less harmless: §8.4 says the benchmark comprises <strong>86 tasks</strong>, and the negative-delta finding is reported over <strong>84 tasks</strong>. The paper never explains the difference. Your existing note on the primary SkillsBench source records different figures again (+16.6 pp, 13 of 87 negative-delta), which is consistent with the two documents describing different benchmark releases — see <code>notes/skillsbench.md</code>. Cite the primary source with the release noted, and treat SoK's numbers as the SoK's.</p>
+
+<p class="eyebrow" id="hostile">11</p>
+<h2>Where a hostile reviewer attacks first</h2>
+
+<div class="callout hostile">
+<span class="label">The strongest objections</span>
+<p>Every quantitative claim in a 20-page systematization traces to <strong>one non-peer-reviewed benchmark</strong>. The authors say this themselves — "the quantitative findings in this subsection derive primarily from a single, non-peer-reviewed benchmark" — and it is the correct disclosure, but it means the paper's most cited sentences ("curated skills help, self-generated skills hurt") rest on an unreplicated result. Strip SkillsBench out and the paper is a taxonomy with no numbers.</p>
+<p>The <strong>seven design patterns were derived bottom-up by the authors and never externally validated</strong>. No expert survey, no formal concept analysis, no inter-rater agreement on the classification of the 24 systems. Combined with non-exclusivity and a median of two patterns per system, the taxonomy risks being a description of the authors' reading rather than a structure in the field.</p>
+<p>The <strong>deterministic-harness position is advocated, not demonstrated</strong>. Section 8.2 argues that deterministic verification beats LLM judging, and this is presented as a design principle rather than a tested hypothesis. No experiment in the paper compares the two.</p>
+<p><strong>Corpus recency and coverage.</strong> The search window closes in February 2025 with one exception, so the corpus skews to 2023–24 academic systems, and 24 systems analysed in depth from 65 retained papers is thin. Production frameworks — LangChain/LangGraph for composition, DSPy for declarative compilation — and safety benchmarks are acknowledged as under-represented.</p>
+<p>The <strong>84-versus-86 task discrepancy</strong> in §8.4 is small but sits in the paper's single evidentiary anchor, which is exactly where an inconsistency is least affordable.</p>
+</div>
+
+<p>Against that, two things hold up under pressure. The <strong>tuple</strong> is genuinely load-bearing: it is used to diagnose why malware scanners fail, to structure the auditing architecture, to explain negative-delta tasks, and — as section eight showed — to locate a defect in a concrete skill file. A definition that does that much work is not decoration. And the <strong>ClawHavoc case study</strong> is real empirical evidence about a real registry, independent of SkillsBench entirely.</p>
+
+<p>My overall read: cite this paper for the definition, the lifecycle vocabulary, the security analysis, and above all for §10.1's framing of the open problem. Do not cite it as evidence for anything quantitative — go to SkillsBench directly, and say which release you mean.</p>
+
+<p class="eyebrow" id="landing">12</p>
+<h2>What this means for AutoSkill</h2>
+
+<div class="callout landing">
+<span class="label">Adoptable, with conditions</span>
+<p><strong>Use the tuple as the harness's metric vocabulary.</strong> Every evaluation this project has been asked for maps onto a component: does the agent trigger the right skill maps to $C$; does it follow the prescribed steps maps to $\pi$; does the output honour its contract maps to $T$ and $R$; do sandbox permissions hold maps to $R$. That is not a cosmetic relabelling — it means a reviewer finding can name which component is defective, and it makes the eval suite's coverage legible at a glance. Adopt it in both the design doc and the MScAC report.</p>
+<p><strong>§10.1 is the citation that establishes the research question is open.</strong> "The key obstacle is no longer skill generation itself, but verification at the point of admission into the skill library," with the explicit proposal to treat skills like software artifacts in continuous integration and evaluate newly generated skills against held-out task distributions before they become reusable. That is the AutoSkill admission harness, named as an open problem by a survey, four months before we build it. It is the single most valuable sentence in the paper for the report's introduction.</p>
+<p><strong>§9's curation–scalability tradeoff predicts our setting is favourable.</strong> The paper's position is that verification-gated self-generation succeeds in constrained environments with deterministic execution feedback (Voyager, Eureka) and has not been shown to work in open-ended multi-domain settings. Skills that orchestrate deterministic pipelines and produce checkable report structures are squarely the constrained case. That is an argument the design doc should make explicitly, with this citation.</p>
+</div>
+
+<p>Three findings cut against the grain of what a platform team's instincts would be, and those are the ones worth acting on.</p>
+
+<p>The first is <strong>compactness</strong>. Focused skills with two or three modules outperform four-or-more by roughly three to one in the reported effect, and exhaustive documentation is <em>negative</em>. The natural response to an authoring platform for non-programmers is to give them templates with many reference files and a comprehensive knowledge section. The evidence says that is backwards, and the walkthrough in section eight showed why: the fix for a broken skill is usually a tighter $C$, not more prose. If our reviewer has one structural rule, it should be a module-count and length ceiling — and testing whether that ceiling actually predicts execution reliability is a clean experiment, since it is currently an unvalidated claim in both this paper and Anthropic's own best-practices document.</p>
+
+<p>The second is the <strong>domain-value hypothesis</strong>, which is genuinely encouraging for this project. Skills help most where the base model's pretraining data is sparse or insufficiently procedural — healthcare +51.9 pp, manufacturing +41.9 pp — and least where it is saturated, software engineering +4.5 pp. An internal risk-reporting workflow at one bank is about as far from the public pretraining distribution as it is possible to get, which predicts a large effect size for well-authored skills in our setting. This is a hypothesis with obvious confounds, not a result, and the honest thing is to treat it as a reason to <em>measure</em> our effect size rather than an assurance that it will be large.</p>
+
+<p>The third is <strong>conflict resolution</strong>, and it is the gap in the ByteDance baseline this paper makes most visible. If new desks fork from a small set of prebuilt skills, the library fills with near-duplicates whose applicability conditions overlap heavily — many skills for which $C_i(o,g) = 1$ simultaneously. The paper says the field has no principled answer and points at method specificity in hierarchical task networks and rule priority in production systems as the places to look. Neither <code>skill-creator</code> nor <code>skill-reviewer</code> addresses this at all. A fork-lineage-aware tie-break — most specific applicability condition wins, ties broken by lineage depth — is a defensible contribution in its own right, and it is cheap to test against a deterministic harness.</p>
+
+<p>Two warnings. <strong>Meta-skill recursion</strong> is the paper's named risk for Pattern 6, which is the pattern AutoSkill instantiates: a flawed authoring agent produces flawed skills that become templates for further authoring, and errors compound across generations. The mitigation the paper recommends — quality gates at each generation step — is exactly the admission harness, which means the harness is not only the research contribution but the thing that keeps the authoring agent from degrading its own library. And <strong>trust tiers apply internally</strong>. It is tempting to treat first-party authored skills as trusted because no marketplace is involved, but the ClawHavoc analysis of confused-deputy attacks shows the attack that matters most does not require a malicious author at all: it requires an agent that reads an untrusted document while holding a privileged skill. In a bank, the documents the agent reads are exactly the untrusted surface. Skill files should be treated as untrusted input even when we wrote them, and the tier a skill runs at should be earned through demonstrated reliability rather than assigned at authoring time.</p>
+
+<p class="fn">Y. Jiang, D. Li, H. Deng, B. Ma, X. Wang, Q. Wang and G. Yu, "SoK: Agentic Skills — Beyond Tool Use in LLM Agents," arXiv:2602.20867v1 [cs.CR], 24 February 2026. University of Technology Sydney and CSIRO Data61. Section numbers in this report refer to that version. The paper has no appendix; its final five pages are references.</p>
+</div>

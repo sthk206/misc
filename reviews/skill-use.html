@@ -1,0 +1,503 @@
+<title>SKILL-USE, Explained</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F7F5F1; --surface:#FFFFFF; --ink:#232A35; --muted:#5A6478;
+  --line:#DDD7CB; --accent:#2C5E8A; --accent-ink:#FFFFFF; --accent-soft:#EAF0F6;
+  --warn:#C2410C; --warn-soft:#FBEDE5; --code-bg:#EFECE5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+    --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+    --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+  --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+  --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--ground); color:var(--ink); font-family:"Source Serif 4",Georgia,serif;
+  font-size:1.125rem; line-height:1.68; margin:0;}
+.wrap{max-width:46rem; margin:0 auto; padding:0 1.25rem 5rem;}
+header.masthead{border-bottom:2px solid var(--ink); padding:2.5rem 0 1.5rem; margin-bottom:2rem;}
+.series{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 1rem;}
+h1{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:2.1rem; line-height:1.15;
+  margin:0 0 .75rem; text-wrap:balance;}
+.dek{font-size:1.15rem; color:var(--muted); margin:0 0 1rem; font-style:italic;}
+.meta{font-family:"IBM Plex Mono",monospace; font-size:.78rem; color:var(--muted);}
+nav.toc{background:var(--surface); border:1px solid var(--line); padding:1.1rem 1.4rem; margin:2rem 0;}
+nav.toc p{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.8rem;
+  text-transform:uppercase; letter-spacing:.1em; margin:0 0 .5rem; color:var(--muted);}
+nav.toc ol{margin:0; padding-left:1.2rem; font-size:.95rem; line-height:1.9;}
+nav.toc a{color:var(--accent); text-decoration:none;}
+nav.toc a:hover, nav.toc a:focus{text-decoration:underline;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin:3rem 0 .25rem;}
+h2{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:1.5rem; line-height:1.2;
+  margin:.1rem 0 1rem; text-wrap:balance;}
+h3{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:1.1rem; margin:1.8rem 0 .6rem;}
+p{margin:0 0 1.1rem;}
+a{color:var(--accent);}
+strong{font-weight:600;}
+.callout{border:1px solid var(--line); background:var(--surface); padding:1.1rem 1.4rem; margin:1.6rem 0;}
+.callout .label{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.75rem;
+  text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:.5rem;}
+.example{border-left:4px solid var(--accent); background:var(--accent-soft);}
+.example .label{color:var(--accent);}
+.hostile{border-left:4px solid var(--warn); background:var(--warn-soft);}
+.hostile .label{color:var(--warn);}
+.landing{background:var(--accent-soft); border:2px solid var(--accent);}
+.landing .label{color:var(--accent);}
+.fidelity{border-left:4px solid var(--muted); background:var(--surface);}
+.fidelity .label{color:var(--muted);}
+.walkthrough{border-top:2px solid var(--accent); border-bottom:2px solid var(--accent);
+  padding:1.5rem 0 .5rem; margin:2rem 0;}
+.beat{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent); margin:2rem 0 .3rem;}
+code{font-family:"IBM Plex Mono",monospace; font-size:.88em; background:var(--code-bg);
+  padding:.12em .35em; border-radius:3px;}
+pre{background:var(--code-bg); padding:1rem 1.2rem; overflow-x:auto; font-family:"IBM Plex Mono",monospace;
+  font-size:.85rem; line-height:1.55; margin:1.2rem 0; border-radius:4px;}
+pre code{background:none; padding:0;}
+table{width:100%; border-collapse:collapse; font-size:.92rem; margin:0;
+  font-variant-numeric:tabular-nums;}
+th{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.78rem; text-transform:uppercase;
+  letter-spacing:.06em; text-align:left; padding:.5rem .7rem; border-bottom:2px solid var(--ink);
+  color:var(--muted);}
+td{padding:.5rem .7rem; border-bottom:1px solid var(--line);}
+.table-wrap{overflow-x:auto; margin:1.2rem 0;}
+.math-block{overflow-x:auto; margin:1.4rem 0; text-align:center; font-size:1.05rem;}
+.fn{font-size:.82rem; color:var(--muted); border-top:1px solid var(--line); margin-top:3rem; padding-top:1rem;}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{fontCache:'global'}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+<div class="wrap">
+<header class="masthead">
+  <p class="series">AutoSkill · Deep Dive 02</p>
+  <h1>SKILL-USE: Can LLMs Actually Use Skills in Agentic Harnesses?</h1>
+  <p class="dek">Everyone had been measuring whether a skill helps. Nobody had measured whether the agent follows it. When you finally do, the best configuration in the world scores 0.613 — and roughly half of that shortfall is the agent never opening the file.</p>
+  <p class="meta">Han, Xu, Liao, Wang, Jiang, Di, Lu, Hu &amp; Xiao · ECNU, HKUST, Fudan &amp; Tencent Hunyuan · arXiv 2608.04828 · 5 August 2026</p>
+</header>
+
+<nav class="toc">
+<p>Contents</p>
+<ol>
+<li><a href="#question">The question nobody was asking</a></li>
+<li><a href="#defs">Three definitions, and the score they combine into</a></li>
+<li><a href="#funnel">How you get 79 skills out of 105,586</a></li>
+<li><a href="#rubric">The rubric, and what counts as evidence</a></li>
+<li><a href="#walkthrough">The method end to end, on one example</a></li>
+<li><a href="#results">What the numbers actually show</a></li>
+<li><a href="#harness">Harness dependence, and what it does to leaderboards</a></li>
+<li><a href="#retrieval">Retrieval is the bottleneck</a></li>
+<li><a href="#restraint">Restraint is a different ability</a></li>
+<li><a href="#helps">Does following a skill help? The 0.5 turning point</a></li>
+<li><a href="#reliability">How reliable is the measurement itself</a></li>
+<li><a href="#hostile">Where a hostile reviewer attacks first</a></li>
+<li><a href="#landing">What this means for AutoSkill</a></li>
+</ol>
+</nav>
+
+<p class="eyebrow" id="question">01</p>
+<h2>The question nobody was asking</h2>
+
+<p>There is an assumption buried in almost every skill paper, and this one digs it out and tests it. The assumption is that pairing a capable agent with the right skill is all it takes to solve the corresponding task — that the hard part is <em>writing</em> a good skill, and once you have one, the agent will use it.</p>
+
+<p>Consider what that assumes. Under the progressive-disclosure interface that Claude Code popularised and Cursor, OpenClaw and Codex have since adopted, the agent does not receive the skill. It receives the skill's <em>name and one-line description</em>. To use the skill it must first decide the skill is relevant, then go and open the file, then read the procedure, then follow it. Three separate things can go wrong before a single prescribed step is executed, and the existing benchmarks measure none of them.</p>
+
+<p>The authors are precise about why. Two literatures come close and each covers half the problem. <strong>Skill-centric benchmarks</strong> — SkillsBench, SkillLearnBench — treat skills as artifacts and judge either their intrinsic quality or their marginal contribution to task success. Their evidence is the final outcome, not the consuming agent's behaviour. The closest of them, SLBench, scores adherence to the preconditions and orderings prescribed inside a skill, but it <em>preloads the full skill document</em>, which bypasses retrieval altogether. <strong>Instruction-following benchmarks</strong> — IFEval, FollowBench, ComplexBench, AgentIF — score constraint compliance, but their constraints concern surface properties of the output (format, length, wording) and they arrive verbatim in the prompt. A skill, by contrast, prescribes a domain procedure together with forbidden operations and reaches the agent only through progressive disclosure.</p>
+
+<p>So there is a hole exactly where the interesting question is, and SKILL-USE fills it. It is, per the paper's own comparison table, the only benchmark that jointly scores recognition, procedural adherence and restraint in an open environment at the level of process rather than final answer.</p>
+
+<p>Two framings are worth carrying through the rest of this report. The first is that this paper measures a <em>process</em>, not an outcome: everything is scored from the execution trajectory, not from whether the task got done. The second is that it treats the agent harness — the scaffolding that manages context, tools and control flow — as an experimental variable rather than a fixed background. That second choice turns out to matter more than anyone expected.</p>
+
+<p class="eyebrow" id="defs">02</p>
+<h2>Three definitions, and the score they combine into</h2>
+
+<p>An evaluation instance is a tuple $x = (s, q, \mathcal{E}, \mathcal{R})$: a skill $s$, a user task $q$, an executable sandbox $\mathcal{E}$, and a scoring rubric $\mathcal{R}$. The sandbox holds the files and tools the agent needs; the rubric is hidden from the agent and used only for evaluation.</p>
+
+<p>The skill itself is split in two: $s = (m, p)$, where $m$ is the <strong>metadata</strong> — name, short description, file path — and $p$ is the <strong>full procedure</strong>. The agent receives $(q, \mathcal{E}, m)$. It does not receive $p$. That split is the entire experimental apparatus: it is what makes retrieval a measurable event rather than an assumption.</p>
+
+<p>Running the agent produces an execution trajectory</p>
+
+<div class="math-block">
+$$\tau = (o_0, a_1, o_1, \ldots, a_T, o_T)$$
+</div>
+
+<p>where $o_0$ is the initial context, $a_k$ is the $k$-th action, and $o_k$ is the observation returned after it — plus a terminal artifact state $z_T$ holding the files the agent produced or modified. The recorded output is $y = (\tau, z_T)$. Both halves matter: some requirements are checkable only in the trajectory (did it call this tool, in this order) and others only in the artifacts (does the produced file have this structure).</p>
+
+<p>Three definitions follow.</p>
+
+<p><strong>Trigger</strong> asks whether the agent retrieved the relevant skill at all:</p>
+
+<div class="math-block">
+$$g(y; s) := \mathbb{I}[\mathrm{Retrieve}(s) \in \tau]$$
+</div>
+
+<p>Read that as: one if the act of retrieving skill $s$ appears somewhere in the trajectory, zero otherwise. It is a deterministic check on the trace, not a judgment.</p>
+
+<p><strong>Compliance</strong> asks how faithfully the prescribed procedure was followed. Let $\mathcal{R}^c$ be the set of prescribed skill requirements, each item $i$ carrying a weight $w_i > 0$ and a verifier $\phi_i$ that returns one exactly when the requirement is satisfied:</p>
+
+<div class="math-block">
+$$\mathrm{C}(y) := \frac{\sum_{i \in \mathcal{R}^c} w_i \phi_i(y)}{\sum_{i \in \mathcal{R}^c} w_i}$$
+</div>
+
+<p><strong>Boundary</strong> is the same construction over the set of prohibitions $\mathcal{R}^b$, where $\phi_i(y) = 1$ means the forbidden behaviour is <em>absent</em>:</p>
+
+<div class="math-block">
+$$\mathrm{B}(y) := \frac{\sum_{i \in \mathcal{R}^b} w_i \phi_i(y)}{\sum_{i \in \mathcal{R}^b} w_i}$$
+</div>
+
+<p>And the three consolidate into one gated score:</p>
+
+<div class="math-block">
+$$\mathrm{SU}(y) = g(y; s)\,[\alpha\,\mathrm{C}(y) + (1-\alpha)\,\mathrm{B}(y)], \qquad \alpha = 0.7$$
+</div>
+
+<p>The gate is the design decision worth pausing on. Because $g$ multiplies the whole bracket, an agent that never retrieves the skill scores <strong>zero</strong>, no matter how well it happened to perform. That is deliberate: credit for execution is only given after the skill has been triggered, so a model cannot earn points for accidentally doing the right thing by general competence. It also means SU conflates two very different failures — never opening the file, and opening it and ignoring it — which is why the paper always reports the three facets separately alongside the aggregate, and reports <em>conditional</em> variants (written Compliance$^\dagger$ and Boundary$^\dagger$) restricted to traces that did trigger.</p>
+
+<p>The weight $\alpha = 0.7$ gives Compliance the larger share on the grounds that it measures whether the agent enacts the prescribed procedure, while Boundary only guards against prohibited actions. The authors sweep $\alpha \in \{0.25, 0.5, 0.7, 0.75\}$ in the appendix and find model rankings identical across $\alpha \in [0.5, 0.75]$ on both harnesses; only the $\alpha = 0.25$ setting under one harness swaps a single adjacent pair, and even there Kendall's $\tau = +0.86$. So the choice is not fragile — for rankings. Section five shows it can be quite consequential for a single run.</p>
+
+<p class="eyebrow" id="funnel">03</p>
+<h2>How you get 79 skills out of 105,586</h2>
+
+<p>The construction pipeline is the most transferable part of this paper, because it is essentially a recipe for admitting skills into an evaluation — which is the AutoSkill problem in a different costume.</p>
+
+<p>Two criteria govern which real GitHub skills are usable at all, and both are subtle enough to be worth stating carefully. <strong>Skill exclusivity</strong> requires that the skill contain requirements which cannot be inferred from the task request or from generic good practice, so that scored behaviour can be attributed to the skill itself rather than to the model's competence. <strong>Process observability</strong> requires that the skill constrain <em>how</em> the agent acts and leave verifiable evidence in its trajectory or artifacts — tool choices, action ordering, prohibited operations. A skill that only says "write clean code" satisfies neither.</p>
+
+<p>Applying those to a hundred thousand candidates takes four phases, with cheap filters first because cost per candidate rises at each step.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Phase</th><th>In</th><th>Out</th><th>Dominant rejection</th></tr></thead>
+<tbody>
+<tr><td>1. Filter and cluster</td><td>105,586</td><td>15,000</td><td>low stars, duplicates</td></tr>
+<tr><td>2. Fetch under quota</td><td>1,500</td><td>1,000</td><td>fetch failure</td></tr>
+<tr><td>3. Rule scoring</td><td>1,000</td><td>400</td><td>generic, no rule</td></tr>
+<tr><td>4. Masked-skill evaluation</td><td>400</td><td>80–150</td><td>no exclusive rule</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Phase 1 drops entries below five stars, mirror aggregators, meta-skills that teach how to write skills, names that are pure numbers or contain <code>test</code>/<code>example</code>/<code>template</code>/<code>demo</code>, and names a prior benchmark already covers. Rather than imposing a fixed taxonomy on $10^5$ unknown skills — which would discard dense regions — they split names on hyphens and underscores, cluster the top 200 tokens, and have a language model propose 15 to 25 categories grounded in those clusters.</p>
+
+<p>Phase 3 is where the mechanism gets interesting. Each document $d$ is scored on two axes, constraint density and style specificity:</p>
+
+<div class="math-block">
+$$s_{\text{den}}(d) = \sum_i w_i^{\text{den}} f_i(d), \qquad s_{\text{sty}}(d) = \sum_j w_j^{\text{sty}} g_j(d)$$
+</div>
+
+<p>and admitted only if it clears <em>both</em> thresholds, $s_{\text{den}}(d) \ge \tau_{\text{den}}$ and $s_{\text{sty}}(d) \ge \tau_{\text{sty}}$, with $\tau_{\text{den}} = 0.30$ and $\tau_{\text{sty}} = 0.25$. The density features $\{f_i\}$ count modal terms — MUST, NEVER, ALWAYS, REQUIRED, FORBIDDEN, CRITICAL — plus code examples, good-versus-bad blocks, numbered rules, length, and guardrail sections. The style features $\{g_j\}$ count named tools and commands, process constraints, counter-intuitive rules, and machine-checkable cues. Requiring both thresholds is what rejects the two degenerate populations: documents that are dense but generic, and documents that are specific but thin.</p>
+
+<p>Phase 4 is the <strong>masked-skill check</strong>, and it is the cleverest instrument in the paper. Hide the skill document, give a strong model only the task prompt, and ask what it would do. Any requirement the model still meets is generic and gets dropped; only requirements it fails without the skill are genuinely skill-exclusive. A red-team attacker prompt then tries to refute each surviving constraint on skill-specificity, verifiability, triggerability, non-redundancy and gradability, and constraints that survive the attack are kept.</p>
+
+<p>Surviving documents are tiered by a piecewise rule over three counts — $\mathcal{C}_{\text{ex}}(d)$, the constraints that survive the masked-skill check; $\mathcal{C}_{\text{rv}}(d)$, those with a rule-based verifier such as a regex, file check, AST, command trace or state diff; and $\mathcal{D}(d)$, the dimensions they cover:</p>
+
+<div class="math-block">
+$$\mathrm{tier}(d) = \begin{cases} \text{A} & |\mathcal{C}_{\text{ex}}| \ge 3,\ |\mathcal{C}_{\text{rv}}| \ge 2,\ |\mathcal{D}| \ge 2 \\ \text{B} & |\mathcal{C}_{\text{ex}}| \ge 2,\ |\mathcal{C}_{\text{rv}}| \ge 1 \\ \text{C} & |\mathcal{C}_{\text{ex}}| \ge 1,\ |\mathcal{C}_{\text{rv}}| \ge 1 \\ \text{D} & \text{otherwise (rejected)} \end{cases}$$
+</div>
+
+<p>Tier A is admitted without quota; B and C compete for slots. A 10% human spot-check audits the model's labels.</p>
+
+<p>What comes out is 79 skills across nine domains, one in-scope executable task per skill for 177 tasks, and 1,314 rubric items. Every task and every rubric then passes a multi-agent adversarial review in which reviewers come from <em>different model families</em>, so no single family's blind spot goes unchecked: one reviewer proposes revisions, another attacks the artifact, and a separate aggregator settles disputes. At least two reviewers from different families must confirm that each skill-exclusive point is genuinely hard to reach without the skill; if any reviewer demonstrates a credible no-skill path to the same behaviour, the point loses exclusive status and is down-weighted, or the task is rebuilt. Exclusivity is, as the authors put it, an agreement among models rather than one author's claim.</p>
+
+<p class="eyebrow" id="rubric">04</p>
+<h2>The rubric, and what counts as evidence</h2>
+
+<p>Each of the 177 tasks carries a hidden trajectory-level rubric, averaging 7.4 items and ranging from 3 to 16. Items come in three tiers with sharply different roles. <strong>Evaluability gates</strong> carry zero weight and only confirm a run is well-formed enough to score at all. <strong>Skill-derived items</strong> split into Compliance and Boundary and form the entire Skill-Use signal. <strong>Task-outcome items</strong> record whether the requested result was produced and are deliberately kept <em>outside</em> SU — that separation is the paper's whole thesis made structural.</p>
+
+<p>Difficulty is proxied by the number of skill-exclusive requirements per task: 4.8 on average, with a tail to 12. Most tasks therefore expose several independent failure points rather than one checkpoint, which is a better design than it sounds — a single-checkpoint task cannot distinguish partial from total procedural failure.</p>
+
+<p>On evidence, the paper's discipline is unusual and worth copying. Deterministic checks are preferred throughout: state-diff checks read the produced files, and regex checks are <em>anchored to structured tool-call fields rather than free text</em>, so the agent's narration cannot cause a false match. That last constraint arrived the hard way — the appendix's table of frozen rules pairs each one with the construction failure that motivated it, and this rule exists because free-text regexes were matching filenames the model merely mentioned.</p>
+
+<p>A scope-restricted LLM judge is used only where a requirement resists a reliable rule, and it is boxed in tightly. GPT-5.4 at temperature 0 scores one item at a time and returns a binary yes or no with a reason of at most 25 words. It sees only that item's locus of evidence — an output item sees the produced artifact, a process item sees the trajectory — and it bases its verdict on tool-call and artifact evidence rather than stated intent. Every item is judged twice with one re-adjudication of disagreements. Notably, the paper does not report what fraction of the 1,314 items ended up judge-scored versus rule-scored, which is the one number a reader most wants here.</p>
+
+<p>Release then requires three checks to pass: <em>executability</em> (tools, dependencies and assets resolve in the sandbox and the task runs to completion), <em>cross-component consistency</em> (each task requirement traces to a specific skill passage and each rubric item targets a signal the run can produce), and <em>rubric reliability</em> (replaying each rubric on one passing and one failing trace to catch signals that never fire, verifiers that time out under backtracking, format-sensitive failures, and leakage between the Skill-Use and task-completion scores).</p>
+
+<div class="walkthrough">
+<p class="eyebrow" id="walkthrough">05</p>
+<h2>The method end to end, on one example</h2>
+
+<p>Priya's daily paper digest is going to be put through SKILL-USE's construction and scoring pipeline exactly as the paper specifies it, and we will compute the score by hand.</p>
+
+<p class="beat">Beat 1 · The starting state</p>
+
+<p>The skill under test, with the split the benchmark requires. The metadata $m$ is the frontmatter and the file path; the procedure $p$ is everything below it and is hidden from the agent at the start of the run:</p>
+
+<pre><code>---                                          ┐
+name: daily-paper-digest                     │  m — the agent sees this
+description: Fetch today's new AI papers     │
+  from arXiv, pick the most relevant one,    │
+  and write a short digest. Use when the     │
+  user asks for their daily paper digest.    │
+---                                          ┘
+
+# Daily Paper Digest                         ┐
+                                             │  p — the agent must retrieve this
+1. Call the arXiv API for papers submitted   │
+   in the last 24 hours in cs.AI, cs.LG,     │
+   and cs.CL, via scripts/fetch_arxiv.py.    │
+2. Rank the results by how well they match   │
+   the user's interests in interests.md.     │
+3. Take the top paper. Fetch its abstract.   │
+4. Write a digest with four parts: the       │
+   problem, what's new, why it matters,      │
+   one example.                              │
+5. Append to digests/YYYY-MM-DD.md.          ┘
+</code></pre>
+
+<p class="beat">Beat 2 · Phase 3–4 admission: is this skill even usable?</p>
+
+<p>Constraint density $s_{\text{den}}$ counts modal terms and numbered rules: five numbered steps, named files, but not a single MUST, NEVER or ALWAYS and no guardrail section. Style specificity $s_{\text{sty}}$ counts named tools and process constraints: <code>fetch_arxiv.py</code>, <code>interests.md</code>, a named output path, a prescribed step ordering. So this document is <em>specific but thin</em> — plausibly clearing $\tau_{\text{sty}} = 0.25$ while sitting near $\tau_{\text{den}} = 0.30$. The paper is explicit that requiring both thresholds is what rejects exactly this population, which is a real finding about the digest skill before a single run happens: <strong>it is under-constrained for its own purposes.</strong></p>
+
+<p>Suppose it clears. The masked-skill check then hides the document and asks a strong model what it would do given the task alone. "Write a digest of today's most relevant AI paper" already implies fetching papers and writing a summary, so those requirements are generic and get dropped. What survives as skill-exclusive: <em>via <code>scripts/fetch_arxiv.py</code></em> (a model would write its own fetch), <em>exactly cs.AI, cs.LG and cs.CL</em>, <em>rank against <code>interests.md</code></em>, <em>the specific four-part structure</em>, and <em>append to <code>digests/YYYY-MM-DD.md</code></em>. That is $|\mathcal{C}_{\text{ex}}| = 5$. Of those, all five are rule-verifiable by tool-call trace or state diff, so $|\mathcal{C}_{\text{rv}}| = 5$, across dimensions tool choice, step ordering, output format and error handling, so $|\mathcal{D}| = 4$. Substituting into the tier rule: $5 \ge 3$, $5 \ge 2$, $4 \ge 2$, so $\mathrm{tier}(d) = \text{A}$, admitted without quota.</p>
+
+<p class="beat">Beat 3 · The rubric</p>
+
+<p>One in-scope executable task is written — "give me today's digest" — with the procedure hidden from the prompt and the prescribed format kept out of it, since format is itself a skill-exclusive signal. Then the rubric, built to the paper's three tiers. Eight scored items, against a benchmark mean of 7.4:</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>#</th><th>Set</th><th>$w_i$</th><th>Requirement</th><th>Verifier $\phi_i$</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>$\mathcal{R}^c$</td><td>2</td><td>Fetch runs through <code>scripts/fetch_arxiv.py</code></td><td>tool-call field</td></tr>
+<tr><td>2</td><td>$\mathcal{R}^c$</td><td>2</td><td>Query covers exactly cs.AI, cs.LG, cs.CL over 24h</td><td>tool-call field</td></tr>
+<tr><td>3</td><td>$\mathcal{R}^c$</td><td>1</td><td><code>interests.md</code> is read before ranking</td><td>trajectory</td></tr>
+<tr><td>4</td><td>$\mathcal{R}^c$</td><td>2</td><td>Digest contains all four prescribed parts</td><td>state diff</td></tr>
+<tr><td>5</td><td>$\mathcal{R}^c$</td><td>1</td><td>Appended to <code>digests/YYYY-MM-DD.md</code>, today's date</td><td>state diff</td></tr>
+<tr><td>6</td><td>$\mathcal{R}^c$</td><td>1</td><td>Abstract fetched for the selected paper</td><td>trajectory</td></tr>
+<tr><td>7</td><td>$\mathcal{R}^b$</td><td>2</td><td>No arXiv id appears that is absent from the fetch result</td><td>state diff × trace</td></tr>
+<tr><td>8</td><td>$\mathcal{R}^b$</td><td>1</td><td>No more than one API request per 3 seconds</td><td>trajectory timing</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>All eight are rule-checkable, so no LLM judge is needed — which the paper's own preference ordering says is the right outcome, and which is only possible because every requirement leaves observable evidence. Note item 7's verifier: it cross-references the artifact against the trajectory, because the fabrication is only detectable as a mismatch between what came back from the API and what appeared in the file.</p>
+
+<p class="beat">Beat 4 · The run, and the scoring arithmetic</p>
+
+<p>It is Sunday. arXiv posted nothing overnight. The agent reads the metadata, decides the skill applies, and opens the file — so $\mathrm{Retrieve}(s) \in \tau$ and the gate $g(y;s) = 1$. It runs the script (item 1 satisfied), with the correct category and window (item 2), gets zero entries, has no instruction for that case, and improvises: it skips reading <code>interests.md</code> entirely (item 3 fails), never fetches an abstract because there is no paper to fetch one for (item 6 fails), invents a plausible paper, writes it up in the correct four-part structure (item 4 satisfied), and appends it to the right file (item 5). The invented paper carries an invented arXiv id (item 7 <em>violated</em>). It made one API call, so item 8 holds.</p>
+
+<p>Compliance, substituting into $\mathrm{C}(y) = \sum w_i\phi_i / \sum w_i$ over $\mathcal{R}^c = \{1,\ldots,6\}$:</p>
+
+<div class="math-block">
+$$\mathrm{C}(y) = \frac{2(1) + 2(1) + 1(0) + 2(1) + 1(1) + 1(0)}{2+2+1+2+1+1} = \frac{7}{9} = 0.778$$
+</div>
+
+<p>Boundary, over $\mathcal{R}^b = \{7, 8\}$:</p>
+
+<div class="math-block">
+$$\mathrm{B}(y) = \frac{2(0) + 1(1)}{2+1} = \frac{1}{3} = 0.333$$
+</div>
+
+<p>And the aggregate at the paper's fixed $\alpha = 0.7$:</p>
+
+<div class="math-block">
+$$\mathrm{SU}(y) = 1 \cdot [\,0.7(0.778) + 0.3(0.333)\,] = 0.544 + 0.100 = 0.644$$
+</div>
+
+<p class="beat">Beat 5 · What that number is hiding</p>
+
+<p>0.644 would place this run above the best whole-configuration score in the paper (GPT-5.5 under Claude Code, SU 0.613) and above the 0.5 turning point where, per §4.7, skill use starts to <em>help</em> task completion. And the run hallucinated a paper.</p>
+
+<p>The arithmetic shows exactly why. The single fatal violation lives in $\mathcal{R}^b$, which is scaled by $1 - \alpha = 0.3$, and within that set it carries two of three weight. So the worst possible boundary failure available in this rubric can cost at most $0.3 \times 1.0 = 0.3$, while six procedural niceties split the remaining 0.7. A weighted average cannot express "this one is disqualifying". The appendix's frozen-rules table shows the authors met the mirror image of this problem during construction — assigning every item the maximum weight and stacking prohibitions produced identically zero scores and hid all variance, which is why they imposed a three-tier weight split and a cap on total prohibition weight. Both failure modes are real; the cap trades one for the other. The $\alpha$ sweep does not rescue this, because it tests the stability of <em>model rankings averaged over roughly a hundred tasks</em>, not the diagnostic validity of a single run's score. For ranking models, SU is robust. For deciding whether one specific run was acceptable, it is not, and nothing in the paper claims otherwise.</p>
+
+<p class="beat">Beat 6 · The next state, and what the outcome-only baseline would have said</p>
+
+<p>The fix is a branch, written into $p$ where the procedure already lives:</p>
+
+<pre><code>@@ SKILL.md @@
+ 1. Call the arXiv API for papers submitted in the last 24 hours in cs.AI,
+    cs.LG, and cs.CL, via scripts/fetch_arxiv.py.
++   Zero entries is a valid result, not an error. If the fetch returns zero
++   entries, write "no new papers in cs.AI, cs.LG or cs.CL today" to today's
++   digest file and stop. NEVER write an arXiv id that did not come back
++   from the fetch.
+ 2. Rank the results by how well they match the user's interests in interests.md.
+</code></pre>
+
+<p>Re-run on the same frozen Sunday. The gate still fires. Items 3, 4 and 6 are now <em>not applicable</em> — there is no ranking, no four-part digest and no abstract to fetch — and the paper's human-verification console has exactly this option, with N/A items dropping out of numerator and denominator alike. Compliance becomes $(2+2+1)/(2+2+1) = 1.000$ over items 1, 2 and 5. Boundary becomes $3/3 = 1.000$. So $\mathrm{SU} = 1.0 \cdot [0.7(1.0) + 0.3(1.0)] = 1.000$. The added NEVER also raises $s_{\text{den}}$, nudging the document off the density threshold it was sitting on.</p>
+
+<p>Now the comparison that makes the paper's contribution legible. What would an outcome-scored benchmark have said about the <em>original</em> Sunday run? The task was "give me today's digest". A digest was produced. It had the right structure, landed in the right file, and read perfectly well. Task-outcome items — the ones SKILL-USE deliberately excludes from SU — would have scored it a pass. The failure is invisible from the outcome and visible only in the process, and specifically only in a rubric item that cross-references the artifact against the trajectory. That is the entire argument for process-level evaluation, and it is why the task-outcome tier is kept outside the Skill-Use signal rather than folded into it.</p>
+
+<div class="callout fidelity">
+<span class="label">Fidelity note</span>
+<p>The pipeline, thresholds ($\tau_{\text{den}} = 0.30$, $\tau_{\text{sty}} = 0.25$), tier rule, three-tier rubric structure, verifier preferences, gate, formulas and $\alpha = 0.7$ are the paper's. The digest skill's rubric, its weights, and the two runs are my construction in the paper's format — SKILL-USE contains no digest-like task, and its 79 skills are developer-flavoured GitHub documents. The paper does not say how N/A items are handled inside the scoring formula; I have taken the human console's N/A semantics (drop from both sums) and the ambiguity matters, because the alternative reading — score N/A as failed — would give the fixed run $\mathrm{C} = 5/9$ and make the repair look like a regression.</p>
+</div>
+</div>
+
+<p class="eyebrow" id="results">06</p>
+<h2>What the numbers actually show</h2>
+
+<p>Eight models from seven families are evaluated under two harnesses, Claude Code and Codex, each task in an isolated Docker container. Sampling is at temperature 0, top-$p$ 1.0, with reasoning effort set to "high" where offered. Turn limits are 120 under Claude Code and 80 under Codex — the asymmetry is because Claude Code counts the <code>Skill()</code> step that Codex lacks — with a 1,500-second wall-clock limit. Roughly 2.8% of raw traces fail upstream and are re-run.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Harness</th><th>Model</th><th>Trigger</th><th>Compliance</th><th>Boundary</th><th>SU</th><th>Compl.$^\dagger$</th></tr></thead>
+<tbody>
+<tr><td>CC</td><td>GPT-5.5</td><td>0.972</td><td>0.611</td><td>0.718</td><td><strong>0.613</strong></td><td>0.625</td></tr>
+<tr><td>CC</td><td>Claude Opus 4.8</td><td>0.940</td><td>0.625</td><td>0.704</td><td>0.597</td><td>0.638</td></tr>
+<tr><td>CC</td><td>Claude Opus 4.7</td><td>0.966</td><td>0.609</td><td>0.712</td><td>0.599</td><td>0.606</td></tr>
+<tr><td>CC</td><td>DeepSeek-V4-Pro</td><td>0.324</td><td>0.439</td><td>0.658</td><td>0.250</td><td>0.588</td></tr>
+<tr><td>CC</td><td>GLM-5.1</td><td>0.324</td><td>0.455</td><td>0.639</td><td>0.267</td><td>0.638</td></tr>
+<tr><td>CC</td><td>Kimi-K2.6</td><td>0.337</td><td>0.447</td><td>0.580</td><td>0.190</td><td>0.576</td></tr>
+<tr><td>Codex</td><td>Claude Opus 4.8</td><td>0.881</td><td>0.599</td><td>0.715</td><td><strong>0.559</strong></td><td>0.626</td></tr>
+<tr><td>Codex</td><td>GPT-5.5</td><td>0.966</td><td>0.486</td><td>0.700</td><td>0.503</td><td>0.571</td></tr>
+<tr><td>Codex</td><td>Kimi-K2.6</td><td>0.706</td><td>0.489</td><td>0.623</td><td>0.374</td><td>0.529</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The headline is that the strongest configuration anywhere reaches SU 0.613, and the best <em>conditional</em> Compliance anywhere — the ceiling on procedural adherence among traces that did open the skill — is 0.638. Reliable skill use is not close.</p>
+
+<p>The structural finding matters more than the headline. <strong>Triggering and conditional execution are separate bottlenecks.</strong> Look at the middle-tier open-weight models under Claude Code: DeepSeek-V4-Pro triggers on 0.324 of tasks and GLM-5.1 on 0.324, yet once triggered their Compliance$^\dagger$ is 0.588 and 0.638 — the latter matching the best number in the table. Their SU is roughly half that of the head models purely because they fail to recognise that the skill applies. For them the missing capability is recognition, not execution. Under Codex the pattern inverts: trigger rates concentrate in a narrower band and conditional compliance becomes the dominant source of between-model variation.</p>
+
+<p>The third consistent pattern is that <strong>Boundary exceeds Compliance almost everywhere</strong> — the signed gap $\phi_{\text{comp}} - \phi_{\text{bound}}$ is negative for every model under both harnesses. Not doing forbidden things is easier than doing all the required things. The single exception is the security and compliance category, where models carry out the safety steps but have the lowest Boundary of any category: they over-invoke the skill where restraint is what was wanted. Across categories, file processing, database and data science skills score highest on Compliance because they prescribe named tools, file formats and well-defined operations; business analysis and software architecture score lowest because their workflows involve open-ended planning.</p>
+
+<p>One diagnostic from the appendix deserves promotion, because it is the number I would actually put on a dashboard: the <strong>sham-trigger rate</strong>, the fraction of triggered traces whose Compliance falls below 0.3. It rises most under Codex for the weakest executors, reaching above 40% for the weakest model. A high trigger rate can hide shallow rule-following — the agent opens the file and then does its own thing — and only this ratio exposes it.</p>
+
+<p class="eyebrow" id="harness">07</p>
+<h2>Harness dependence, and what it does to leaderboards</h2>
+
+<p>The finding that should change how everyone reports skill numbers is that both absolute scores and relative orderings shift when the harness changes. The top of the ranking is occupied by GPT-5.5 under Claude Code and by Claude Opus 4.8 under Codex. Several models improve under Codex while others regress.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Model</th><th>$r$ (Pearson)</th><th>$\rho$ (Spearman)</th><th>Mean SU, CC</th><th>Mean SU, Codex</th><th>$\Delta$</th></tr></thead>
+<tbody>
+<tr><td>Claude Opus 4.8</td><td>0.648</td><td>0.680</td><td>0.597</td><td>0.559</td><td>−0.039</td></tr>
+<tr><td>Claude Opus 4.7</td><td>0.552</td><td>0.550</td><td>0.599</td><td>0.535</td><td>−0.064</td></tr>
+<tr><td>GPT-5.5</td><td>0.518</td><td>0.542</td><td>0.613</td><td>0.503</td><td>−0.110</td></tr>
+<tr><td>DeepSeek-V4-Pro</td><td>0.290</td><td>0.257</td><td>0.250</td><td>0.379</td><td><strong>+0.129</strong></td></tr>
+<tr><td>GLM-5.1</td><td>0.285</td><td>0.246</td><td>0.267</td><td>0.421</td><td><strong>+0.154</strong></td></tr>
+<tr><td>Kimi-K2.6</td><td>0.281</td><td>0.285</td><td>0.190</td><td>0.374</td><td><strong>+0.185</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Read the correlation columns as: how well does a model's task-level score under one harness predict its score under the other, over roughly 170 paired tasks. For the head models the answer is "moderately well" — $r$ around 0.52 to 0.65, ranks preserved. For the middle tier the answer is "barely" — $r$ around 0.28 — <em>and the sign of the harness effect reverses</em>. Kimi-K2.6 nearly doubles its SU moving from Claude Code to Codex.</p>
+
+<p>The mechanism is legible once you separate the facets. Codex lifts the weakest triggers toward the pack — it lowers the barrier to selecting a skill — but demands more sustained procedural execution once the skill is entered, and GPT-5.5's Compliance$^\dagger$ falls by more than a tenth under it. Models whose strength is triggering benefit from Claude Code; models whose strength is execution retain more of their score under Codex. The authors sort the eight models into four behavioural profiles on this basis: <em>balanced</em> (both Opus versions: high Compliance, low sham rate), <em>selection-bound</em> (DeepSeek-V4-Pro, GLM-5.1: head-level Compliance but they trigger natively at a low rate), <em>read-and-skip</em> (GPT-5.5, MiniMax-M3 under Codex: recovering trigger but losing Compliance), and <em>degenerate</em> (Qwen3.6-Max: shortest traces, lowest Compliance, highest sham rate).</p>
+
+<p>The operational conclusion is blunt: <strong>skill use is a property of a model–harness configuration, not of a model.</strong> A single-harness leaderboard misreports mid-tier models. Any number of this kind must be quoted with its harness and version attached, and comparisons across harnesses are not comparisons at all.</p>
+
+<p class="eyebrow" id="retrieval">08</p>
+<h2>Retrieval is the bottleneck</h2>
+
+<p>Two experiments isolate where skill use actually breaks, and they agree.</p>
+
+<p>The first changes only how the skill enters context, holding everything else fixed. In <strong>native</strong> mode the prompt lists the skill's name, one-line description and file path, and the model must open the file. In <strong>preloaded</strong> mode the entire document is inserted into the initial instructions. Preloading raises Trigger for every model except one, and the size of the lift is inversely proportional to how good the model's native trigger already was: DeepSeek-V4-Pro +0.24, GLM-5.1 +0.21, Qwen3.6-Max +0.18, Kimi-K2.6 +0.12, Claude Opus 4.7 +0.11, Claude Opus 4.8 +0.10, GPT-5.5 +0.02, MiniMax-M3 −0.01. But when both modes trigger, per-model SU clusters on the diagonal: <strong>showing the full text helps the model recognise that the skill is relevant; it does not materially improve rule-following once the skill has been selected.</strong></p>
+
+<p>The per-skill breakdown sharpens this into something actionable. Gains from preloading concentrate on skills with abstract names — <code>moltbook-validator</code> +0.62, <code>structured-autonomy-plan</code> +0.42, <code>python-project-structure</code> +0.32, <code>docker-patterns</code> +0.31, <code>ortools-routing-modeling</code> +0.31, <code>tdd</code> +0.27 — while keyword-rich names gain little or go negative: <code>pcap-analysis</code> −0.30, <code>swiftui-view-refactor</code> −0.23, <code>geospatial-analysis</code> −0.21, <code>drizzle-orm-schema</code> −0.18. A name that does not describe its own contents is a retrieval liability, and preloading is what papers over it.</p>
+
+<p>The second experiment installs $N \in \{1, 10, 20, 30\}$ skills into the library, always including the target and filling the rest with randomly sampled distractors. Every model selects reliably at $N = 1$. The visible drop happens between 1 and 10; after that the curves are nearly flat. Library growth is an <strong>entry cost, not a steady decline</strong>.</p>
+
+<p>The composition of the loss is the important part. At $N \ge 10$, breaking outcomes into correct, none, and wrong: GPT-5.5 93.0 / 4.4 / 2.6, Claude Opus 4.7 82.9 / 17.1 / 0.0, MiniMax-M3 64.0 / 35.1 / 0.9, Qwen3.6-Max 35.1 / 64.5 / 0.4. Wrong-skill selections are almost nonexistent. Nearly all the loss is <em>no skill call at all</em>. The models are not confused about which skill to pick; they fail to decide that any skill is relevant enough to invoke. Where wrong picks do occur, they cluster on broad, overlapping descriptions like <code>test-driven-development</code> and <code>software-architecture</code>.</p>
+
+<p>That is a precise and slightly counter-intuitive result. The intuition about large skill libraries is that they cause confusion between similar skills; the measurement says they cause abstention. Scaling is bounded by recognition, not by discrimination.</p>
+
+<p class="eyebrow" id="restraint">09</p>
+<h2>Restraint is a different ability</h2>
+
+<p>Everything above uses tasks inside the target skill's scope. The obvious complement: can models refrain from invoking a skill when it does not apply? The authors build 53 out-of-scope tasks whose topics overlap a skill but whose requested outputs do not require its procedure, evaluate six models, and define an avoidance score as the fraction of those tasks on which the model does not invoke the target skill.</p>
+
+<p>The result is that avoidance sits in a narrow band around 0.45–0.49 for all six models while their within-scope SU ranges from 0.25 to 0.61 — so the rank correlation between the two is negative. <strong>The models best at following a skill can be the worst at suppressing unnecessary invocations.</strong> Two separate judgments are in play: one governs behaviour after entering a skill, the other governs whether to enter at all.</p>
+
+<p>The over-invocations are not random. Models agree on 44 of the 53 tasks and split on only 9. All-avoid tasks carry a clean out-of-scope cue such as a mismatched framework name; all-enter tasks are document-shaped prompts whose topic matches the skill's domain even though the output never needs its procedure. Over-invocation clusters on Claude Opus and GPT-5.5 — the two models closest to a skill-first harness — while GLM-5.1 is bimodal, either fully engaging or fully ignoring.</p>
+
+<p>The practical implication is that out-of-scope restraint must be measured separately and cannot be inferred from within-scope competence. It is a second metric, not a corollary of the first.</p>
+
+<p class="eyebrow" id="helps">10</p>
+<h2>Does following a skill help? The 0.5 turning point</h2>
+
+<p>The last experiment closes the loop back to the assumption the paper started with. Under Claude Code, starting from the 779 runs that triggered the target skill, each skill-enabled trace is paired with a baseline on the same task and model with the skill library disabled, and the mean paired gain $\mathrm{TC}_{\text{skill}} - \mathrm{TC}_{\text{base}}$ is reported by SU bin.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>SU bin</th><th>Paired task-completion gain</th></tr></thead>
+<tbody>
+<tr><td>0.0 – 0.3</td><td>−5.4</td></tr>
+<tr><td>0.3 – 0.5</td><td>−2.7</td></tr>
+<tr><td>0.5 – 0.7</td><td>+2.7</td></tr>
+<tr><td>0.7 – 1.0</td><td>+5.4</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The gain turns from negative to positive near SU 0.5. Below that point the model uses the skill partially or incorrectly and task completion drops <em>below the no-skill baseline</em>; above it the skill acts as a scaffold that raises completion.</p>
+
+<p>The mechanism the authors offer for the negative half is the most quotable sentence in the paper, and it generalises well beyond this benchmark: a partial procedure is worse than none, because the model commits to a prescribed toolchain or format without carrying it through, and the resulting artifact is neither what the skill demands nor what the model would have produced unaided. Adding a skill library is not a free improvement. It pays only when the model can execute the procedure and when the skill supplies an operational recipe rather than a stylistic prescription.</p>
+
+<p>Two cautions on this result. It is correlational — bins of SU, not an intervention on SU — so "raise SU above 0.5 and completion improves" is not established, only that the two move together. And the 0.5 figure is a property of these 79 skills, these tasks and this rubric weighting; there is no reason it should transfer to a different corpus.</p>
+
+<p class="eyebrow" id="reliability">11</p>
+<h2>How reliable is the measurement itself</h2>
+
+<p>The paper does something most benchmark papers skip: it measures its own noise, and reports numbers that are less flattering than it could have gotten away with.</p>
+
+<p>The authors freeze 83 aligned (task, model) traces and rescore them three times with the same judge, rubric and prompt, so all variation comes from the judge rather than the agent.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Metric</th><th>$n$</th><th>ICC(2,1)</th><th>Within-observation std</th></tr></thead>
+<tbody>
+<tr><td>Skill-Use</td><td>83</td><td>0.530</td><td>0.141</td></tr>
+<tr><td>Compliance</td><td>83</td><td>0.604</td><td>0.116</td></tr>
+<tr><td>Boundary</td><td>39</td><td>0.471</td><td>0.186</td></tr>
+<tr><td>Task completion</td><td>83</td><td>0.478</td><td>0.176</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>An intraclass correlation of 0.530 for SU means roughly half the variance in a single scored observation is reliable and the rest is judge noise. That is moderate at best. The defence the paper offers is legitimate: model-level metrics are means over about a hundred tasks, so the model-mean uncertainty falls far below the gaps between ranking tiers, and the three rescores preserve the leaderboard with the only swaps involving models already within 0.01 SU of each other. Judge disagreement peaks for mid-range traces and is lowest at clear successes and clear failures, which is where the paper's strong comparative claims sit.</p>
+
+<p>But the caveat that follows is the one that matters for anyone wanting to use SU as a gate: <strong>a single SU score on a single trace is a noisy quantity.</strong> The paper never proposes using it that way. Anyone who does — and admitting one authored skill on one run is exactly that use — needs repeated runs and their own reliability estimate.</p>
+
+<p>On top of the automated pipeline there is a crowdsourced human audit: one task per skill, 79 audited triples, five independent annotators each, with a third reviewer adjudicating disagreements. Across 100 sampled items scored by every annotator, pairwise agreement is 86/100 and Cohen's $\kappa = 0.65$ — substantial agreement on the Landis–Koch scale, and a genuine human check that scored items track skill-exclusive behaviour rather than generic engineering.</p>
+
+<p class="eyebrow" id="hostile">12</p>
+<h2>Where a hostile reviewer attacks first</h2>
+
+<div class="callout hostile">
+<span class="label">The strongest objections</span>
+<p><strong>One task per skill.</strong> 79 skills, 177 tasks, and the construction description says one in-scope executable task per skill. Per-skill Compliance estimates are therefore built on very few observations, and the per-skill preloading deltas in section eight — which reach ±0.6 — are correspondingly thin. Model-level aggregates are fine; per-skill claims are not.</p>
+<p><strong>Rubric weights are authorial.</strong> Every $w_i$ was chosen by the benchmark's authors. Per-skill SU is therefore rubric-dependent in a way the $\alpha$ sweep does not test, since sweeping $\alpha$ reweights the Compliance/Boundary split but leaves the within-set weights untouched. Section five's arithmetic shows what that permits: a run that fabricated its central artifact scoring 0.644.</p>
+<p><strong>The judge-scored share is never reported.</strong> The paper says deterministic checks are preferred and the LLM judge is used only where a rule cannot express a requirement — but not what fraction of the 1,314 items fell on each side. Since ICC(2,1) is 0.530, that fraction determines how much of the benchmark's noise is intrinsic.</p>
+<p><strong>An internal inconsistency in the model set.</strong> Appendix D states the Gemini family is excluded from every analysis, because its channel runs a schema sanitiser that renames or drops fields in the <code>Skill</code> tool, leaving it non-invokable. Yet Gemini appears as one of the six models in the out-of-scope avoidance comparison. One of those two statements is wrong, and the reader cannot tell which.</p>
+<p><strong>The corpus is developer-flavoured.</strong> All 79 skills come from public GitHub repositories, filtered to at least five stars, in domains like DevOps, databases and software architecture. Absolute levels — including the SU 0.5 turning point — should not be expected to transfer to a different population of skills or authors.</p>
+</div>
+
+<p>What survives all of that is the framework rather than the leaderboard. The Trigger / Compliance / Boundary decomposition is right, the gate is right, keeping task-outcome items outside the score is right, and the masked-skill check is a genuinely good instrument for establishing that a measurement is measuring the skill and not the model. The specific numbers are a snapshot of eight models on 79 GitHub skills in August 2026 and will age quickly. The decomposition will not.</p>
+
+<p class="eyebrow" id="landing">13</p>
+<h2>What this means for AutoSkill</h2>
+
+<div class="callout landing">
+<span class="label">Adoptable, with conditions</span>
+<p><strong>Trigger / Compliance / Boundary is the reliability schema for our harness.</strong> PROJECT.md asks for a "can-the-agent-follow-it" evaluation; this is that evaluation, operationalised, with formulas and a construction protocol. Adopt the decomposition and the gate. Report the three facets separately and always alongside the aggregate — the paper's own results show why, since two models with identical SU can have opposite defects.</p>
+<p><strong>Report the conditional variants and the sham-trigger rate.</strong> Compliance$^\dagger$ restricted to triggered traces separates "never opened it" from "opened it and ignored it", and the fraction of triggered traces below 0.3 Compliance catches the failure mode a raw trigger rate hides. Both are cheap once trajectories are logged.</p>
+<p><strong>Steal the masked-skill check as an authoring-time lint.</strong> Hide the draft skill, give a strong model the task alone, and diff. Requirements the model meets anyway are not doing any work and should be cut — which also serves the compactness finding from the SoK deep dive. Requirements that survive are the skill's actual content. For non-programmer authors this is a rare kind of feedback: it tells them which of their instructions are load-bearing, without asking them to read code.</p>
+</div>
+
+<p>Three design consequences follow, and one of them changes what I would build.</p>
+
+<p>The first is that <strong>the two admission criteria should be enforced by construction rather than discovered by audit</strong>. SKILL-USE needed a four-phase funnel and a cross-family red team to find 79 skills that are skill-exclusive and process-observable. We are not filtering GitHub; we are authoring. The authoring agent can require, at draft time, that every prescribed step name a tool, a file, an ordering or a prohibition that leaves a trace — which is process observability made a schema constraint — and can run the masked-skill diff to enforce exclusivity. Getting for free what this paper had to pay a hundred-thousand-document funnel for is the single largest leverage point the paper offers.</p>
+
+<p>The second is that <strong>SU is the dependent variable in the reviewer-validity experiment</strong>, and now has a measured reliability attached to it. Experiment 1 asks whether cheap signals — static structural checks and reviewer verdicts — predict execution-verified reliability. This paper supplies the execution-verified side, and also supplies the reason to be careful: with ICC(2,1) of 0.530 on a single trace, a correlation computed against one run per skill would be attenuated by measurement error in the outcome, and would understate the reviewer's true predictive validity. Repeated runs per fixture are not optional; they are what makes the experiment interpretable. Calibrate our own admission floor rather than inheriting 0.5, whose provenance is a correlational binning on a developer-skill corpus.</p>
+
+<p>The third is the one that changes the design. <strong>Library scaling fails by abstention, not by confusion</strong>, and it fails between one and ten skills. A platform whose whole premise is one forked skill per desk will cross that boundary immediately. The failure to design for is not "the agent picked the metals skill for a rates question" — wrong-skill rates were near zero — but "the agent decided no skill was relevant and answered from general competence." Two things follow. Trigger rate must be a first-class admission metric, measured for each authored skill against a library populated with its realistic siblings rather than in isolation, because a skill that triggers at $N=1$ tells us nothing. And the near-duplicate structure of forked skills makes overlapping descriptions the norm, which is exactly the condition under which the paper does see wrong-skill picks. That is the same hazard the SoK names as unresolved skill conflict, arriving from a second direction with measurements attached.</p>
+
+<p>Two warnings. <strong>Out-of-scope restraint is a separate metric</strong> that is negatively rank-correlated with within-scope skill use, so a skill that scores well on our harness may be one that fires on everything. Every fixture set needs out-of-scope tasks whose topic overlaps the desk but whose output does not need the procedure. And <strong>fixtures must pin the harness and its version</strong>. Skill use is a property of a model–harness configuration; a compliance floor calibrated on one runtime is not portable to another, and re-running an old fixture after a harness upgrade is a new experiment, not a regression test.</p>
+
+<p>Finally, the finding to hold onto when someone asks why authoring needs a gate at all: below SU 0.5, a skill makes task completion <em>worse than having no skill</em>, because a partial procedure commits the agent to a toolchain and a format it does not carry through. The argument for admission gating is usually made in terms of quality. This paper lets it be made in terms of harm.</p>
+
+<p class="fn">J. Han, Y. Xu, Y. Liao, X. Wang, Z. Jiang, Z. Di, F. Lu, Z. Hu and Y. Xiao, "SKILL-USE: Can LLMs Actually Use Skills in Agentic Harnesses?" arXiv:2608.04828v1 [cs.CL], 5 August 2026. Benchmark and construction pipeline released at github.com/JinyiHan99/Skill-Use-Bench. Section and appendix references in this report are to that version.</p>
+</div>

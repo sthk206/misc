@@ -1,0 +1,480 @@
+<title>SkillGen, Explained</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F7F5F1; --surface:#FFFFFF; --ink:#232A35; --muted:#5A6478;
+  --line:#DDD7CB; --accent:#2C5E8A; --accent-ink:#FFFFFF; --accent-soft:#EAF0F6;
+  --warn:#C2410C; --warn-soft:#FBEDE5; --code-bg:#EFECE5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+    --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+    --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+  --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+  --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--ground); color:var(--ink); font-family:"Source Serif 4",Georgia,serif;
+  font-size:1.125rem; line-height:1.68; margin:0;}
+.wrap{max-width:46rem; margin:0 auto; padding:0 1.25rem 5rem;}
+header.masthead{border-bottom:2px solid var(--ink); padding:2.5rem 0 1.5rem; margin-bottom:2rem;}
+.series{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 1rem;}
+h1{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:2.1rem; line-height:1.15;
+  margin:0 0 .75rem; text-wrap:balance;}
+.dek{font-size:1.15rem; color:var(--muted); margin:0 0 1rem; font-style:italic;}
+.meta{font-family:"IBM Plex Mono",monospace; font-size:.78rem; color:var(--muted);}
+nav.toc{background:var(--surface); border:1px solid var(--line); padding:1.1rem 1.4rem; margin:2rem 0;}
+nav.toc p{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.8rem;
+  text-transform:uppercase; letter-spacing:.1em; margin:0 0 .5rem; color:var(--muted);}
+nav.toc ol{margin:0; padding-left:1.2rem; font-size:.95rem; line-height:1.9;}
+nav.toc a{color:var(--accent); text-decoration:none;}
+nav.toc a:hover, nav.toc a:focus{text-decoration:underline;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin:3rem 0 .25rem;}
+h2{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:1.5rem; line-height:1.2;
+  margin:.1rem 0 1rem; text-wrap:balance;}
+h3{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:1.1rem; margin:1.8rem 0 .6rem;}
+p{margin:0 0 1.1rem;}
+a{color:var(--accent);}
+strong{font-weight:600;}
+.callout{border:1px solid var(--line); background:var(--surface); padding:1.1rem 1.4rem; margin:1.6rem 0;}
+.callout .label{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.75rem;
+  text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:.5rem;}
+.example{border-left:4px solid var(--accent); background:var(--accent-soft);}
+.example .label{color:var(--accent);}
+.hostile{border-left:4px solid var(--warn); background:var(--warn-soft);}
+.hostile .label{color:var(--warn);}
+.landing{background:var(--accent-soft); border:2px solid var(--accent);}
+.landing .label{color:var(--accent);}
+.fidelity{border-left:4px solid var(--muted); background:var(--surface);}
+.fidelity .label{color:var(--muted);}
+.walkthrough{border-top:2px solid var(--accent); border-bottom:2px solid var(--accent);
+  padding:1.5rem 0 .5rem; margin:2rem 0;}
+.beat{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent); margin:2rem 0 .3rem;}
+code{font-family:"IBM Plex Mono",monospace; font-size:.88em; background:var(--code-bg);
+  padding:.12em .35em; border-radius:3px;}
+pre{background:var(--code-bg); padding:1rem 1.2rem; overflow-x:auto; font-family:"IBM Plex Mono",monospace;
+  font-size:.85rem; line-height:1.55; margin:1.2rem 0; border-radius:4px;}
+pre code{background:none; padding:0;}
+table{width:100%; border-collapse:collapse; font-size:.92rem; margin:0;
+  font-variant-numeric:tabular-nums;}
+th{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.78rem; text-transform:uppercase;
+  letter-spacing:.06em; text-align:left; padding:.5rem .7rem; border-bottom:2px solid var(--ink);
+  color:var(--muted);}
+td{padding:.5rem .7rem; border-bottom:1px solid var(--line);}
+.table-wrap{overflow-x:auto; margin:1.2rem 0;}
+.math-block{overflow-x:auto; margin:1.4rem 0; text-align:center; font-size:1.05rem;}
+.fn{font-size:.82rem; color:var(--muted); border-top:1px solid var(--line); margin-top:3rem; padding-top:1rem;}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{fontCache:'global'}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+<div class="wrap">
+<header class="masthead">
+  <p class="series">AutoSkill · Deep Dive 03</p>
+  <h1>SkillGen: Verified Inference-Time Agent Skill Synthesis</h1>
+  <p class="dek">The paper that stops treating a generated skill as a summary and starts treating it as an intervention — something you administer to an agent and then measure, counting not just what it fixed but what it broke. Its most useful result is almost a footnote: by round eight the newest draft is worse than useless, and only the gate knows which of the eight to keep.</p>
+  <p class="meta">Ma, Huang, Bao, Zhuang, Shukla, Galley, Zhang &amp; Feuerriegel · LMU Munich, Notre Dame &amp; Microsoft Research · arXiv 2605.10999 · 9 May 2026</p>
+</header>
+
+<nav class="toc">
+<p>Contents</p>
+<ol>
+<li><a href="#intervention">Skills as interventions, not summaries</a></li>
+<li><a href="#setup">The setup, formally</a></li>
+<li><a href="#stage1">Stage 1: baseline elicitation, and why failures are the point</a></li>
+<li><a href="#stage2">Stage 2: contrastive induction</a></li>
+<li><a href="#stage3">Stage 3: generate, verify, refine — and the gate</a></li>
+<li><a href="#walkthrough">The method end to end, on one example</a></li>
+<li><a href="#results">What the numbers show, and which parts are load-bearing</a></li>
+<li><a href="#bestofk">Best-of-K: the gate as a selection mechanism</a></li>
+<li><a href="#transfer">Transfer, cost, and who should write the skill</a></li>
+<li><a href="#stillfails">Where the gate still fails</a></li>
+<li><a href="#hostile">Where a hostile reviewer attacks first</a></li>
+<li><a href="#landing">What this means for AutoSkill</a></li>
+</ol>
+</nav>
+
+<p class="eyebrow" id="intervention">01</p>
+<h2>Skills as interventions, not summaries</h2>
+
+<p>Almost every automatic skill-synthesis system in the literature does the same two things, and this paper's contribution is to name both as mistakes.</p>
+
+<p>The first is <strong>learning only from what worked</strong>. Systems collect successful trajectories and distil the common procedure out of them. Where failures are considered at all, they are summarised in isolation rather than contrasted against nearby successes on the same task. The authors' example of what this loses is precise: a successful trajectory may include an intermediate validation step that a failed attempt omitted. Success-only learning sees the validation step but has no way to know it was <em>load-bearing</em>, so it does not know to put it in the reusable pattern. The signal lives in the difference, not in either half.</p>
+
+<p>The second and larger mistake is <strong>never checking whether the skill actually helped</strong>. A generated skill can repair failures, and it can also introduce new ones on cases the agent previously solved correctly. If you only measure aggregate accuracy after adding a skill, those two effects are confounded; if you only measure whether the skill fixed the failures it was written for, you never see the damage. The paper's reframing is that skill synthesis is fundamentally an <em>interventional</em> problem: you are administering something to an agent, and the quantity you care about is the difference in outcome on the same inputs with and without it.</p>
+
+<p>The vocabulary they take from causal inference — potential outcomes, repairs, regressions — is not decoration. It licenses a specific experimental design (paired rollouts on identical instances), a specific statistic (net effect), and a specific deployment rule (ship only if verified net effect clears a threshold, otherwise ship nothing). That last part is the piece that matters most, and I want to flag it early: <strong>SkillGen's answer to "what if the generated skill is bad" is to deploy no skill at all.</strong> A candidate that fails verification is marked <em>deprecated</em> and replaced by the empty intervention. Nothing in the pipeline is obliged to produce output.</p>
+
+<p class="eyebrow" id="setup">02</p>
+<h2>The setup, formally</h2>
+
+<p>Let $\mathcal{X}$ be the input space with task distribution $p$, and $\mathcal{T}$ the space of agent trajectories, where a trajectory is the full sequence of model interactions, tool calls, environment observations and final output. A base agent $\mathcal{A}$ maps inputs to trajectories, modelled as a stochastic kernel $P_{\mathcal{A}}(\tau \mid x; \eta)$ where $\eta$ is the inference-time intervention loaded into the agent's context. The empty intervention $\eta = \varnothing$ defines the no-skill behaviour $\tau^0(x) \sim P_{\mathcal{A}}(\cdot \mid x; \varnothing)$.</p>
+
+<p>Outcomes come from a task-level evaluator $\mathcal{E} : \mathcal{X} \times \mathcal{T} \to [0,1]$, which assigns a success probability to each instance–trajectory pair. The observed outcome is $Y(x,\tau) \sim \mathrm{Bernoulli}(\mathcal{E}(x,\tau))$, with deterministic evaluators as the special case $\mathcal{E}(x,\tau) \in \{0,1\}$. In practice the evaluator is an LLM judge, a benchmark score, or an environment check — and the paper is upfront that everything downstream inherits the evaluator's quality.</p>
+
+<p>A candidate skill is a four-part bundle $s = (u, a, \mathcal{P}, \mathcal{R})$: a structured prompt $u$, task metadata $a$ such as a description, an optional set of executable scripts $\mathcal{P}$, and an optional collection of auxiliary reference documents $\mathcal{R}$.</p>
+
+<p>Then the potential-outcomes move. For each input $x$ there are two potential outcomes: the baseline $Y^0(x) = Y(x, \tau^0(x))$ and the skill-augmented $Y^s(x) = Y(x, \tau^s(x))$ where $\tau^s(x) \sim P_{\mathcal{A}}(\cdot \mid x; \eta(s))$. Loading skill $s$ <em>is</em> applying intervention $\eta(s)$. The objective is the net effect:</p>
+
+<div class="math-block">
+$$\Delta(s) = \mathbb{E}_{x \sim p}\big[\,\mathbb{E}[Y^s(x) \mid x, s] - \mathbb{E}[Y^0(x) \mid x]\,\big]$$
+</div>
+
+<p>Read that in words: averaged over the task distribution, how much does having the skill change the probability of success on the <em>same</em> input, relative to not having it. Because both terms are conditioned on the same $x$, this is a paired comparison, which is what makes repairs and regressions separately visible rather than netted out invisibly inside an accuracy number.</p>
+
+<p>The training data splits into an <strong>induction subset</strong> $\mathcal{D}_{\text{ind}} = \{x_i\}_{i=1}^n$, used to analyse agent behaviour, and a <strong>construction-time verification subset</strong> $\mathcal{D}_{\text{ver}} = \{\tilde{x}_j\}_{j=1}^m$, used to evaluate and select candidates. The appendix pins the ratio at 70/30, with a floor of at least four verification instances when the pool is small. All held-out reporting happens on a separate test split that neither subset touches.</p>
+
+<p class="eyebrow" id="stage1">03</p>
+<h2>Stage 1: baseline elicitation, and why failures are the point</h2>
+
+<p>Run the base agent on the induction subset and store everything:</p>
+
+<div class="math-block">
+$$\mathcal{B} = \{(x_i, \tau_i^0, y_i^0)\}_{i=1}^n, \qquad \mathcal{I}^- = \{i : y_i^0 = 0\}, \qquad \mathcal{I}^+ = \{i : y_i^0 = 1\}$$
+</div>
+
+<p>So $\mathcal{I}^-$ indexes the runs the agent failed and $\mathcal{I}^+$ the runs it passed. The paper's justification for keeping both strata is the sharpest sentence in the section: failures show where the base agent needs help, and successes show procedures it can already execute. Using only failures produces misleading advice — you write instructions for problems the agent does not have. Using only successes does not identify the capability gap at all.</p>
+
+<p>Separately, the no-skill outcomes on the verification subset are cached:</p>
+
+<div class="math-block">
+$$\mathcal{B}_{\text{ver}} = \{(\tilde{x}_j, \tilde{\tau}_j^0, b_j)\}_{j=1}^m, \qquad b_j = Y(\tilde{x}_j, \tilde{\tau}_j^0)$$
+</div>
+
+<p>These cached baselines are deliberately withheld from the induction agent and from the first-round generator — they exist purely so that every later candidate can be compared against the same frozen no-skill behaviour on the same instances. That is a small engineering decision with a large methodological consequence: the comparison baseline cannot drift between refinement rounds, which is what makes the round-to-round numbers commensurable.</p>
+
+<p class="eyebrow" id="stage2">04</p>
+<h2>Stage 2: contrastive induction</h2>
+
+<p>The induction agent compresses the raw trajectories into a diagnostic summary:</p>
+
+<div class="math-block">
+$$\mathrm{Compress}(\mathcal{B}) = \mathcal{Z} = (a_0, \mathcal{F}, \mathcal{S}, \mathcal{C})$$
+</div>
+
+<p>Four components. $a_0$ is a task-level summary written by applying a fixed abstraction prompt to the induction inputs — it describes the task <em>family</em> rather than any single instance. $\mathcal{F}$ holds cluster-level failure summaries, $\mathcal{S}$ cluster-level success summaries, and $\mathcal{C}$ local contrastive observations. Any of the three set-valued components may be empty.</p>
+
+<p>The failure side works like this. For each failed rollout $i \in \mathcal{I}^-$ the agent writes a root-cause summary $\rho_i^-$; a text encoder $\phi$ applied to the serialized input–summary pair gives an embedding $e_i^- = \phi([x_i; \rho_i^-])$. Those embeddings are clustered and each cluster summarised:</p>
+
+<div class="math-block">
+$$\Pi^- = \mathrm{Cluster}(\{e_i^- : i \in \mathcal{I}^-\}), \qquad f_P = \mathrm{Summ}^-\big(\{(x_i, \tau_i^0, \rho_i^-) : i \in P\}\big)$$
+</div>
+
+<p>Each cluster-level summary describes the recurring root cause, the point in the trajectory where the failure typically appears, and the corrective rule that would avoid it. The success side is the identical construction over $\mathcal{I}^+$, producing $\mathcal{S} = \{h_P\}$, where each summary describes the reusable procedure, the conditions under which it applies, and the checks that make it robust.</p>
+
+<p>Clustering alone, though, misses the small action choices that separate a success from a failure — and this is where the paper earns its "contrastive" adjective. For each failed instance, find its nearest successful neighbour in embedding space:</p>
+
+<div class="math-block">
+$$j(i) = \arg\min_{j \in \mathcal{I}^+} d(e_i^-, e_j^+)$$
+</div>
+
+<p>If $x_i$ and $x_{j(i)}$ share the same task type, the agent compares the two <em>full</em> trajectories and writes a contrastive observation</p>
+
+<div class="math-block">
+$$c_i = \mathrm{Contr}(x_i, \tau_i^0, x_{j(i)}, \tau_{j(i)}^0)$$
+</div>
+
+<p>describing the behaviour present in the successful rollout and absent from the failed one. The same-task-type check is what keeps this honest; without it you would be contrasting unrelated problems. What $\mathcal{C}$ contributes that $\mathcal{F}$ and $\mathcal{S}$ cannot is <em>evidence the base agent has already demonstrated</em>: not advice about what a good agent would do, but a record of what this agent did do, in a nearby case, that it failed to do here.</p>
+
+<p>The concrete parameters, from the appendix: at most eight failure clusters and eight success clusters, adaptive $k$-means over $k \in [2,8]$ with a target cluster size of 15, up to 20 nearest failure–success pairs retained, and the generation prompt receiving up to six failure clusters, six success clusters and eight contrastive observations. Embeddings come from <code>text-embedding-3-small</code>; web search is disabled throughout.</p>
+
+<p class="eyebrow" id="stage3">05</p>
+<h2>Stage 3: generate, verify, refine — and the gate</h2>
+
+<p>The third stage is a loop over $K$ rounds, indexed $r \in \{1, \ldots, K\}$, with four steps.</p>
+
+<p><strong>Generation.</strong> The generation agent turns the diagnostic summary plus the previous round's feedback into a candidate $s^{(r)} = (u^{(r)}, a^{(r)}, \mathcal{P}^{(r)}, \mathcal{R}^{(r)})$. The structured prompt has a fixed three-part schema:</p>
+
+<div class="math-block">
+$$u^{(r)} = (u_{\text{ctx}}^{(r)}, u_{\text{succ}}^{(r)}, u_{\text{fail}}^{(r)})$$
+</div>
+
+<p>where $u_{\text{ctx}}$ encodes the task context derived from $a_0$, $u_{\text{succ}}$ encodes reusable success patterns distilled from $\mathcal{S}$ and the successful instances in $\mathcal{C}$, and $u_{\text{fail}}$ encodes failure-avoidance patterns from $\mathcal{F}$ and the negative instances in $\mathcal{C}$. The schema acts as a constrained projection from the diagnostics onto the skill space. One detail with real consequences: for tool-intensive tasks the generator may emit scripts and references in round one, but <strong>after round one, refinement edits are restricted to the natural-language body $u^{(r)}$</strong>, which keeps the tool interface fixed and prevents uncontrolled expansion.</p>
+
+<p><strong>Verification.</strong> The verification agent runs each candidate on every instance in $\mathcal{D}_{\text{ver}}$, producing $z_j(s) = Y(\tilde{x}_j, \tilde{\tau}_j^s)$ with $\tilde{\tau}_j^s \sim P_{\mathcal{A}}(\cdot \mid \tilde{x}_j; \eta(s))$. Against the cached baselines $b_j$, outcomes are cross-tabulated:</p>
+
+<div class="math-block">
+$$n_{\alpha\beta}(s) = \sum_{j=1}^{m} \mathbb{1}\{Y^0(\tilde{x}_j) = \alpha,\ Y^s(\tilde{x}_j) = \beta\}$$
+</div>
+
+<p>so that $n_{01}$ counts <strong>repairs</strong> — baseline failed, skill passed — and $n_{10}$ counts <strong>regressions</strong> — baseline passed, skill failed. The empirical net effect and net gain are</p>
+
+<div class="math-block">
+$$\widehat{\Delta}_m(s) = \frac{1}{m}\sum_{j=1}^{m}\big(Y^s(\tilde{x}_j) - Y^0(\tilde{x}_j)\big) = \frac{n_{01}(s) - n_{10}(s)}{m}, \qquad G_m(s) = n_{01}(s) - n_{10}(s)$$
+</div>
+
+<p>and for a fixed, non-adaptively chosen skill on i.i.d. verification instances, $\mathbb{E}[\widehat{\Delta}_m(s)] = \Delta(s)$. Note the qualifier <em>non-adaptively chosen</em>; section eleven returns to it, because best-of-$K$ selection violates it by construction.</p>
+
+<p><strong>Refinement.</strong> Rather than shipping raw trajectories back to the generator, the verification agent partitions the verification instances into three sets — baseline failures the skill repaired, baseline successes the skill broke, and baseline failures still unresolved:</p>
+
+<div class="math-block">
+$$\mathcal{Q}_{\text{repair}}^{(r)} = \{j : b_j = 0,\ z_j = 1\}, \quad \mathcal{Q}_{\text{regress}}^{(r)} = \{j : b_j = 1,\ z_j = 0\}, \quad \mathcal{Q}_{\text{fail}}^{(r)} = \{j : b_j = 0,\ z_j = 0\}$$
+</div>
+
+<p>and aggregates explanations of each into a four-part structured feedback object</p>
+
+<div class="math-block">
+$$\Phi^{(r)} = \big(\Phi_{\text{keep}}^{(r)},\ \Phi_{\text{remove}}^{(r)},\ \Phi_{\text{add}}^{(r)},\ \Phi_{\text{emphasize}}^{(r)}\big)$$
+</div>
+
+<p>which tells the next round which parts of the current skill to keep, remove, add and emphasise. The update rule avoids rewriting from scratch:</p>
+
+<div class="math-block">
+$$s^{(r)} = \begin{cases} \mathrm{Gen}(\mathcal{Z}), & r = 1 \\ \mathrm{Refine}(s^{(r-1)}, \mathcal{Z}, \Phi^{(r-1)}), & r > 1 \end{cases}$$
+</div>
+
+<p><strong>Selection and the gate.</strong> Because later rounds need not be better, the loop ends with a best-of-$K$ selection over the whole candidate sequence:</p>
+
+<div class="math-block">
+$$r^\star = \arg\max_{1 \le r \le K} G_m(s^{(r)}), \qquad s^\star = s^{(r^\star)}$$
+</div>
+
+<p>and the selected candidate is marked <em>active</em> only if it clears the verification gate</p>
+
+<div class="math-block">
+$$G_m(s^\star) \ge \gamma_m, \qquad \gamma_m = \max\{g_{\text{abs}},\ \lceil g_{\text{rel}} m \rceil,\ 1\}$$
+</div>
+
+<p>otherwise it is marked <em>deprecated</em> and replaced by the empty intervention. The three terms each do a job: the absolute floor $g_{\text{abs}}$ prevents deploying a candidate whose gain is negligible in raw count, the relative term $\lceil g_{\text{rel}} m \rceil$ makes the requirement scale with the verification set, and the final 1 forces a strictly positive construction-time gain. The paper's settings are $g_{\text{abs}} = 2$ and $g_{\text{rel}} = 0.05$, so in practice $\gamma_m = \max\{2, \lceil 0.05m \rceil, 1\}$. Up to 30 additional baseline-success guard checks are run specifically to expose regressions on already-solved instances.</p>
+
+<p>At deployment an active skill is injected into a dedicated slot of the system prompt, references are retrieved on demand through a <code>skill_load_reference</code> call, and executable scripts expose only declared top-level functions prefixed <code>skill_</code>, so the deployed capability surface matches what was verified.</p>
+
+<div class="walkthrough">
+<p class="eyebrow" id="walkthrough">06</p>
+<h2>The method end to end, on one example</h2>
+
+<p>SkillGen synthesises a skill from scratch for an agent that has none, so the digest agent enters this walkthrough <em>without</em> its <code>SKILL.md</code>. The base agent $\mathcal{A}$ is a plain agent with a shell, an HTTP tool and a file writer, and the task is "write today's digest". The hand-written skill we normally start from will reappear at the end as the comparison.</p>
+
+<p class="beat">Beat 1 · Inputs, splits, evaluator</p>
+
+<p>The dataset is 100 archived days, each a frozen record of what the arXiv API returned that morning. The paper's 70/30 rule splits this into $n = 70$ induction days and $m = 30$ construction-time verification days, with a separate held-out set of later days for final reporting.</p>
+
+<p>The evaluator $\mathcal{E}$ is deterministic — the special case the paper explicitly permits, $\mathcal{E}(x,\tau) \in \{0,1\}$ — and returns 1 when all three checks pass: every arXiv id in the digest appears in that day's fetch result, the digest has the four prescribed parts, and it does not cover a paper already covered in the previous seven days. This is the digest agent's one real advantage over the paper's own benchmarks: no LLM judge is needed, so the noise the paper inherits from its evaluators is absent here.</p>
+
+<p class="beat">Beat 2 · Stage 1 — baseline elicitation</p>
+
+<p>Roll $\mathcal{A}$ on the 70 induction days with $\eta = \varnothing$. It passes on 41 and fails on 29, so $|\mathcal{I}^+| = 41$ and $|\mathcal{I}^-| = 29$, and $\mathcal{B}$ holds all 70 triples $(x_i, \tau_i^0, y_i^0)$. Separately, roll on the 30 verification days and cache $\mathcal{B}_{\text{ver}}$: 18 pass ($b_j = 1$) and 12 fail ($b_j = 0$). Those 30 cached outcomes are now frozen and will be the comparison point for every candidate in every round.</p>
+
+<p class="beat">Beat 3 · Stage 2 — contrastive induction</p>
+
+<p>The induction agent writes a root-cause summary $\rho_i^-$ for each of the 29 failures, embeds $e_i^- = \phi([x_i; \rho_i^-])$, and clusters. With 29 points and a target cluster size of 15, adaptive $k$-means over $k \in [2,8]$ lands on $k = 2$:</p>
+
+<pre><code>F1 (17 traj)  Empty result set → fabrication.
+              Root cause: no branch for a zero-entry fetch.
+              Trajectory point: immediately after the fetch call.
+              Corrective rule: treat zero entries as a valid outcome and emit a
+              no-papers line rather than selecting a paper.
+
+F2 (12 traj)  Repeat coverage.
+              Root cause: cross-listed paper ranks top on consecutive days; no
+              check against prior digests.
+              Trajectory point: ranking step.
+              Corrective rule: exclude ids appearing in digests/ from the last 7 days.
+</code></pre>
+
+<p>The 41 successes cluster into $k = 3$: S1, a single unambiguous top paper; S2, a near-tie broken by submission recency; S3, a cross-listed duplicate spotted and skipped. Note S3 — the base agent <em>already</em> handles deduplication correctly on some days. That is exactly the fact success-only extraction cannot use and contrastive analysis can.</p>
+
+<p>Then the local contrastive step. For each failure, $j(i) = \arg\min_{j \in \mathcal{I}^+} d(e_i^-, e_j^+)$, keeping pairs that pass the same-task-type check, up to the cap of 20. The most informative one:</p>
+
+<pre><code>c_7  Failed run (day 41) and nearest success (day 38) both had the same paper
+     ranking first as the previous day.
+     Present in the success, absent in the failure: the agent read
+     digests/2026-04-11.md before ranking and skipped the repeated id.
+     Absent in the failure: any read of digests/ at all.
+</code></pre>
+
+<p>So $\mathcal{Z} = (a_0, \mathcal{F}, \mathcal{S}, \mathcal{C})$ with $|\mathcal{F}| = 2$, $|\mathcal{S}| = 3$, and $|\mathcal{C}| = 20$ — all under the generation prompt's caps of six, six and eight, so nothing is dropped except the twelve lowest-ranked contrastive pairs.</p>
+
+<p class="beat">Beat 4 · Stage 3, round 1 — generate</p>
+
+<p>The generator emits $s^{(1)} = (u^{(1)}, a^{(1)}, \mathcal{P}^{(1)}, \mathcal{R}^{(1)})$ in the fixed three-part schema. Because this is a tool-intensive task, round one is also the only round allowed to emit scripts and references:</p>
+
+<pre><code>u_ctx   Each instance is one calendar day. Fetch new submissions in cs.AI,
+        cs.LG and cs.CL over the last 24 hours, select the paper best matching
+        interests.md, and append a four-part digest to digests/YYYY-MM-DD.md.
+
+u_succ  Rank by interest match; break near-ties by submission recency.
+        Before ranking, read the previous days' digests and exclude ids
+        already covered.
+
+u_fail  A zero-entry fetch is a valid outcome. Never select or describe a
+        paper whose id was not returned by the fetch.
+
+P       skill_fetch_arxiv.py  (URL-encodes the query; returns [] on empty)
+R       arxiv-api.md          (Atom feed, pagination, 3s rate limit)
+</code></pre>
+
+<p class="beat">Beat 5 · Round 1 — verify, and compute the gate</p>
+
+<p>Run $s^{(1)}$ on all 30 verification days and cross-tabulate against the cached $b_j$. Of the 12 baseline failures, 9 are repaired; of the 18 baseline successes, 3 break — the dedup rule as written excludes any id seen in <em>any</em> prior digest, so on three days where the only available paper was a legitimate follow-up it produced no digest at all.</p>
+
+<div class="math-block">
+$$n_{01} = 9, \quad n_{10} = 3, \quad G_m(s^{(1)}) = 9 - 3 = 6, \quad \widehat{\Delta}_m(s^{(1)}) = \frac{6}{30} = +0.200$$
+</div>
+
+<p>The gate threshold for this verification set is $\gamma_{30} = \max\{2, \lceil 0.05 \times 30 \rceil, 1\} = \max\{2, 2, 1\} = 2$, so $6 \ge 2$ and this candidate would already be deployable. The loop continues anyway, because the gate is applied once at the end to the best candidate, not per round.</p>
+
+<p>Feedback partitions the 30 instances: $|\mathcal{Q}_{\text{repair}}| = 9$, $|\mathcal{Q}_{\text{regress}}| = 3$, $|\mathcal{Q}_{\text{fail}}| = 12 - 9 = 3$. The aggregated $\Phi^{(1)}$ reads: <em>keep</em> the zero-entry rule (all 9 repairs trace to it); <em>remove</em> the unbounded dedup exclusion (all 3 regressions trace to it); <em>add</em> a seven-day window to the exclusion; <em>emphasise</em> reading <code>interests.md</code> before ranking, since the 3 unresolved failures skipped it.</p>
+
+<p class="beat">Beat 6 · Rounds 2–8, and best-of-$K$</p>
+
+<p>The maximum refinement budget is $K = 8$. Refinement edits the natural-language body only — the script and reference are now frozen. Net gain by round:</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>$r$</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr></thead>
+<tbody>
+<tr><td>$n_{01}$</td><td>9</td><td>11</td><td>11</td><td>12</td><td>12</td><td>11</td><td>11</td><td>10</td></tr>
+<tr><td>$n_{10}$</td><td>3</td><td>1</td><td>2</td><td>1</td><td>0</td><td>3</td><td>4</td><td>6</td></tr>
+<tr><td>$G_m$</td><td>6</td><td>10</td><td>9</td><td>11</td><td><strong>12</strong></td><td>8</td><td>7</td><td>4</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The shape is the paper's own finding in miniature: gains rise, peak, and then decay as the generator keeps adding qualifications that break previously-working days. Selection takes the maximum rather than the last:</p>
+
+<div class="math-block">
+$$r^\star = \arg\max_r G_m(s^{(r)}) = 5, \qquad G_m(s^\star) = 12, \qquad \widehat{\Delta}_m(s^\star) = \frac{12}{30} = +0.400$$
+</div>
+
+<p>Shipping the newest draft instead would have given $G_m = 4$, or $+0.133$ — a third of the value, from the same eight rounds of work. The paper measures exactly this gap on its own benchmarks and finds it larger still: by round eight the latest candidate has expected $\Delta = -3.1$ pp while the best verified candidate reaches $+8.1$ pp.</p>
+
+<p>The gate: $12 \ge \gamma_{30} = 2$, so $\sigma_{\text{ver}}(s^\star; \mathcal{D}_{\text{ver}}) = \text{active}$. Had every round produced $G_m \le 1$ — say a task where the base agent was already near-perfect — the skill would have been marked <em>deprecated</em> and the digest agent would ship with no skill at all.</p>
+
+<p class="beat">Beat 7 · Deployment, and what the alternatives would have produced</p>
+
+<p>At deployment $u^{(5)}$ goes into a dedicated system-prompt slot, <code>arxiv-api.md</code> is fetched on demand via <code>skill_load_reference</code>, and the script exposes exactly one declared entry point, <code>skill_fetch_arxiv</code>.</p>
+
+<p>Three counterfactuals make the contribution legible, each corresponding to one of the paper's ablations.</p>
+
+<p><strong>Success-only extraction</strong> (the Trace2Skill/SkillX family) never sees F1, because a day with an empty result set produces no successful trajectory to summarise. The skill it writes describes ranking, tie-breaking and formatting — and the agent still fabricates a paper every Sunday. The failure that mattered most is invisible from the success stratum alone.</p>
+
+<p><strong>No verification gate</strong> (ablation A3) ships $s^{(1)}$, or worse, $s^{(8)}$. Both are net-positive here, but $s^{(8)}$ carries six regressions: six days on which the agent used to produce a correct digest and now does not. Aggregate accuracy still improves, which is precisely why aggregate accuracy is the wrong instrument.</p>
+
+<p><strong>No failure lessons</strong> (ablation A4) drops $u_{\text{fail}}$, so the "never describe a paper whose id was not returned" rule has nowhere to live. The dedup improvement survives; the fabrication does not get fixed.</p>
+
+<p>And the comparison to the hand-written <code>SKILL.md</code> the other reports start from: that file says "take the top paper" and nothing about zero entries, because its author was imagining a normal Tuesday. SkillGen wrote the Sunday branch because 17 Sundays were sitting in $\mathcal{I}^-$. This is the honest case for automatic synthesis over hand authoring — not that the machine writes better prose, but that it has read every failure and the human has read none of them.</p>
+
+<div class="callout fidelity">
+<span class="label">Fidelity note</span>
+<p>The stages, notation, three-part schema, the restriction of post-round-1 edits to $u$, the feedback partition, the update rule, best-of-$K$, and the gate with $g_{\text{abs}} = 2$, $g_{\text{rel}} = 0.05$, $K = 8$, the 70/30 split, cluster caps of eight, $k \in [2,8]$, target cluster size 15, 20 contrastive pairs and prompt caps of 6/6/8 are all the paper's. The 100-day dataset, the outcome counts in every round, and the cluster contents are my construction — SkillGen has no digest-like benchmark, and its evaluators on the closest tasks are LLM judges rather than the deterministic checker used here. The paper does not specify what happens when $\mathcal{I}^+$ is empty for the contrastive step beyond noting that $\mathcal{C}$ may be empty, nor how ties in $\arg\max_r G_m$ are broken; neither ambiguity affects this walkthrough, but both would matter in an implementation.</p>
+</div>
+</div>
+
+<p class="eyebrow" id="results">07</p>
+<h2>What the numbers show, and which parts are load-bearing</h2>
+
+<p>SkillGen is evaluated on eight base agents across interactive, scientific, coding, web and tool-use benchmarks — ALFWorld in-distribution and out-of-distribution splits, ScienceWorld, LiveCodeBench, MCPBench, Mind2Web, PubMedQA, SocialMaze, ChemLLMBench and $\tau$-Bench. Every reported number is a paired held-out evaluation: after construction is complete, the same instances are rolled out with and without the generated skill, same identifier, same random seed.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Base agent</th><th>Weights</th><th>Avg baseline</th><th>Avg with skill</th><th>Avg $\Delta$</th></tr></thead>
+<tbody>
+<tr><td>Gemma-4-26B</td><td>open</td><td>58.49%</td><td>61.76%</td><td>+3.27 pp</td></tr>
+<tr><td>Llama-3.1-8B</td><td>open</td><td>35.20%</td><td>38.88%</td><td>+3.68 pp</td></tr>
+<tr><td>Mistral-Nemo</td><td>open</td><td>37.10%</td><td>41.87%</td><td>+4.77 pp</td></tr>
+<tr><td>Qwen-2.5-7B</td><td>open</td><td>38.70%</td><td>42.33%</td><td>+3.63 pp</td></tr>
+<tr><td>Claude-Haiku-4.5</td><td>proprietary</td><td>57.73%</td><td>62.52%</td><td>+4.79 pp</td></tr>
+<tr><td>GPT-5.4-Nano</td><td>proprietary</td><td>54.27%</td><td>64.35%</td><td><strong>+10.08 pp</strong></td></tr>
+<tr><td>GPT-5.4-Mini</td><td>proprietary</td><td>59.17%</td><td>64.80%</td><td>+5.63 pp</td></tr>
+<tr><td>Grok-4-Fast</td><td>proprietary</td><td>58.84%</td><td>65.19%</td><td>+6.35 pp</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Across 80 held-out benchmark–split–model entries, <strong>50 improve, 25 are unchanged, and 5 regress</strong>. The 25 unchanged are not failures of the method; they are gate refusals, reported as zero delta because a deprecated skill reuses the no-skill baseline. That reporting convention — spelled out in Appendix C.7 — is worth noting as good practice: it makes rejections explicit rather than letting an unverified prompt sneak into the average.</p>
+
+<p>The gains concentrate exactly where the theory predicts. ALFWorld improves in 14 of 16 entries and ScienceWorld improves for all eight agents; both are procedural, multi-step environments. ChemLLMBench <em>yield</em> prediction, which benefits from script-and-reference bundles, gains +16.1 pp on average across six models, while <em>property</em> prediction — knowledge-bound rather than procedural — barely moves. The authors' reading, which I find convincing, is that resource-bundle skills pay when the task is procedurally learnable rather than a matter of recalling domain facts.</p>
+
+<p>The ablations test five removals against the full system: A1 replaces the induced skill with in-context learning from $k = 3$ demonstrations; A2 removes refinement; A3 removes the verification gate; A4 removes failure lessons; A5 strips the skill to plain text with no script or reference bundle. The full system wins on <em>every</em> dataset–model pair. The specific findings: the induced skill outperforms simple demonstration reuse, so the improvement is not merely retrieval; refinement and the gate are both needed, because early candidates can repair some failures while introducing regressions; and task-specific skill structure matters, with failure patterns carrying ALFWorld OOD and the script bundle carrying ChemLLMBench.</p>
+
+<p>Against four contemporary skill-generation baselines — Trace2Skill, SkillX, EvoSkill and CoEvoSkills — SkillGen is consistently positive and largest by a clear margin, while several baselines go <em>negative</em> on some benchmark–model pairs. The authors are careful about what this comparison means: all baselines are adapted to the same single-skill interface, which is not their native multi-skill deployment, so it is a controlled comparison of synthesis quality rather than a claim that the adapted baselines exhaust their capabilities.</p>
+
+<p class="eyebrow" id="bestofk">08</p>
+<h2>Best-of-K: the gate as a selection mechanism</h2>
+
+<p>The result I would put in front of a supervisor is the answer to the paper's sixth research question, because it changes how you think about what the gate is <em>for</em>.</p>
+
+<p>The obvious mental model of an iterative refinement loop is that each round improves on the last, so you take the final output. SkillGen measures per-round candidate quality on the construction-time verification subset and finds that this is simply false. Per-round candidates are noisy. <strong>By round eight, the latest candidate has an expected $\Delta$ of $-3.1$ pp, while the best verified candidate across the eight rounds reaches $+8.1$ pp</strong> — a gap of about 11 percentage points between "ship the newest" and "ship the best verified".</p>
+
+<p>So the verification gate is not only a safety check that stops bad skills from deploying. It is the selection mechanism that turns an unstable refinement trajectory into a reliable final artifact. Without it you do not merely lose the protection against harm; you lose most of the value the refinement loop generated, because you have no way to tell which round produced it.</p>
+
+<p>That reframing has a direct organisational consequence for anyone building an authoring loop: <em>every draft has to be scored and retained, not just the current one</em>. A system that overwrites the working draft each round destroys the information the selection step needs.</p>
+
+<p class="eyebrow" id="transfer">09</p>
+<h2>Transfer, cost, and who should write the skill</h2>
+
+<p>Because a SkillGen skill is a readable artifact rather than a weight update, it can be moved to a different agent. The transfer study reuses a final skill from one source model and executes it with a different evaluator model on ALFWorld OOD, ScienceWorld, Mind2Web and SocialMaze, comparing against the evaluator's own no-skill baseline on a shared pool of 100 held-out instances per benchmark. Across 120 off-diagonal comparisons, <strong>70% are non-negative and 42% exceed +5 pp</strong>.</p>
+
+<p>The finding inside that finding is the one worth carrying: <strong>transferable skills are not written by the strongest models.</strong> On ALFWorld the best skill-generating model on average is Qwen-2.5-7B; on ScienceWorld it is GPT-5.4-Nano. Neither is the strongest base agent in the study. Writing a good procedure and executing a good procedure are different competencies, and the pipeline lets you use different models for each — which the paper in fact does throughout, routing induction, generation and verification through a single fixed auxiliary model, GPT-5.4-Mini, precisely so that the quality of the skill is isolated from the capability of the base agent being improved.</p>
+
+<p>On cost, the appendix is unusually forthcoming. Skill construction — baseline trajectory collection, induction, generation, refinement and verification — is a one-time cost per model–benchmark pair, ranging from 2.2M tokens on ScienceWorld to 10.2M on $\tau$-Bench, mean 5.6M. At the auxiliary model's list prices that is <strong>roughly &#36;8.20 per generated skill</strong>. Inference-time overhead is modest and stays in the same few-thousand-token regime: mean 3,589 tokens per call at baseline against 4,537 with the skill, with the largest per-call average being 6,358 tokens on $\tau$-Bench.</p>
+
+<p>Eight dollars and one afternoon to produce an audited, verified skill is a number worth remembering when someone argues that automated authoring is too expensive to gate properly. The gating is not the expensive part.</p>
+
+<p class="eyebrow" id="stillfails">10</p>
+<h2>Where the gate still fails</h2>
+
+<p>Appendix C.9 is the most valuable two pages in the paper, and it is the part a summary would omit, because it is where the authors document their own method failing.</p>
+
+<p><strong>The gate reduces harm substantially, but accepted skills can still regress on held-out instances.</strong> The clearest evidence is the contrast between rejected and accepted negative skills. Skills the gate <em>rejected</em> would have taken Qwen-2.5-7B on LiveCodeBench from 25.33% down to 16.00%, and Gemma-4-26B from 83.33% to 80.67%; those cells are reported as zero-delta because the rejection worked. But filtering is not perfect. An <em>accepted</em> skill for Llama-3.1-8B on ALFWorld OOD still lowers held-out accuracy from 67.45% to 65.10% — 51 repairs against 57 regressions on the final split — and on ChemLLMBench yield prediction, Mistral-Nemo drops from 43.33% to 20.00% with three repairs against ten regressions.</p>
+
+<p>The named failure mode is <strong>overgeneralization</strong>: a skill that looks beneficial on the construction-time verification subset can still perturb correct baseline behaviour on the final split. Which is to say the gate is a sample-based decision and inherits every problem sample-based decisions have. It is a real check, not a guarantee.</p>
+
+<p>Three further observations from the failure analysis are directly useful for building a reviewer:</p>
+
+<p><strong>In interactive environments, the dominant residual error is incomplete procedure execution rather than wrong local action choice.</strong> For Llama-3.1-8B on ALFWorld the largest failure cluster is <em>incomplete dependency planning</em>, 65 cases: trajectories that begin a plausible subgoal but omit a later prerequisite, such as turning on a lamp before inspection. For Gemma-4-26B, 110 failures out of 150 construction instances cluster as <em>ungrounded action planning</em> (25), <em>incomplete task-sequence planning</em> (20) and <em>incomplete goal-to-action planning</em> (19). The agent recognises the task theme and fails to maintain the full ordered procedure — which is the same diagnosis SKILL-USE arrives at from the measurement side.</p>
+
+<p><strong>On chemistry tasks, failures are about grounding, not facts.</strong> Qwen-2.5-7B on yield prediction fails 27 of 30 examples, clustering as <em>superficial reaction-feasibility assessment</em> (14) and <em>reaction-role misparsing</em> (13): the model recognises a familiar reaction family, confuses substrates with catalysts or bases, and predicts from a generic template rather than checking the actual combination. This is why the script-and-reference bundle helps so much there — the gain comes from enforcing a grounded checking procedure, not from restating chemistry.</p>
+
+<p><strong>On code generation, skills cannot compensate for missing global structure.</strong> LiveCodeBench failures for Qwen-2.5-7B number 113 of 150, dominated by <em>incomplete algorithmic modeling</em> (19) and <em>incomplete algorithm realization</em> (14). A skill can regularise recurring habits but cannot rescue a case where the model never identifies the right combinatorial structure. There is a ceiling, and it is set by the base model's capability rather than by the quality of the procedure.</p>
+
+<p class="eyebrow" id="hostile">11</p>
+<h2>Where a hostile reviewer attacks first</h2>
+
+<div class="callout hostile">
+<span class="label">The strongest objections</span>
+<p><strong>Best-of-$K$ selection on the same verification set is a multiple-comparisons problem, and the paper states the unbiasedness result in a form that excludes it.</strong> $\mathbb{E}[\widehat{\Delta}_m(s)] = \Delta(s)$ holds "for a fixed, non-adaptively chosen skill". Selecting $\arg\max_r G_m(s^{(r)})$ over eight candidates on the very set used to compute $G_m$ is adaptive by definition, so the selected candidate's construction-time $G_m$ is an optimistically biased estimate of its true net effect. The paper never quantifies the bias, and with $m$ as small as 30 and $K = 8$ it could be material. The C.9 evidence of accepted-but-regressing skills is consistent with exactly this.</p>
+<p><strong>Everything rests on evaluator quality.</strong> $Y \sim \mathrm{Bernoulli}(\mathcal{E}(x,\tau))$, and on several benchmarks $\mathcal{E}$ is an LLM judge. Judge noise propagates into $n_{01}$ and $n_{10}$, into the gate decision, and into best-of-$K$ selection — and a noisy evaluator makes the $\arg\max$ over eight candidates <em>more</em> likely to select on noise rather than signal.</p>
+<p><strong>The gate threshold is unmotivated.</strong> $g_{\text{abs}} = 2$ and $g_{\text{rel}} = 0.05$ are stated without derivation, sensitivity analysis, or a false-acceptance-rate argument. It is a "simple construction-time safeguard" in the authors' own words, which is honest, but it means the single most consequential number in the deployment rule is a choice rather than a calibration.</p>
+<p><strong>One skill per benchmark–model pair.</strong> Multi-skill libraries, interaction between skills, and routing are all out of scope — the appendix is explicit that library-based baselines were adapted <em>down</em> to a single-skill interface for comparability. Everything the field knows about library scaling and skill conflict is therefore untested here.</p>
+<p><strong>No human in the loop anywhere.</strong> The pipeline is fully automatic. Our regime — a domain expert authoring with an agent's help — is an untested variant, and the transfer result showing that the best skill-writer is not the best task-model is a hint that the identity of the author matters more than one might assume.</p>
+</div>
+
+<p>What survives is the core: the interventional framing, paired verification against cached baselines, counting repairs and regressions separately, best-of-$K$ over retained drafts, and shipping nothing when nothing verifies. Those are right, and they are right independently of whether $g_{\text{abs}} = 2$ is the correct threshold or whether these particular percentage points replicate.</p>
+
+<p class="eyebrow" id="landing">12</p>
+<h2>What this means for AutoSkill</h2>
+
+<div class="callout landing">
+<span class="label">Adoptable, with conditions</span>
+<p><strong>Net effect on frozen fixtures is the admission currency.</strong> $G_m = n_{01} - n_{10}$, computed by paired rollout against cached no-skill outcomes on identical instances, is the outcome-side metric the harness needs — the complement to SKILL-USE's process-side Trigger/Compliance/Boundary. Cache $Y^0$ at the moment fixtures freeze, exactly as SkillGen caches $\mathcal{B}_{\text{ver}}$, so the comparison baseline cannot drift as the platform changes underneath it.</p>
+<p><strong>Promotion selects best-of-$K$ across retained sandbox drafts, not the latest one.</strong> $-3.1$ pp for the newest against $+8.1$ pp for the best verified is the one-line justification for keeping every draft an author produces and scoring all of them. It also means the sandbox needs draft lineage as a first-class object rather than a working copy that gets overwritten.</p>
+<p><strong>Split the selection set from the final holdout.</strong> This is the fix for the multiple-comparisons problem the paper leaves open: select $s^\star$ on one frozen set, then verify the selected candidate once on a set never used for selection, and promote on <em>that</em> number. It costs one extra evaluation pass per skill and removes the single strongest methodological objection to the gate.</p>
+</div>
+
+<p>Four further consequences, in descending order of how much they change the build.</p>
+
+<p><strong>Contrastive induction is an algorithm the authoring agent can run, and our setting supplies its inputs for free.</strong> Every sandbox iteration produces trajectories labelled pass or fail by deterministic checks. Clustering the failures, clustering the successes, and diffing each failure against its nearest same-type success is directly implementable, and the three-part skill schema — context, success patterns, failure lessons — is a better template for a non-programmer than a blank file. The A4 ablation says the failure-lessons section carries real weight; it should be a required section in our skill schema, not an optional one.</p>
+
+<p><strong>Author under one model, verify under the deployed one.</strong> The transfer result and the fixed-auxiliary-model design both point the same way: the model that writes the skill and the model that runs it need not be the same, and the best writer is not the strongest executor. For us this means the authoring agent can be chosen for writing quality while every fixture is verified under the exact runtime model and harness the desk will use in production. Combined with SKILL-USE's harness-dependence finding, this is now two papers saying the same thing: pin the execution configuration, vary the authoring one.</p>
+
+<p><strong>Our research question is the one this paper defines but does not ask.</strong> SkillGen establishes $G_m$ as the target variable and demonstrates that verified gating works. What it never measures is whether anything <em>cheaper</em> predicts $G_m$ — no static structural check, no reviewer verdict, nothing that would let you skip the expensive machinery for candidates that are obviously fine or obviously broken. At roughly 5.6M tokens and &#36;8.20 per skill, and one full paired rollout per candidate per round, that machinery is the dominant cost of the loop. "When can cheap signals predict the verified net effect" is exactly the gap, and this paper is the citation that defines the dependent variable rigorously enough for the question to be askable.</p>
+
+<p><strong>The deterministic-evaluator advantage is ours to claim, and it should be stated as a scope condition rather than a boast.</strong> SkillGen's largest acknowledged weakness is evaluator quality, and the failure analysis shows the gate admitting harmful skills partly because the verification signal is noisy. Our fixtures are report-generating pipelines with checkable output contracts — schema conformance, golden-diff comparison against a reference report, reconciliation totals. That is the deterministic special case $\mathcal{E}(x,\tau) \in \{0,1\}$, which removes a whole class of noise from the gate and makes the multiple-comparisons correction above more likely to actually help rather than being swamped.</p>
+
+<p>Two warnings. First, <strong>the gate is a sample-based decision, and accepted skills still regress</strong> — an accepted ALFWorld skill posted 51 repairs against 57 regressions on held-out. Promotion cannot be the end of the story; whatever monitoring exists after deployment has to be able to detect a skill that verified and then underperformed, which is the gap our baseline analysis already flags as "nothing after promotion". Second, <strong>skills cannot fix capability gaps</strong>. The code-generation failure analysis is unambiguous: where the model never identifies the right structure, no procedure rescues it. For AutoSkill this predicts which desk requests are appropriate for a skill at all — procedural workflows with a known correct sequence, yes; tasks whose difficulty is analytical judgment, no — and that distinction is worth making explicit in the authoring agent's intake step rather than discovering it after a skill fails to verify.</p>
+
+<p class="fn">Y. Ma, Y. Huang, H. Bao, H. Zhuang, S. Shukla, M. Galley, X. Zhang and S. Feuerriegel, "SkillGen: Verified Inference-Time Agent Skill Synthesis," arXiv:2605.10999v1 [cs.LG], 9 May 2026. Code at github.com/yccm/SkillGen. Section, equation and appendix references in this report are to that version.</p>
+</div>

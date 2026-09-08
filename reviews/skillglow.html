@@ -1,0 +1,423 @@
+<title>SkillGLoW, Explained</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F7F5F1; --surface:#FFFFFF; --ink:#232A35; --muted:#5A6478;
+  --line:#DDD7CB; --accent:#2C5E8A; --accent-ink:#FFFFFF; --accent-soft:#EAF0F6;
+  --warn:#C2410C; --warn-soft:#FBEDE5; --code-bg:#EFECE5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+    --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+    --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+  --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+  --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--ground); color:var(--ink); font-family:"Source Serif 4",Georgia,serif;
+  font-size:1.125rem; line-height:1.68; margin:0;}
+.wrap{max-width:46rem; margin:0 auto; padding:0 1.25rem 5rem;}
+header.masthead{border-bottom:2px solid var(--ink); padding:2.5rem 0 1.5rem; margin-bottom:2rem;}
+.series{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 1rem;}
+h1{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:2.1rem; line-height:1.15;
+  margin:0 0 .75rem; text-wrap:balance;}
+.dek{font-size:1.15rem; color:var(--muted); margin:0 0 1rem; font-style:italic;}
+.meta{font-family:"IBM Plex Mono",monospace; font-size:.78rem; color:var(--muted);}
+nav.toc{background:var(--surface); border:1px solid var(--line); padding:1.1rem 1.4rem; margin:2rem 0;}
+nav.toc p{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.8rem;
+  text-transform:uppercase; letter-spacing:.1em; margin:0 0 .5rem; color:var(--muted);}
+nav.toc ol{margin:0; padding-left:1.2rem; font-size:.95rem; line-height:1.9;}
+nav.toc a{color:var(--accent); text-decoration:none;}
+nav.toc a:hover, nav.toc a:focus{text-decoration:underline;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin:3rem 0 .25rem;}
+h2{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:1.5rem; line-height:1.2;
+  margin:.1rem 0 1rem; text-wrap:balance;}
+h3{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:1.1rem; margin:1.8rem 0 .6rem;}
+p{margin:0 0 1.1rem;}
+a{color:var(--accent);}
+strong{font-weight:600;}
+.callout{border:1px solid var(--line); background:var(--surface); padding:1.1rem 1.4rem; margin:1.6rem 0;}
+.callout .label{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.75rem;
+  text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:.5rem;}
+.example{border-left:4px solid var(--accent); background:var(--accent-soft);}
+.example .label{color:var(--accent);}
+.hostile{border-left:4px solid var(--warn); background:var(--warn-soft);}
+.hostile .label{color:var(--warn);}
+.landing{background:var(--accent-soft); border:2px solid var(--accent);}
+.landing .label{color:var(--accent);}
+.fidelity{border-left:4px solid var(--muted); background:var(--surface);}
+.fidelity .label{color:var(--muted);}
+.walkthrough{border-top:2px solid var(--accent); border-bottom:2px solid var(--accent);
+  padding:1.5rem 0 .5rem; margin:2rem 0;}
+.beat{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent); margin:2rem 0 .3rem;}
+code{font-family:"IBM Plex Mono",monospace; font-size:.88em; background:var(--code-bg);
+  padding:.12em .35em; border-radius:3px;}
+pre{background:var(--code-bg); padding:1rem 1.2rem; overflow-x:auto; font-family:"IBM Plex Mono",monospace;
+  font-size:.85rem; line-height:1.55; margin:1.2rem 0; border-radius:4px;}
+pre code{background:none; padding:0;}
+table{width:100%; border-collapse:collapse; font-size:.92rem; margin:0;
+  font-variant-numeric:tabular-nums;}
+th{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.78rem; text-transform:uppercase;
+  letter-spacing:.06em; text-align:left; padding:.5rem .7rem; border-bottom:2px solid var(--ink);
+  color:var(--muted);}
+td{padding:.5rem .7rem; border-bottom:1px solid var(--line);}
+.table-wrap{overflow-x:auto; margin:1.2rem 0;}
+.math-block{overflow-x:auto; margin:1.4rem 0; text-align:center; font-size:1.05rem;}
+.fn{font-size:.82rem; color:var(--muted); border-top:1px solid var(--line); margin-top:3rem; padding-top:1rem;}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{fontCache:'global'}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+<div class="wrap">
+<header class="masthead">
+  <p class="series">AutoSkill · Deep Dive 08</p>
+  <h1>SkillGLoW: Procedural-Family Skill Consolidation for Self-Improving Agents on Long-Horizon Task Streams</h1>
+  <p class="dek">One skill document for everything goes generic; one entry per task never generalises. This paper argues the right unit of reuse sits between them — the procedure a cluster of tasks shares — and only lets a consolidated procedure into the library after real execution says it did not make things worse.</p>
+  <p class="meta">Yan, Xin, Du &amp; Zhou · National University of Singapore &amp; IAIC · arXiv 2609.02217 · 2 September 2026</p>
+</header>
+
+<nav class="toc">
+<p>Contents</p>
+<ol>
+<li><a href="#granularity">The granularity problem</a></li>
+<li><a href="#setup">The setup: one handle on a frozen agent</a></li>
+<li><a href="#local">Stage 1: local skills and skill cards</a></li>
+<li><a href="#cluster">Stage 2: clustering by procedure, then compressing</a></li>
+<li><a href="#gate">Stage 3: the verifier-grounded commit gate</a></li>
+<li><a href="#weave">At execution time: the weave</a></li>
+<li><a href="#walkthrough">The method end to end, on the digest agent</a></li>
+<li><a href="#results">The results, and what the gate actually caught</a></li>
+<li><a href="#hostile">Where a hostile reviewer attacks first</a></li>
+<li><a href="#landing">What this means for AutoSkill</a></li>
+</ol>
+</nav>
+
+<p class="eyebrow" id="granularity">01</p>
+<h2>The granularity problem</h2>
+
+<p>Every self-improving agent in this literature ends up with the same question once it has written a few dozen skills from its own experience: in what shape should it keep them? Two shapes dominate. The first is a <strong>single global document</strong>, one skill file that gets rewritten after every round and injected whole into every task. SkillOpt, which you know from the landscape as the strictest acceptance discipline in the lane, is the state of the art here. The second is a <strong>flat library</strong>, one entry per task the agent has solved, grown by appending and searched by retrieval. Most of the evidence that either shape works, the authors point out, comes from benchmarks whose tasks resemble each other structurally, and that is not a coincidence: each shape encodes an assumption about how tasks are distributed. A single document assumes most tasks share one dominant procedure that a document can summarise. A per-task pool assumes an old entry can be reused wholesale on a new task.</p>
+
+<p>On a stream of long-horizon tasks where each one wants a different solution — a different repository to repair, a different terminal scenario to automate — both assumptions fail at once, and they fail in opposite directions. The single document, forced to average over procedures that do not share anything, collapses into generic discipline the model already has: read the spec, probe the environment, check edge cases. The pool grows linearly with the stream, each entry stays bound to the instance that wrote it, and retrieval over it transfers almost nothing. The paper's Figure 1 draws this as a dial from "too coarse" to "too fine" with the proposed unit at a balanced point between them.</p>
+
+<p>That unit is the <strong>procedural family</strong>: a cluster of tasks that are solved the same way, whether or not they are about the same thing. The insight behind it is that solutions differ from instance to instance but tasks are not isolated. Similar tasks share a solving procedure, and each instance also carries local constraints that only surface during execution. The procedure transfers; the instance details do not. So an organisation should keep both, in different places, with different lifetimes. SkillGLoW, the name being a contraction of Global–Local Weave, is the framework that does this. The <strong>global layer</strong> compresses each family's shared procedure into a stable prior that is frozen while a task runs and revised only offline. The <strong>local layer</strong> is regenerated fresh for each task from that task's own execution feedback, carries the instance detail the prior deliberately dropped, and is never written into long-term storage. It is, however, what the next round of consolidation consumes. The two are combined at solving time and separated at consolidation time, and a revision to the global layer is committed only when real execution shows it does not degrade the deployed library.</p>
+
+<p>Hold the contrast with the two papers already in your notes. WikiSkill (<code>[[wikiskill]]</code>) keeps three layers with different persistence contracts, but its skills are a single set gated as a whole and its consolidation problem is what to write into the wiki. SkillCommit (<code>[[skillcommit]]</code>) also refuses to merge on similarity, but its unit is the patch and its evidence is replay of each source instance. SkillGLoW's unit is the family, its evidence is the mean score over the whole task stream, and its claim is specifically about granularity: that a library holding one prior per family beats both the single document and the flat pool on the same runs. The rest of this report is about whether the evidence supports that, and the answer is more interesting than a yes or a no.</p>
+
+<p class="eyebrow" id="setup">02</p>
+<h2>The setup: one handle on a frozen agent</h2>
+
+<p>The problem statement is worth reading carefully because every later design choice is justified by it. A skill is a natural-language procedure inserted into the agent's context. The agent $\pi$ is frozen: no fine-tuning anywhere in this paper. Given a task $x$, a skill context $s$, and an execution harness $h$, one execution returns a trajectory and a verifier score,</p>
+
+<div class="math-block">$$(\tau_x(s),\, r_x(s)) = h(\pi, x, s), \qquad r_x(s) \in [0,1],$$</div>
+
+<p>and the authors draw the two consequences immediately: changing $s$ is the only handle on the frozen agent's behaviour, and $r_x$ is the only trustworthy measure of effect. Everything else in the method follows from taking those two sentences literally. The library is a set of committed global priors $G = \{G_{\text{base}}, G_1, \ldots, G_K\}$, where each $G_k$ carries the procedural structure shared by one family and $K$ is far smaller than the number of tasks seen. For a task $x$, the system recalls the relevant prior by concatenating a base prior that is always injected with the one family prior that is most similar to the task:</p>
+
+<div class="math-block">$$G_x = \mathrm{Recall}(G, x) = G_{\text{base}} \oplus G_{k(x)}.$$</div>
+
+<p>A separate module named Localize produces the task-local skill from the differences between successive runs of the same task together with their scores, $L_x = \mathrm{Localize}(\Delta\tau_x, r_x)$, and the paper is emphatic about its isolation: $L_x$ depends only on the current task's own feedback, queries no historical library, and is not written into it. The objective is then to maintain $G$ over the task stream so that the expected score of the combined context is as high as possible,</p>
+
+<div class="math-block">$$\max_{G}\; \mathbb{E}_{x \sim \mathcal{D}}\Big[\, r_x\big(\mathrm{Recall}(G, x) \oplus L_x\big) \Big],$$</div>
+
+<p>where $\mathcal{D}$ is the stream's task distribution. Note what the objective does not contain: a library-size term. Size is meant to fall out of the family structure, since consolidation keeps one prior per family, so $|G|$ tracks the number of distinct procedures found rather than the number of tasks seen. The authors name three reasons this optimisation is hard — the score $r_x$ is a black box, the granularity of $G$ is unknown in advance, and language compression is lossy — and the three method stages are pitched as answering those three difficulties in turn.</p>
+
+<p>One thing the paper never says is what $G_{\text{base}}$ contains. It is "injected unconditionally" and it is the fallback when no family prior is similar enough, but its text, its origin and whether it changes across rounds are unspecified in both the body and the appendix. I flag it here because it matters for the walkthrough, and because a base prior that carries generic discipline would be the very thing §4.3 says is worthless.</p>
+
+<p class="eyebrow" id="local">03</p>
+<h2>Stage 1: local skills and skill cards</h2>
+
+<p>The first stage is where execution evidence is turned into text, and its distinctive choice is that a local skill is generated from <em>differences between multiple runs of the same task</em>, not from a single trajectory. Localize compares what changed between adjacent runs and, using the verifier scores, judges which changes actually advanced the task. What it keeps are "operational hypotheses that execution feedback has already supported on the current task": a step that appeared between a failing run and a passing one is retained; a step that was present in both is not credited. In Algorithm 1 this is the inner loop of lines 8–11: execute under the recalled prior, generate $L_x$ from the trajectory differences and scores, execute again under $G_x \oplus L_x$, and repeat until the iteration budget is exhausted. The budget is $J = 3$ sub-rounds, one trial per task, for every benchmark and model.</p>
+
+<p>The appendix shows the two prompts that read a single task's own execution, and they are worth quoting because they are the entire content of "Localize" as far as the paper reveals it. The first fires when a task turns from failing to passing:</p>
+
+<pre><code>A task just succeeded (pass_rate=1.0) after previously failing (pass_rate=0.0).
+Extract MINIMAL, reusable procedure knowledge for the skill's procedure slot.
+Successful trajectory (key steps): {traj}
+Final code (key part): {code}
+Rules:
+- Output 2-4 concise bullet points describing the STEPS that made this work
+- Focus on FLOW: what to do first, what to check, what to call
+- Include at most ONE short code snippet (&lt;=8 lines) only if it encodes a
+  non-obvious pattern
+- Do NOT include task-specific file paths, test constants, or verifier output
+- Each bullet must be actionable: start with a verb
+- Total output: &lt;=80 words</code></pre>
+
+<p>What that buys is de-instantiation enforced at the top of the pipeline rather than left to the compressor: the eighty-word cap and the ban on file paths and test constants mean a local skill is already closer to a procedure than to a transcript. The second prompt runs on failures and drives the repair route you will meet in the gate section:</p>
+
+<pre><code>An AI agent attempted a task but failed. Your job: identify which skill slot's
+guidance was missing or wrong, based on the agent's actual code.
+Extract the missing reusable knowledge, rule, mapping, schema invariant, parser
+assumption, API/library usage rule, numeric/statistical criterion, or
+algorithmic constraint that would have prevented this failure.
+Do NOT default to generic process advice such as "avoid loops", "stop earlier",
+or "be more careful" unless the evidence clearly proves that is the primary
+missing rule.</code></pre>
+
+<p>The last sentence is the same defence against generic discipline that runs through the whole paper, applied at the smallest scale. The output of the stage is a <strong>skill card</strong> per task, $c_x = (x, a_x, \tau_x, r_x, L_x)$: the task instruction, an abstract signature $a_x$ naming what the solution did, the trajectory text, the verifier score, and the local skill. The trajectory differences $\Delta\tau_x$ feed Localize but are not carried on the card, and the local skill $L_x$ never enters $G$ (Algorithm 1, line 12). The cards are the whole of what consolidation sees.</p>
+
+<p class="eyebrow" id="cluster">04</p>
+<h2>Stage 2: clustering by procedure, then compressing</h2>
+
+<p>Consolidation groups the cards into families "by how it is solved rather than what the task is about," and the mechanism for that is a multi-view embedding in which the procedure signature deliberately outweighs the task text. Each card supplies textual views that are encoded separately with a sentence-embedding model and fused with fixed weights into one vector $\phi(c)$. The body describes four views; the appendix reveals five channels, because the signature is encoded twice, once compact and once verbose:</p>
+
+<div class="table-wrap">
+<table>
+<tr><th>Channel</th><th>Content</th><th>Five-view weight</th><th>Four-view weight</th></tr>
+<tr><td>S — signature, compact</td><td>the 2–5-word abstract operation name</td><td>0.30</td><td>0.25</td></tr>
+<tr><td>L — signature, verbose</td><td>a 10–15-word description of the procedure</td><td>0.20</td><td>0.25</td></tr>
+<tr><td>I — task instruction</td><td>the task text as given</td><td>0.20</td><td>0.25</td></tr>
+<tr><td>T — trajectory text</td><td>goal, actions, checks and observations, ≈500 characters</td><td>0.20</td><td>—</td></tr>
+<tr><td>F — full local skill</td><td>the skill with every section, truncated at 8,000 characters</td><td>0.10</td><td>0.25</td></tr>
+</table>
+</div>
+
+<p>The tier is chosen at run time by which fields the round's cards actually carry, and the twelve runs only ever trigger these two. In both, the two signature channels together carry half the weight and the full skill text the least, which is the paper's way of making sure grouping follows the procedure rather than either wording. Two LLM prompts feed the signature channels. One asks, for a pair of tasks, whether "one procedure, written once, [would] correctly accomplish the core of BOTH tasks," judging "by the underlying operation and the shape of the data flow, not by surface wording or subject matter," and returns JSON. The other takes all $n$ cards and asks the model to bucket them into $K$ canonical operations, each bucket getting one label of three to five lowercase words that leads with a generic verb, with the instruction that cards "MUST NOT be merged just because they touch the same surface tech." Every card in a bucket receives that label as its compact signature. Across rounds the fused vectors accumulate under an exponential moving average with $\alpha = 0.2$.</p>
+
+<p>A single hierarchical clustering is sensitive to the linkage rule and to the number of clusters, so GLoW runs nine of them and votes. The cosine similarity matrix is min-max normalised to $[0,1]$ and turned into a distance $D = 1 - S$. The nine base partitions are average and complete linkage on $D$ and Ward linkage on $S$, each run at three cluster counts $K \in \{K_0 - 1, K_0, K_0 + 1\}$ around a seed value from a first pass. The consensus similarity between two cards is then simply how often the nine partitions put them together,</p>
+
+<div class="math-block">$$\mathrm{CO}_{ij} = \frac{1}{9}\sum_{p=1}^{9} \mathbf{1}\big[\ell_p(i) = \ell_p(j)\big],$$</div>
+
+<p>and the final families come from one more average-linkage clustering on $1 - \mathrm{CO}$. The number of families is not set by hand: it is the Kneedle knee of the silhouette curve, searched over $K \in [3, \min(n-1, \lfloor n/2 \rfloor + 2)]$, which the authors note prefers fewer clusters than a plain argmax. The lower bound of three is worth remembering; it means the method will always draw at least three families even from a stream that has one procedure.</p>
+
+<p>Each family is then compressed into one candidate prior, $\hat{G}_k^{(t)} = \mathrm{Compress}(C_k^{(t)})$, and the goal of compression is stated precisely: de-instantiated induction over the group's local skills, extracting the recurring solving skeleton and filtering out bindings that hold only in a single instance. A generated prior retains exactly three kinds of content — applicability conditions, the core solving procedure, and common failure modes — and the filtered instance details are recovered by the local skill regenerated at execution time. The compression prompt is the most candid artifact in the appendix, because it tells the model that a short generic answer is a correct answer:</p>
+
+<pre><code>You are distilling {n_tasks} task-specific skills into ONE reusable
+family-level skill.
+These tasks were grouped by an automated clustering step and may or may not
+share a real solving procedure - do not assume they do. Before writing
+anything, judge honestly: would solving one of these tasks actually teach you
+concrete, reusable steps for solving the others (same algorithm family, same
+class of checks, same kind of artifact), or do they only share generic
+competent-engineering discipline (read the spec first, probe the environment,
+enumerate edge cases, validate formally)? If a candidate Step/Pattern would
+only ever fire for 1 of the {n_tasks} tasks, DO NOT include it - leave it out
+rather than force it in. It is a CORRECT and USEFUL output for
+section_procedure to end up short and generic if that is what genuinely
+generalizes; a short honest skill is far more useful downstream than a long one
+that silently overfits to whichever task you processed last.</code></pre>
+
+<p>That instruction is doing something the clustering cannot: it lets the compressor refuse the cluster it was given. The appendix shows the result. A debugging family from a pre-partitioned run produced a 500-word prior whose merge note reads "These 2 tasks span unrelated domains and share only generic engineering discipline," and whose procedure amounts to "establish baseline execution, gather direct runtime evidence, and report conclusions conservatively." The authors offer that as direct evidence for their own claim that a merged document over unrelated tasks yields discipline the model already has. The good case looks different in kind, not just length: the ALFWorld examine-in-light prior carries concrete action commands and a turn-budget consideration, and can change the search path, whereas the generic one can only change the wording.</p>
+
+<p class="eyebrow" id="gate">05</p>
+<h2>Stage 3: the verifier-grounded commit gate</h2>
+
+<p>A candidate prior is not written into the library directly, and the reason is the lossiness named in §2: compression can widen a rule or drop a constraint, and the text offers no way to tell. So admission rests on measured execution. The execution value of deploying the pure global priors on a task set is the mean verifier score over that set when each task is run under its recalled prior <em>alone</em>,</p>
+
+<div class="math-block">$$V(G; \mathcal{D}) = \frac{1}{|\mathcal{D}|} \sum_{x \in \mathcal{D}} r_x\big(\mathrm{Recall}(G, x)\big),$$</div>
+
+<p>with no $L_x$ appended, so that whatever value is measured is attributable to the prior rather than to within-task adaptation. That is the same discipline WikiSkill arrived at from the other direction, where giving the agent wiki access during evaluation corrupted the signal, and it is good to see two groups converge on it. The appendix adds a detail the body hides: $r_x$ here is each benchmark's <strong>soft</strong> score, the partial-credit signal, while the headline table reports hard. On long-horizon tasks the all-or-nothing flag is too sparse to gate on, since one task flipping can decide the verdict.</p>
+
+<p>A round's candidates come from three routes. The first is fresh compression of that round's local skills. The second is <strong>append-only repair</strong>: where the deployed prior lost ground, scope-restricted guards distilled from the degraded tasks' local skills are appended, leaving the verified structure intact. The third carries forward, for each family, whichever version has scored best so far. Every route yields one prior per family, the priors of a round together form a candidate revision $G^{(v)}$, and the gate keeps the best:</p>
+
+<div class="math-block">$$V^{\text{real}} = \max_{v} V\big(G^{(v)}; \mathcal{D}\big), \qquad \text{commit} \iff V^{\text{real}} \ge A - \epsilon.$$</div>
+
+<p>The anchor $A = \max(V^\star, V^{\text{ns}})$ is the larger of the standing library's real deployment value and the no-skill baseline, and $\epsilon = 0.02$ absorbs fluctuation. Three further rules make this stricter than it looks. First, $A$ is floored at the highest value any measurement in the previous round reached, so a revision cannot pass merely by clearing the standing commit; it has to match the best thing seen. Second, the maximum selects among candidate texts, not among repeated measurements of one text, so the gate is not a lottery over noise. Third, admission is decided <em>once per round over the revision as a whole</em>, not separately per family — a point that will matter for AutoSkill, because it means a revision can fix one family and break another and still pass on the average. If the inequality fails, the library is left untouched.</p>
+
+<p>Two appendix details complete the picture. The task set $\mathcal{D}$ in the gate is the <strong>training stream itself</strong>; no held-out evaluation enters any gate decision. And candidates are adjudicated <em>late</em>: the candidate of round $k$ is scored by the first real deployment of round $k+1$, which is already inside the training budget. So every prior in a reported library carries the evidence of one real deployment, and searching over the three routes costs no extra rollouts — their scores are read off the nine deployments already executed. The paper does not spell out how a per-route score is recovered from deployments that ran under one library, and I return to that in the walkthrough. Finally, the gate includes equality: a tie passes. The authors call this a design choice they did not verify, justified by the thought that a prior which merely holds level still changes what the next round's local skills are extracted from. Whether that helps or hurts on balance was not tested.</p>
+
+<p class="eyebrow" id="weave">06</p>
+<h2>At execution time: the weave</h2>
+
+<p>The last piece of the method is the runtime, and it is simple by design. The committed library stays frozen. For a new task, Recall runs in two levels: the base prior is always present, and on the family side the system embeds the full text of each committed prior, embeds the task instruction as the query, takes the cosine-similarity top-1, and injects it only when the similarity exceeds a fixed threshold of 0.45 shared across all four benchmarks — otherwise it falls back to $G_{\text{base}}$ alone, which the authors call fail-closed. Recall completes before the task starts and stays fixed throughout its execution. The embedding model is Qwen3-Embedding-8B under 4-bit quantisation, running on a single 16 GB laptop GPU; 8-bit was measured not to change any routing decision.</p>
+
+<p>The agent then executes under $G_x$, collects feedback from the current task, and Localize generates a fresh $L_x$ exactly as in Stage 1. In subsequent solving the agent uses $G_x \oplus L_x$ and keeps updating $L_x$; that local skill is staged as evidence for the current sub-round and, after the round, feeds consolidation. So the loop closes on the same object each time: what a task learns about itself is thrown away as memory but consumed as evidence. What a family learns is kept, but only after a deployment proves it did not hurt. The only thing the paper leaves to the reader here is the query. Recall keys on the <em>task instruction</em>, not on anything the agent has observed, which is fine when tasks differ in their instructions and, as the walkthrough will show, not fine when they differ only in the world they meet.</p>
+
+<div class="walkthrough" id="walkthrough">
+<p class="eyebrow">07</p>
+<h2>The method end to end, on the digest agent</h2>
+
+<p>Everything above is a description; this section is the simulation. It runs SkillGLoW's Algorithm 1 start to finish on Priya's Daily Paper Digest agent, with the paper's constants substituted in and the gate arithmetic computed on the page. Two constructions are mine and I say so up front. The paper's task streams are sets of <em>distinct</em> tasks — thirty-two different terminal scenarios, twenty different repositories. The digest agent has one skill and runs it every day, so to give the method a stream at all I treat <strong>each day as a task instance</strong> $x$, with $\mathcal{D}$ a fixed set of 24 recorded days, exactly as the WikiSkill report did and with the same caveat that this is not the paper's setup. And the paper needs a soft score $r_x \in [0,1]$; the digest has no benchmark, so I define one as the fraction of five checks passed: a digest file exists, it cites a real arXiv id, it does not repeat a paper covered in the last seven days, it has the four required sections, and the cited paper was actually in the fetched feed. Hard is all five. Both constructions are interrogated at the end of the section.</p>
+
+<p class="beat">Beat 1 — the starting state, and the failure that gives the stream its shape</p>
+
+<p>The skill the agent starts with is the baseline from the running example, quoted here in the paper's own terms as the skill context $s$ that the frozen agent $\pi$ receives:</p>
+
+<pre><code>---
+name: daily-paper-digest
+description: Fetch today's new AI papers from arXiv, pick the most relevant one, and write a
+  short digest. Use when the user asks for their daily paper digest or "what's new today".
+---
+
+# Daily Paper Digest
+
+1. Call the arXiv API for papers submitted in the last 24 hours in cs.AI, cs.LG, and cs.CL.
+2. Rank the results by how well they match the user's interests in `interests.md`.
+3. Take the top paper. Fetch its abstract.
+4. Write a digest with four parts: the problem, what's new, why it matters, one example.
+5. Append the digest to `digests/YYYY-MM-DD.md`.</code></pre>
+
+<p>Over the 24 recorded days the agent meets three of the standing failure modes, and which days meet which is the whole reason a family structure might exist here. On the four Sundays and one holiday the feed is empty, step 3 says "take the top paper," and the agent invents one: $r_x = 0.2$ on those five days, since only the file-exists check passes. On four weekdays a paper cross-listed in cs.AI and cs.LG ranks top again and Priya gets a repeat, $r_x = 0.8$. On three heavy days the abstract-fetch loop over twenty candidates hits arXiv's rate limit partway and the digest cites a paper whose abstract was never fetched, $r_x = 0.6$. The remaining twelve days pass cleanly. The no-skill baseline that the gate will anchor on is the mean over the stream, $V^{\text{ns}} = (5 \times 0.2 + 4 \times 0.8 + 3 \times 0.6 + 12 \times 1.0)/24 = 0.75$. In the paper's Algorithm 1 this is the state before line 1: $G \leftarrow \{G_{\text{base}}\}$, and since the paper never specifies what $G_{\text{base}}$ contains, I take it to be the baseline skill above and note that this is an assumption the paper does not license.</p>
+
+<p class="beat">Beat 2 — round 1, stage 1: three sub-rounds produce 24 cards</p>
+
+<p>Lines 2–4 open round $t = 1$ and sub-round $j = 1$. Line 6 recalls a prior for each day; with no family priors committed yet, every day gets $G_x = G_{\text{base}}$, and the paper's rule that this is frozen for the episode is trivially satisfied. Line 7 executes all 24 days once and records $(\tau_x, r_x)$. Now the inner loop, lines 8–11. Localize is handed the trajectory differences and the scores, and on the first pass there is only one trajectory per day, so on a failing day it runs the failure-attribution prompt from Figure A1. For the first Sunday, whose trajectory shows the API returning an empty Atom feed followed by the agent writing a digest about a paper with a fabricated id, the prompt's instruction to find "the missing reusable knowledge, rule, mapping, schema invariant, parser assumption" and not "generic process advice" yields a local skill along these lines:</p>
+
+<pre><code>- Check `len(papers)` in papers.json before ranking; the feed can be empty with HTTP 200.
+- If zero entries, write digests/YYYY-MM-DD.md containing only "No new papers in
+  cs.AI, cs.LG, cs.CL for 2026-08-30" and stop; do not proceed to step 3.
+- Never cite an id not present in papers.json.</code></pre>
+
+<p>Line 10 re-executes that Sunday under $G_x \oplus L_x$ and it passes: $r_x$ goes from 0.2 to 1.0. Sub-round 2 runs the local-skill-extraction prompt, which is the one that fires when "a task just succeeded after previously failing," and tightens the skill to the two-to-four bullets and eighty words the prompt demands, dropping nothing the flip needed. Sub-round 3 changes nothing on this day. The paper reports exactly this pattern of diminishing returns across its 1,323 task-round pairs: the second sub-round improved a task's best local skill 12.2% of the time, the third only 5.3%. Line 12 then writes the card $c_x = (x, a_x, \tau_x, r_x, L_x)$, with the signature $a_x$ produced by the canonical-signature prompt — for the Sundays it comes out as something like <code>guard empty result set</code>, for the repeat days <code>filter against prior coverage</code>, for the rate-limited days <code>throttle sequential fetches</code>, and for the twelve clean days <code>rank and summarise feed</code>. Note the date, the literal filename and the literal message in the Sunday skill; they are the instance bindings compression exists to remove. Twenty-four cards go into $C$, and $L_x$ enters none of $G$.</p>
+
+<p class="beat">Beat 3 — round 1, stage 2: the clustering finds the shape, and the floor of three shows</p>
+
+<p>Line 16 embeds each card's five views with the Table A3 weights — compact signature 0.30, verbose signature 0.20, instruction 0.20, trajectory 0.20, full skill 0.10 — and runs the nine-partition consensus. Here the construction exposes something real. The instruction view is <em>identical</em> for all 24 days, "write today's paper digest," so 0.20 of the weight contributes nothing to separating them; what separates the cards is the signature channels at 0.50 and the trajectory text at 0.20, and those do separate cleanly. Kneedle searches $K \in [3, \min(23, 14)] = [3, 14]$ and the silhouette knee lands at $K = 4$: the twelve clean days, the five empty-feed days, the four repeat days and the three rate-limit days. Had the rate-limit days not existed, the method would still have had to draw three families from what is really two procedures, because three is the floor of the search range; on the paper's own streams that floor never binds, but on a homogeneous stream it does.</p>
+
+<p>Line 17 compresses each family with the Figure A3 prompt. For the empty-feed family the five local skills differ only in their dates and their exact message strings, and the prompt's rule that a step firing for only one of the five tasks must be dropped removes precisely those. The candidate prior $\hat{G}_2$ retains the three permitted kinds of content and reads, in the paper's own Step / Action / Pitfall layout from the ALFWorld excerpt:</p>
+
+<pre><code>Applicability: the fetch step returned a feed with zero &lt;entry&gt; elements.
+Step 1 | Action: Test the entry count of papers.json before any ranking or
+  writing | Pitfall: arXiv returns an empty feed with HTTP 200; a missing
+  check leads to a digest about a paper that does not exist.
+Step 2 | Action: Write a one-line digest stating that no new papers appeared
+  in the queried categories, then stop | Pitfall: do not fall through to the
+  ranking step; there is nothing to rank.
+Common failure: citing an id absent from the fetched feed.</code></pre>
+
+<p>The date is gone, the filename is gone, the literal message is gone, and what remains would fire on any empty day. For the twelve-day clean family the compressor's honesty clause does what the appendix says it does: the twelve local skills share nothing beyond the baseline procedure, so $\hat{G}_1$ comes back short and close to generic, and the merge note records that the family shares only the baseline flow. Line 19 assembles the round's candidate revision $G' = \{G_{\text{base}}, \hat{G}_1, \hat{G}_2, \hat{G}_3, \hat{G}_4\}$.</p>
+
+<p class="beat">Beat 4 — the gate, adjudicated late, and the arithmetic that admits round 1</p>
+
+<p>Line 20 is written as if the decision is made now, but §D.3 says the candidate of round 1 is decided by the first real deployment of round 2. So the loop advances to $t = 2$, $j = 1$, and line 6 recalls priors from the <em>candidate</em> library for each of the 24 days. This is where the second real finding lands. Recall embeds the task instruction as the query, and the instruction is the same string every day, so its cosine similarity to each prior is the same every day: whichever family prior is nearest to "write today's paper digest" is injected on all 24 days, or none is if the best similarity falls below 0.45. The empty-feed prior cannot be routed to the Sundays by anything the paper's Recall reads. In the paper's benchmarks this never arises, because every task has its own instruction. For the simulation I let the nearest prior be the clean-day family $\hat{G}_1$ at similarity 0.61, injected everywhere, and the other three priors sit in the library unrecalled.</p>
+
+<p>Line 7 executes the 24 days under $G_{\text{base}} \oplus \hat{G}_1$ alone — no $L_x$, as Equation 4 requires — and the value comes out as $V(G'; \mathcal{D}) = 0.76$: the clean-day prior does no harm and nudges one repeat day into passing. There is only one route in round 1 (fresh compression; nothing to repair, nothing to carry forward), so $V^{\text{real}} = 0.76$. The anchor has no committed round yet, so $A = \max(V^\star, V^{\text{ns}}) = V^{\text{ns}} = 0.75$, and there is no previous round to floor against. Equation 5 asks whether $0.76 \ge 0.75 - 0.02 = 0.73$. It does, and the revision is committed: $G \leftarrow G'$. Notice that the commit says nothing about $\hat{G}_2$, $\hat{G}_3$ or $\hat{G}_4$, which were never recalled and never measured; the paper's "one decision per round over the revision as a whole" admitted them on the strength of a deployment that only exercised $\hat{G}_1$.</p>
+
+<p class="beat">Beat 5 — round 2: repair guards, three routes, and a rejection</p>
+
+<p>Round 2's sub-rounds proceed as before under the committed library, and its cards carry local skills that now sit on top of $\hat{G}_1$. The Sundays still fail at $j = 1$, since their prior never arrived, and Localize repairs them again per task; the four repeat days, where the deployed prior lost ground on two of them after a change in how the agent phrased its ranking, are the "degraded tasks" the append-only repair route reads. Their local skills distil to a scope-restricted guard — <em>before writing, grep the last seven digest files for the chosen arXiv id</em> — appended to $\hat{G}_1$ without touching its verified structure. Stage 2 recomputes families with the vectors under the $\alpha = 0.2$ moving average, and line 19 now has three candidate revisions: fresh compression $G^{(1)}$, repaired $G^{(2)}$, and the carried-forward best $G^{(3)}$, which is the standing library itself.</p>
+
+<p>Now the paper's description and my ability to simulate it part company, and the honest thing is to say so. §I says the three routes are not scored by re-running the stream for each; their values are read off deployments already executed, and the commit is settled by the first deployment of round 3. I cannot reconstruct from the text how a route that has never been deployed acquires a value from deployments that ran under a different library, unless the carried-forward route inherits the standing value and the other two are compared on the consolidation-time evidence before one is chosen for the single deployment. I proceed on that reading: the repaired revision $G^{(2)}$ is selected and deployed at $t = 3$, $j = 1$. Suppose the guard, written from two degraded days, over-fires — it now suppresses any paper whose id appears in the last week even when the earlier mention was a passing one-line reference — and three clean days lose their four-section digest. The deployment measures $V^{\text{real}} = 0.71$. The anchor is $A = \max(V^\star, V^{\text{ns}}) = \max(0.76, 0.75) = 0.76$, floored at the highest measurement of the previous round; taking that floor over prior-alone measurements only, since the paper does not say whether sub-round measurements with $L_x$ appended count, the floor is 0.76 and $A$ stays 0.76. Equation 5 asks whether $0.71 \ge 0.76 - 0.02 = 0.74$. It does not, by a margin of $-0.05$, and the library is left untouched. That margin is the smallest of the paper's seven real rejections, whose margins ran from $-0.05$ to $-0.13$, and comfortably outside the $\epsilon$ band; the two candidates the paper admitted inside the band were at $-0.0108$ and $-0.0181$, both smaller than its 2.71-point reproduction standard deviation.</p>
+
+<p class="beat">Beat 6 — what the rejection leaves behind, and what the two extremes would have done</p>
+
+<p>What round 3 starts from is the round-1 library, unchanged, and that is the entire inheritance from a rejected revision: nothing. The candidate texts are discarded; there is no equivalent of WikiSkill's <code>skill-impact.md</code> recording what was tried and why it failed, and no equivalent of SkillOpt's rejected-edit buffer. The paper's defence is structural rather than archival — families are re-derived from each round's own evidence, "so a bad grouping is not carried into the next" — but a bad <em>guard</em> is not carried forward either, and neither is the knowledge that it was bad. Round 3's cards will show the same two degraded repeat days, and the repair route will distil a guard from them again, with nothing to tell it that the last one over-fired.</p>
+
+<p>The comparison that makes the contribution legible is what the two extremes do with the same 24 cards. A single document in SkillOpt's style would rewrite one skill to cover all four situations, and the compressor's own honesty clause predicts the result: a document whose procedure section is the baseline flow plus three conditionals, which is not obviously worse here and which the paper concedes is the right granularity wherever "one skeleton covers the whole set." A flat pool would store all 24 local skills and retrieve by instruction, and on this stream retrieval is blind for the same reason Recall was: every query is the same string. So the digest stream is, in the paper's own terms, the ALFWorld case — a shared skeleton exists at the scale of the whole set — and the paper's own Table 2 says that is exactly where a single document is reliably positive and family granularity has least to add.</p>
+
+<p class="beat">Beat 7 — interrogating the construction</p>
+
+<p>Three things in this walkthrough are mine and each carries a risk. The day-as-task construction manufactured a stream from a single task, and in doing so it exposed two mismatches — the Kneedle floor of three and the instruction-keyed Recall — that are genuine properties of the method but that the paper's heterogeneous benchmarks never trigger; they are findings about transfer to a repetitive setting, not defects in the paper. The soft score is five mechanically checkable properties, and it never asks whether the digest was <em>good</em>; a prior that made every digest a dull four-section template would score 1.0. The paper's own soft scores have the same shape (fraction of tests passed, a subgoal ratio), so the walkthrough is faithful in kind, but a judgment-heavy step is exactly what this gate cannot see. And $G_{\text{base}}$ as the baseline skill is a guess the paper does not license. The arc itself — first revision admitted with a small margin, second rejected after a repair over-fires, library held flat — maps onto the paper's software-repair pattern, where all three models were admitted in round 1 and rejected in round 2, and onto Figure 3, where the kept library ends 5.1 points above the round's candidate.</p>
+</div>
+
+<p class="eyebrow" id="results">08</p>
+<h2>The results, and what the gate actually caught</h2>
+
+<p>The main table covers four benchmarks ordered from low to high cross-task procedure sharing — Terminal-Bench-Pro (32 tasks), SWE-bench Verified (20 repositories, run through an agentic harness), ALFWorld (42 household tasks) and LiveMathematicianBench (53 multiple-choice problems) — times three hosted models, DeepSeek-V4-Pro, MiniMax-M3 and GPT-5.4-mini, for twelve continual-improvement runs. Every run is one model doing solving, extraction and compression; every cell is a single run at the vendor's default temperature of 0.7; the read-out is the peak over deployed rounds; and every setting is a measurement point inside one run that differs only in what occupies the skill context. Here is the table's hard-score slice, with the change over that model's no-skill row:</p>
+
+<div class="table-wrap">
+<table>
+<tr><th>Model / setting</th><th>TBP</th><th>SWE</th><th>ALFWorld</th><th>LMB</th><th>Avg</th></tr>
+<tr><td>DeepSeek-V4-Pro · No-Skill</td><td>34.4</td><td>45.0</td><td>57.1</td><td>13.2</td><td>37.4</td></tr>
+<tr><td>· SkillOpt</td><td>43.8 (+9.4)</td><td>60.0 (+15.0)</td><td>90.5 (+33.4)</td><td>22.6 (+9.4)</td><td>54.2 (+16.8)</td></tr>
+<tr><td>· GLoW Global</td><td>50.0 (+15.6)</td><td>70.0 (+25.0)</td><td>83.3 (+26.2)</td><td>37.7 (+24.5)</td><td>60.3 (+22.9)</td></tr>
+<tr><td>· GLoW Global+Local</td><td>43.8 (+9.4)</td><td>70.0 (+25.0)</td><td>81.0 (+23.9)</td><td>39.6 (+26.4)</td><td>58.6 (+21.2)</td></tr>
+<tr><td>MiniMax-M3 · No-Skill</td><td>40.6</td><td>35.0</td><td>76.2</td><td>22.6</td><td>43.6</td></tr>
+<tr><td>· SkillOpt</td><td>43.8 (+3.1)</td><td>55.0 (+20.0)</td><td>95.2 (+19.0)</td><td>28.3 (+5.7)</td><td>55.6 (+12.0)</td></tr>
+<tr><td>· GLoW Global</td><td>53.1 (+12.5)</td><td>60.0 (+25.0)</td><td>92.9 (+16.7)</td><td>28.3 (+5.7)</td><td>58.6 (+15.0)</td></tr>
+<tr><td>· GLoW Global+Local</td><td>53.1 (+12.5)</td><td>65.0 (+30.0)</td><td>90.5 (+14.3)</td><td>35.8 (+13.2)</td><td>61.1 (+17.5)</td></tr>
+<tr><td>GPT-5.4-mini · No-Skill</td><td>28.1</td><td>35.0</td><td>42.9</td><td>15.1</td><td>30.3</td></tr>
+<tr><td>· SkillOpt</td><td>40.6 (+12.5)</td><td>40.0 (+5.0)</td><td>61.9 (+19.0)</td><td>13.2 (−1.9)</td><td>38.9 (+8.7)</td></tr>
+<tr><td>· GLoW Global</td><td>50.0 (+21.9)</td><td>45.0 (+10.0)</td><td>61.9 (+19.0)</td><td>18.9 (+3.8)</td><td>43.9 (+13.6)</td></tr>
+<tr><td>· GLoW Global+Local</td><td>46.9 (+18.8)</td><td>50.0 (+15.0)</td><td>66.7 (+23.8)</td><td>18.9 (+3.8)</td><td>45.6 (+15.3)</td></tr>
+</table>
+</div>
+
+<p>Two things are true at once in that table. The frozen priors beat no-skill in all twelve runs, by 17.2 points on average, and the sign test and Wilcoxon test both give $p = 0.000488$, which the authors correctly note is simply the smallest value attainable at $n = 12$ when every sign agrees. And the ordering the framework predicts holds: the largest gains are on software repair, where each task is a separate repository and a single document has least to summarise, while the smallest are on the mathematics benchmark whose tasks share the most procedure. SkillOpt, run from the authors' official implementation with its hyperparameters untouched and only the launch protocol aligned, leads GLoW on four of 21 cells, all of them ALFWorld, the benchmark with one action space where the paper freely concedes "a single document is already the right granularity." Elsewhere GLoW leads by 8.3 on terminal tasks, 6.7 on repair and 6.9 on mathematics, averaged over models.</p>
+
+<p>Adding local regeneration on top of the priors is worth much less than the abstract's framing suggests: +18.0 against +17.2 on average, and it is <em>negative</em> in four hard-score cells, most sharply DeepSeek on terminal tasks where it costs 6.2 points. The paper does not discuss this, and it undercuts the "weave" half of the name. What the local layer clearly is worth is as evidence — the consolidation input — rather than as a runtime addition.</p>
+
+<h3>The organisational ablation, which is the paper's real argument</h3>
+
+<p>Table 2 places the authors' own library at each extreme under identical conditions, which is the comparison the granularity thesis actually needs. Base-only compresses the whole library into a single injected document in one pass; Local-only keeps only the skill each task regenerated from its own feedback and recalls nothing; AWM is a flat pool of induced workflows with retrieval, ported from its official repository with a top-$k$ of 3 rather than the default 10 so that retrieval was not degenerate on libraries of four to thirty entries.</p>
+
+<div class="table-wrap">
+<table>
+<tr><th>Organisation (hard, mean over 12 runs)</th><th>Gain over No-Skill</th><th>Spread</th></tr>
+<tr><td>Base-only (single document, no families)</td><td>+2.0</td><td>−9.3 to +16.7; negative in 4 of 12 cells</td></tr>
+<tr><td>Local-only (no global layer)</td><td>+10.9</td><td>positive in 11 of 12</td></tr>
+<tr><td>AWM (flat pool with retrieval)</td><td>+5.0</td><td>−6.2 to +20.0; 8 up, 3 down, 1 flat</td></tr>
+<tr><td>GLoW Global (one prior per family)</td><td>+17.2</td><td>+3.8 to +26.2; 12 of 12</td></tr>
+</table>
+</div>
+
+<p>The single document is reliably positive only on ALFWorld, and on software repair it never helps: the resolved count is flat for one model and lower for the other two, which the authors set beside an independent benchmark of hand-authored software skills finding 39 of 49 left the pass rate unchanged. The flat pool helps by 10.9 but the entry is built around the instance and the pool grows with the stream; adding retrieval to it, in the AWM column, does not close the gap, and on the mathematics benchmark the three models give +1.9, 0.0 and −1.9, a mean of zero, against +24.5, +5.7 and +3.8 for family priors in the same cells. The library-size claim is documented cell by cell in the appendix: at the last round the committed priors hold 0.278 of the words of the per-task pool, which the body states as 3.6× and which is the least favourable of the three aggregations available.</p>
+
+<h3>What the gate caught</h3>
+
+<p>Ablating the gate needs no separate run, because the gate already evaluates every candidate under real deployment, so the cost of an erroneous admission is measured rather than simulated. Across twelve runs the gate made 26 decisions, accepting 19 and rejecting 7, and the decisions tracked the workload rather than the model: on terminal tasks every candidate was admitted in both rounds, and on software repair all three models were admitted in round 1 and rejected in round 2. The number to carry away is that <strong>4 of the 7 rejections would have been admitted under the consolidation-time score alone</strong>. The representative case is MiniMax-M3 on mathematics, whose round-2 candidate scored 0.283 on the soft signal at consolidation time, above the anchor, and then 0.151 in deployment — a drop of 13.2 points, more than twice the largest run-to-run range the authors measured. Averaged over the runs, the library the gate kept ends at +14.7 while that round's candidates average +9.6, so the retained older library sits 5.1 points above the newer text. That is the paper's version of the finding SkillCommit's ledger and the Regression Tax both reached: the text that looks best at authoring time is not the text that performs best, and only execution can tell them apart.</p>
+
+<h3>Whether what is consolidated is procedure</h3>
+
+<p>Section 4.4 makes the claim checkable in the one place it can be. ALFWorld carries solution-type labels the algorithm never sees, and consolidation returned 15 priors over 42 tasks of which 13 sit wholly inside one labelled class, with a purity of 0.950 and an adjusted Rand index of 0.605; the gap between those is over-segmentation (15 families against 6 types, five of them singletons), which the authors argue is the design intent since families are meant to be finer than task types. The two families that straddle a pair of types do so along a shared procedure: an egg cooled and placed in the microwave and an egg heated and placed in the fridge, appliance and receptacle swapped, skeleton identical. The examine-in-light comparison is the clearest illustration of what compression keeps: a 989-word local skill built around a memorised table of which furniture holds what becomes a 440-word prior whose first step is a read — scan the initial observation for the illuminator-class object, "do not default to desk" — and whose remaining steps guard one thing, turns spent on probes that return no information. Which furniture holds what is regenerated per task.</p>
+
+<p>The reverse case is reported with the same candour. The largest family in the study put eight terminal tasks together — a debugger session, a write-ahead-log recovery, a logic-gate CRC32 build — named itself after one member, and its prior repaired one task and broke another, the only large family with no net gain. On the same 32 tasks a second model drew ten families instead, none larger than five. The authors' conclusion is the right one and it is a limitation: procedure sharing is a property of how the family is drawn rather than of the benchmark. Transfer is tested twice. The library from the training stream, injected unmodified into 60 unseen ALFWorld tasks, lifts the mean from 73.9% to 83.9% at a single trial with the smallest gain for the model with the highest baseline; on 30 held-out repositories it lifts MiniMax-M3's resolve rate from 40.0% to 45.6% over three trials.</p>
+
+<p class="eyebrow" id="hostile">09</p>
+<h2>Where a hostile reviewer attacks first</h2>
+
+<div class="callout hostile">
+<span class="label">Attack 1 — one run per cell, read at its peak, against a 2.7-point noise floor</span>
+<p>Every cell in Table 1 is a single continual run, and its reported value is the maximum across deployed rounds. The authors did the right thing and measured their own reproduction dispersion — 18 repeated no-skill measurements in six groups, pooled standard deviation 2.71 points — and then stated the consequence themselves: single-cell resolution is ±5.4 points. Read the table against that. GPT-5.4-mini gains 3.8 on mathematics, MiniMax gains 5.7 there and 4.0 soft on ALFWorld, and the entire Global-versus-Global+Local comparison lives inside the band. The significance the paper claims is at the level of the twelve runs and, as the appendix says, "cannot be pushed down to a single cell." The defence is that the mean gain of 17.2 is 6.4 standard deviations and all twelve signs agree, which is real. But peak-over-rounds is a maximum of three noisy readings, and a maximum of three draws from a distribution with a 2.7-point spread is biased upward by roughly a couple of points even when nothing improved; the paper does not correct for that, and neither does the SkillOpt comparison, which takes its own epoch-weighted peak.</p>
+</div>
+
+<div class="callout hostile">
+<span class="label">Attack 2 — the gate measures on the training stream, and so does the headline</span>
+<p>Section D.3 states that the task set in the commit gate "is the training task stream itself; held-out evaluation enters no gate decision." The main table is then the same training stream, read at the peak of a process that was optimising against it. That is in-sample by construction, and the honest number for what this method delivers on new tasks is the transfer section: 60 ALFWorld tasks at a single trial, and 30 repositories for one of the three models. The ALFWorld gain of 10 points is on the benchmark where the authors themselves say a single document already suffices, so it does not discriminate the family thesis from the document thesis. The 5.6-point repair gain is on one model. An in-sample gate is defensible — the deployment that adjudicates is a real one — but the paper's framing that "every prior carries the evidence of one real deployment" elides that the deployment is on the tasks the prior was written from. This is the same objection the WikiSkill note records about validation splits of ten to forty tasks, and the same one <code>[[skillcommit]]</code> avoids by replaying on each source individually.</p>
+</div>
+
+<div class="callout hostile">
+<span class="label">Attack 3 — the SkillOpt comparison confounds organisation with optimisation, and the authors half admit it</span>
+<p>The paper's central claim is about granularity, and the only external baseline is SkillOpt. To align it, the authors removed SkillOpt's stronger-optimiser channel ("one frozen model does solving, extraction and compression, so we switch it off on SkillOpt too"), replaced its hand-written initial skills with a 99-byte skeleton, and scored it through their own adapter. Each step is argued, and the check that the hand-written skill contributed 0.0 points on one cell is a nice touch. But then §4.3 says of Base-only, their own single-document arm, that SkillOpt clears it on 10 of 12 cells and "the distance between them measures optimisation effort rather than organisation." If optimisation effort separates two single-document systems by that much, it can equally separate GLoW from SkillOpt, and the granularity claim needs a control in which the same optimisation effort is spent at each granularity. Base-only is one compression pass with no iteration; GLoW gets three rounds of consolidation with a gate. The paper never runs an iterated, gated single document, which is the experiment that would isolate the unit of reuse from the amount of work spent on it.</p>
+</div>
+
+<div class="callout hostile">
+<span class="label">Attack 4 — the family structure is unstable, and the paper's own evidence says so</span>
+<p>The clustering weights are hard-coded constants chosen on ALFWorld plus a spreadsheet benchmark that is not among the four; the other three benchmarks "inherited the result directly." On the one benchmark with independent labels the adjusted Rand index is 0.605 with 15 families over 6 types and five singletons. On the terminal benchmark one model drew ten families of at most five tasks and another drew nine with one family of eight that had no net gain, which the authors summarise as "procedure sharing is a property of how the family is drawn rather than of the benchmark." Table A21 then states there is no sensitivity analysis for any hyperparameter. So the method's central object, the family, depends on view weights tuned elsewhere, a linkage vote, and an automatic knee, and the paper offers no evidence about how much the results move when any of those move. The defence — families are re-derived each round, so a bad grouping is not carried forward — protects the library from a bad round but says nothing about whether a good grouping is reproducible.</p>
+</div>
+
+<div class="callout hostile">
+<span class="label">Attack 5 — a net-effect gate admits a prior that breaks a task</span>
+<p>The gate is a mean over the stream, decided once per round for the whole revision. The paper's own accounting shows what that permits: the eight-task terminal family fixed one and broke one, the ALFWorld round fixed eight and broke one, and each revision was committed. A prior that breaks a previously passing task is admitted so long as it fixes more elsewhere, and in the walkthrough a revision was admitted on a deployment that never recalled three of its four priors. Compare the Regression Tax's finding that the best libraries win by regressing less, and SkillCommit's split-or-reject rule that refuses any scope a replay does not support. This is a design choice the authors do not discuss, and for a deployment where a regression on one desk costs more than a gain on another, it is the wrong one.</p>
+</div>
+
+<div class="callout hostile">
+<span class="label">Attack 6 — the runtime routing has never been exercised on a homogeneous stream</span>
+<p>Recall keys on the task instruction and nothing else, injects one prior, and fails closed below 0.45. Every benchmark here gives each task a distinct instruction, so the design is never stressed. The walkthrough shows what happens when instructions repeat and only the environment differs: the same prior is recalled every time and the family structure is invisible at runtime. The paper's title says "long-horizon task streams," and its results are exactly there, but the abstract's language of a library "any open-ended workflow could accumulate" is broader than what was tested, and the settings closest to a deployed workflow — repeated tasks, drifting inputs — are the ones this Recall cannot route.</p>
+</div>
+
+<p class="eyebrow" id="landing">10</p>
+<h2>What this means for AutoSkill</h2>
+
+<p>This is the section that talks about the bank platform, and SkillGLoW is candidate B in <code>notes/landscape.md</code>: the sharpening that asks whether three near-duplicate desk pipelines plus a forked fourth are one procedural family or three skills. Reading the paper in full moves that candidate in a specific direction, and it is not the one the scan expected.</p>
+
+<div class="callout landing">
+<span class="label">The representation transfers; the routing and the gate need rebuilding</span>
+<p><strong>Adopt the global–local split as the representation for fork lineage, and treat it as design position 4 made precise.</strong> "Family prior plus per-task regenerated local" maps directly onto "shared primitive library plus thin per-desk config": the prior is the procedure the three desks share, the local skill is each desk's instance bindings, and the paper's rule that instance detail is regenerated rather than stored is the argument for keeping the desk delta declarative and out of the shared text. The compression prompt's honesty clause — drop any step that fires for only one member, and accept a short generic result — is the exact discipline a consolidation of three desk skills needs, and it is what stops semantic merging from doing what <code>[[skillcommit]]</code>'s ledger shows it does. What has to be validated first is that the three desks' commit histories actually diverge on instance bindings rather than on procedure; if a desk's delta is a different <em>step</em>, the paper's own compressor would refuse the family, and that refusal is itself the answer candidate B is looking for.</p>
+
+<p><strong>Expect the paper's own prediction to hold: at $n = 3$ near-identical pipelines, family granularity has the least to add.</strong> The result that matters for us is not the headline 17.2 but Table 2's finding that a single document is reliably positive exactly where one skeleton covers the whole set, and SkillOpt beats GLoW on every such cell. The walkthrough made the mechanism visible on a homogeneous stream: the Kneedle floor forces three families from one procedure, and the instruction-keyed Recall cannot tell the desks' nightly runs apart because the instruction does not change between nights. Our desks do have distinct configs, so desk-level routing would work, but drift nights — the traces <code>DIRECTION.md</code> says matter most — are invisible to a query that reads only the instruction. So the experiment note for candidate B should be framed as a test of the paper's own ordering, with the null hypothesis that the consolidated family matches but does not beat the three deployed skills, and the interesting outcome being <em>which</em> desk delta the compressor refuses to merge.</p>
+
+<p><strong>Take the gate's discipline, not its formula.</strong> Four properties of the commit gate are worth copying into the admission harness: the anchor floored at the best previous measurement, so a revision must match the best thing seen and not just the standing commit; a tolerance set below the measured reproduction standard deviation, so it absorbs noise and nothing else — the paper's two in-band admissions at −1.1 and −1.8 points against a 2.7-point spread is the calibration argument; late adjudication, so every committed text has one real deployment behind it; and the finding that 4 of 7 rejections would have passed a consolidation-time score, which is one more independent group confirming that authoring-time signals do not predict deployed effect (beside <code>[[aces]]</code> and <code>[[skill-lifecycle-study]]</code>). Do not take the mean-over-stream criterion. On three desks a mean admits a revision that breaks one desk and helps two, and for this platform that is a regression, not a gain. Score per desk, on each desk's own frozen fixtures, and require no desk to fall — which is SkillGen's net effect applied per family and SkillCommit's split rule applied to the revision.</p>
+
+<p><strong>Note what a rejection leaves behind here: nothing.</strong> A rejected revision is discarded with no record, and the walkthrough showed the repair route re-deriving the same over-firing guard the next round. WikiSkill's <code>skill-impact.md</code> and SkillOpt's rejected-edit buffer both exist to prevent that, and the authoring loop's own trace — edit, behaviour, verdict, next edit — is precisely the record this method lacks. That is an argument for candidate A's reading list over candidate B's on the memory question, and for keeping the audit trail in the harness regardless of which method wins.</p>
+
+<p><strong>Against the ByteDance baseline.</strong> <code>skill-creator</code> writes one skill per task from one session and never consolidates; <code>skill-reviewer</code> judges the text and never runs it. SkillGLoW is a complete answer to gap 5 in <code>[[bytedance-baseline]]</code> (no consolidation governance) and a partial one to gap 2 (no net effect), and its compression prompt alone, run over the three desk skills, would be the cheapest experiment in the queue: no stream, no gate, just the question of whether a model told to be honest about shared procedure finds one. What the experiment note in <code>notes/experiments/</code> would set up is therefore two arms. First, compression only: the three deployed skills as three cards with signatures written by the canonical-signature prompt, the Figure A3 compressor run over them, and the merge note read for whether it found a procedure or "generic discipline." Second, if it found one, the family prior plus per-desk local config deployed on each desk's frozen fixtures against the three skills as deployed, scored per desk with no-regression as the gate, and the forked fourth desk built from the prior versus copy-forked from the nearest skill, counting authoring rounds. The red flags going in are the two the walkthrough surfaced — the family floor and the instruction-keyed routing — and the one the paper admits, that no hyperparameter here has a sensitivity analysis.</p>
+</div>
+
+<div class="callout fidelity">
+<span class="label">Fidelity note — what in this report is the paper's and what is mine</span>
+<p>The method description (§2–§6) follows §3.1–§3.5 and appendices A, B, D, K and M, with the paper's notation and constants: $T = 3$, $J = 3$, one trial per task, view weights 0.30/0.20/0.20/0.20/0.10 or 0.25×4, EMA $\alpha = 0.2$, nine base partitions, Kneedle over $[3, \min(n-1, \lfloor n/2 \rfloor + 2)]$, $\epsilon = 0.02$, top-1 recall at threshold 0.45, Qwen3-Embedding-8B at 4-bit. All prompts are quoted from Figures A1–A3. In the walkthrough, the day-as-task stream, the five-check soft score, the 24-day numbers, and the choice of $G_{\text{base}}$ are my constructions; the reading that the carried-forward route inherits the standing value and one selected route is deployed is my interpretation of §I and §D.3, which the paper does not spell out; and the floor over prior-alone measurements only is my assumption where the paper is silent. Table 1 and Table 2 numbers are transcribed from the paper; the "Spread" column of the second table is computed from its cells.</p>
+</div>
+
+<p class="fn">Yan, A., Xin, Z., Du, J. &amp; Zhou, J. T. (2026). <em>SkillGLoW: Procedural-Family Skill Consolidation for Self-Improving Agents on Long-Horizon Task Streams.</em> arXiv:2609.02217v1. Read in full including appendices A–O on 2026-09-06 for the AutoSkill deep-dive series. Companion note: <code>notes/skillglow.md</code>.</p>
+</div>

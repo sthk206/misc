@@ -1,0 +1,519 @@
+<title>SkillRevise, Explained</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F7F5F1; --surface:#FFFFFF; --ink:#232A35; --muted:#5A6478;
+  --line:#DDD7CB; --accent:#2C5E8A; --accent-ink:#FFFFFF; --accent-soft:#EAF0F6;
+  --warn:#C2410C; --warn-soft:#FBEDE5; --code-bg:#EFECE5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+    --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+    --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14181F; --surface:#1B212B; --ink:#E8E4DA; --muted:#9AA2B2;
+  --line:#333C4B; --accent:#82B4DE; --accent-ink:#10151D; --accent-soft:#1F2A38;
+  --warn:#F08A5C; --warn-soft:#33231C; --code-bg:#232B38;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--ground); color:var(--ink); font-family:"Source Serif 4",Georgia,serif;
+  font-size:1.125rem; line-height:1.68; margin:0;}
+.wrap{max-width:46rem; margin:0 auto; padding:0 1.25rem 5rem;}
+header.masthead{border-bottom:2px solid var(--ink); padding:2.5rem 0 1.5rem; margin-bottom:2rem;}
+.series{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 1rem;}
+h1{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:2.1rem; line-height:1.15;
+  margin:0 0 .75rem; text-wrap:balance;}
+.dek{font-size:1.15rem; color:var(--muted); margin:0 0 1rem; font-style:italic;}
+.meta{font-family:"IBM Plex Mono",monospace; font-size:.78rem; color:var(--muted);}
+nav.toc{background:var(--surface); border:1px solid var(--line); padding:1.1rem 1.4rem; margin:2rem 0;}
+nav.toc p{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.8rem;
+  text-transform:uppercase; letter-spacing:.1em; margin:0 0 .5rem; color:var(--muted);}
+nav.toc ol{margin:0; padding-left:1.2rem; font-size:.95rem; line-height:1.9;}
+nav.toc a{color:var(--accent); text-decoration:none;}
+nav.toc a:hover, nav.toc a:focus{text-decoration:underline;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin:3rem 0 .25rem;}
+h2{font-family:Archivo,Verdana,sans-serif; font-weight:700; font-size:1.5rem; line-height:1.2;
+  margin:.1rem 0 1rem; text-wrap:balance;}
+h3{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:1.1rem; margin:1.8rem 0 .6rem;}
+p{margin:0 0 1.1rem;}
+a{color:var(--accent);}
+strong{font-weight:600;}
+ul,ol.body-list{margin:0 0 1.1rem; padding-left:1.3rem;}
+li{margin:0 0 .4rem;}
+.callout{border:1px solid var(--line); background:var(--surface); padding:1.1rem 1.4rem; margin:1.6rem 0;}
+.callout .label{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.75rem;
+  text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:.5rem;}
+.example{border-left:4px solid var(--accent); background:var(--accent-soft);}
+.example .label{color:var(--accent);}
+.hostile{border-left:4px solid var(--warn); background:var(--warn-soft);}
+.hostile .label{color:var(--warn);}
+.landing{background:var(--accent-soft); border:2px solid var(--accent);}
+.landing .label{color:var(--accent);}
+.fidelity{border-left:4px solid var(--muted); background:var(--surface);}
+.fidelity .label{color:var(--muted);}
+.walkthrough{border-top:2px solid var(--accent); border-bottom:2px solid var(--accent);
+  padding:1.5rem 0 .5rem; margin:2rem 0;}
+.beat{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--accent); margin:2rem 0 .3rem;}
+code{font-family:"IBM Plex Mono",monospace; font-size:.88em; background:var(--code-bg);
+  padding:.12em .35em; border-radius:3px;}
+pre{background:var(--code-bg); padding:1rem 1.2rem; overflow-x:auto; font-family:"IBM Plex Mono",monospace;
+  font-size:.85rem; line-height:1.55; margin:1.2rem 0; border-radius:4px;}
+pre code{background:none; padding:0;}
+table{width:100%; border-collapse:collapse; font-size:.92rem; margin:0;
+  font-variant-numeric:tabular-nums;}
+th{font-family:Archivo,Verdana,sans-serif; font-weight:600; font-size:.78rem; text-transform:uppercase;
+  letter-spacing:.06em; text-align:left; padding:.5rem .7rem; border-bottom:2px solid var(--ink);
+  color:var(--muted);}
+td{padding:.5rem .7rem; border-bottom:1px solid var(--line);}
+.table-wrap{overflow-x:auto; margin:1.2rem 0;}
+.math-block{overflow-x:auto; margin:1.4rem 0; text-align:center; font-size:1.05rem;}
+.fn{font-size:.82rem; color:var(--muted); border-top:1px solid var(--line); margin-top:3rem; padding-top:1rem;}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{fontCache:'global'}};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+<div class="wrap">
+<header class="masthead">
+  <p class="series">AutoSkill · Deep Dive 09</p>
+  <h1>SkillRevise: Improving LLM-Authored Agent Skills via Trace-Conditioned Skill Revision</h1>
+  <p class="dek">Most self-improving-skill papers assume you already have a pile of trajectories to learn from. This one assumes you have exactly one mediocre skill file and a verifier, and asks how much of the gap you can close with three bounded repair attempts — then keeps the first version that passes.</p>
+  <p class="meta">Liu, Su, Xie, Zhang, Zong, Guo, Xie, Ji, Yim, Luo, Ren, Chenyu, Li &amp; Song · HKUST, HIT, HIT-Shenzhen, Nanjing University &amp; HKU · arXiv 2606.01139v3 · 17 June 2026</p>
+</header>
+
+<nav class="toc">
+<p>Contents</p>
+<ol>
+<li><a href="#problem">The cold-start problem this paper picks</a></li>
+<li><a href="#episode">What one revision episode has to work with</a></li>
+<li><a href="#diagnosis">Diagnosis: turning a failed run into repair constraints</a></li>
+<li><a href="#memory">Principle Memory and how a principle gets retrieved</a></li>
+<li><a href="#operator">The Revision Operator, execution anchors, and the bounded loop</a></li>
+<li><a href="#selection">Selection: verifier first, utility only as a fallback</a></li>
+<li><a href="#walkthrough">The method end to end, on the digest agent</a></li>
+<li><a href="#results">What the numbers actually say</a></li>
+<li><a href="#hostile">Where a hostile reviewer attacks first</a></li>
+<li><a href="#landing">What this means for AutoSkill</a></li>
+</ol>
+</nav>
+
+<p class="eyebrow" id="problem">01</p>
+<h2>The cold-start problem this paper picks</h2>
+
+<p>A skill, in the sense this literature has settled on, is a folder of instructions an agent loads before it starts work: a procedure, some constraints, sometimes reference documents and scripts. The promise is that a skill turns a general model into a reliable specialist. The recurring disappointment is that it often does not. The paper opens on the finding that low-quality or poorly matched skills frequently yield little improvement and can actively degrade behaviour — a result you already have from your notes on SkillsBench, where curated skills helped by 16.6 points and self-generated ones <em>hurt</em> by 8 to 11.</p>
+
+<p>Given that, the field's attention has moved from skill <em>adoption</em> to skill <em>acquisition</em>, and the authors sort the existing answers into three families. Retrieval-based methods pull an existing skill out of a repository, which fails when nothing in the repository quite matches the task. Self-evolution methods refine skills from the agent's own accumulated experience, which needs a corpus of past trajectories the agent may not have. Direct authoring — an expert writes the skill, or an LLM writes it in one shot from a task description — is what you fall back on when neither is available, and is the expensive or the unreliable option respectively.</p>
+
+<p>SkillRevise targets the situation none of the three handles well, which the paper calls the <strong>cold start</strong>: you have exactly one initial, imperfect, LLM-authored skill and no history at all. There is no corpus to self-evolve from and no better skill to retrieve. The question becomes how much of the gap between a plausible-looking skill and a behaviourally sound one can be closed by running it once, looking at what the verifier said, and editing it — under a hard cap on how many attempts you get.</p>
+
+<p>The framing is worth pausing on because it is a deliberately smaller claim than most of the lane makes. This is not lifelong learning and there is no library. Each task gets its own skill, its own revision episode of at most three rounds, and its own answer; nothing learned on task A is carried to task B except through a small, fixed, read-only bank of general repair advice.</p>
+
+<p>The contribution the abstract sells is the loop — diagnose from execution evidence, retrieve repair principles, apply edits anchored to concrete executor actions, re-execute, and keep the first version the verifier accepts. The contribution I think is more durable is the <em>bookkeeping</em>: the paper is unusually specific about what a revision is allowed to change, what it must not break, and what evidence has to be on the table before an edit is permitted at all.</p>
+
+<p>One more distinction the paper insists on, because it recurs throughout: the loop revises a <em>reusable artifact</em> and validates it by downstream execution, whereas reflection-style methods (Reflexion and its descendants, which append a natural-language critique of a failed attempt to the next attempt's context) revise a single trajectory or a single answer. The artifact survives the episode; a reflection does not. Whether the artifact is genuinely reusable is a question the evaluation only partly answers, and section 8 is where that comes apart.</p>
+
+<p class="eyebrow" id="episode">02</p>
+<h2>What one revision episode has to work with</h2>
+
+<p><strong>The whole method sits inside a single, fully specified execution loop, and every design choice is downstream of what that loop returns.</strong> A revision episode is given a task $T$, an initial skill $S_0$, an executor policy $\pi_\theta$ (a frozen model — nothing is fine-tuned anywhere in this paper), a fixed Principle Memory $\mathcal{M}$, and a revision budget $B$. Running the current skill once produces</p>
+
+<div class="math-block">$$e_i = (\tau_i,\, v_i,\, r_i,\, c_i) = \Phi(T, S_i, \pi_\theta),$$</div>
+
+<p>where $\tau_i$ is the trajectory (the actual sequence of tool calls and file writes), $v_i$ is the verifier feedback or evaluation evidence, $r_i$ is the outcome score or pass/fail reward, and $c_i$ records costs — tokens, tool calls, steps, latency. A warning about notation: the paper uses $v_i$ here for verifier feedback and, in every results table, $v_0$ through $v_5$ for successive <em>skill versions</em>. They are unrelated. I will write "version $v_1$" whenever the version index is meant.</p>
+
+<p>The episode carries three pieces of state. There is a <strong>current skill</strong> $S_i$, which is the thing being edited and the base for the next diagnosis. There is a <strong>utility fallback skill</strong> $S_{\text{fb}}$, which is the best-scoring version seen so far and is what gets returned if nothing ever passes. And there is the <strong>candidate set</strong> $\mathcal{H}$, the record of every version that has been generated and executed. All three start at $S_0$.</p>
+
+<p>The paper is explicit that the search base and the returned artifact are separated: the loop keeps editing whatever it most recently produced, but what it hands back is the first version that passed, not the last version it wrote.</p>
+
+<p>The environment is deliberately uniform across benchmarks. Appendix A describes repackaging all three suites into one file-based task directory containing <code>instruction.md</code>, <code>task.toml</code>, a verifier entrypoint under <code>tests/</code>, and assets under <code>environment/</code>. The same runner installs no skill, a one-shot skill, or a revised skill before invoking the verifier, so the only thing that differs between conditions is the installed artifact and the revision budget. That is a genuinely clean controlled comparison for what it covers, and section 9 is about what it does not cover.</p>
+
+<p class="eyebrow" id="diagnosis">03</p>
+<h2>Diagnosis: turning a failed run into repair constraints</h2>
+
+<p><strong>Diagnosis is the component that converts raw execution evidence into an explicit statement of what to repair and what not to touch.</strong> For the $i$-th revision attempt it is a triple</p>
+
+<div class="math-block">$$D_i = (V_i,\, A_i,\, \mathcal{K}_i),$$</div>
+
+<p>whose three parts each do a different job. The <strong>verification specification</strong> $V_i$ is the observable contract the run is judged against: output paths, schemas, formats, terminal sentinels (a sentinel here is just a marker the verifier looks for, like a required final line), and pass/fail assertions. The <strong>failure attribution</strong> $A_i$ summarises which checks failed, what the agent actually did, the probable cause, and a defect label — and crucially it states whether the <em>skill</em> contributed to the failure at all. The <strong>preservation constraints</strong> $\mathcal{K}_i$, which the implementation calls the preserve ledger, record the checks that already passed and the choices likely responsible for them.</p>
+
+<p>That third element is the one to hold onto. Most revision loops in this corpus record what went wrong; recording what went <em>right</em> and forbidding the editor from disturbing it is a regression control built into the prompt rather than into the harness. It is cheap, and the ablations say it is worth more than the retrieval machinery.</p>
+
+<p><strong>The diagnosis sees both the with-skill run and a matched no-skill run of the same task.</strong> This only becomes visible in Appendix K, where the diagnosis prompt's inputs are listed: task id, task family, task instruction, acceptance criteria, the current skill, authoring-prior violations, and then <code>[NO_SKILL_TRACE]</code> and <code>[WITH_SKILL_TRACE]</code> plus the utility. So the diagnostic question is not "why did this run fail" but "what did installing this skill change, and was the change the problem" — the paired-run comparison your notes have from SkillGen's net-effect measure, applied here as an input to repair rather than as an admission gate.</p>
+
+<p>The label set is fixed and worth reading as a taxonomy in its own right: path, schema, method, environment, incomplete execution, data understanding, constraint violation, verification gap, efficiency timeout, overfit or hardcode, context pollution, false certainty, and wrong abstraction level. Output is JSON with keys <code>labels</code>, <code>evidence</code>, <code>causal_judgment</code>, <code>rewrite_targets</code> and <code>summary</code>, where each evidence item carries a source, a snippet, and a reason. The appendix notes that non-LLM diagnosis runs construct the same fields deterministically from traces and verifier outcomes, which implies the schema is meant to survive without a model in the loop.</p>
+
+<p><strong>The failure attribution doubles as a gate on whether any edit happens at all.</strong> Algorithm 1 checks $A_i$ before revising: if the attribution does not support a <em>skill-level</em> defect — the failure was the environment's fault, or the model simply could not do the task — the episode records an abstention trace and stops revising that task entirely. This is the right instinct, and it is one of the more interesting design commitments in the paper, because it is an explicit "sometimes the answer is to leave the skill alone". How often it actually fires is a different matter, and I come back to it.</p>
+
+<p class="eyebrow" id="memory">04</p>
+<h2>Principle Memory and how a principle gets retrieved</h2>
+
+<p><strong>Principle Memory is a small fixed bank of reusable repair patterns, not a store of task solutions.</strong> $\mathcal{M}$ holds seven seed entries, each abstracting a recurring skill-design defect into an operational repair. Every entry has the same three fields — a <em>trigger</em> saying when the repair applies, a <em>repair</em> saying how the skill should change, and a <em>guard</em> constraining what the edit must not smuggle in. Appendix L lists them in full; the shape is best seen by reading two:</p>
+
+<pre><code>Verifier-contract alignment
+  Trigger: plausible domain logic misses a verifier convention.
+  Repair:  restate sentinels, formats, tolerances, traversal rules, or
+           scoring rules as pre-finalization checks.
+  Guard:   record the convention class, not hidden answers.
+
+Fallback after tool failure
+  Trigger: a command, tool, file, endpoint, or assumption fails without
+           a valid alternative.
+  Repair:  add one bounded fallback branch, choose the closest supported
+           alternative, and rerun the affected search.
+  Guard:   keep fallback short and task-directed.</code></pre>
+
+<p>The other five are workflow checkpointing (turn broad advice into ordered discover–validate–act–verify–recover checkpoints), input schema validation, environment-output grounding (the artifact is missing or written outside the checked path), transfer-preserving repair (replace an instance-specific patch with a trigger condition plus a reusable decision rule), and trigger noninterference (narrow the skill's <em>When to Use</em> so it stops firing where it only adds cost).</p>
+
+<p>Notice that every guard is an anti-overfitting clause. The bank's entire job is to push each edit from "make this task pass" toward "make this class of failure not recur", which is precisely the axis on which one-shot authored skills fail.</p>
+
+<p><strong>Retrieval is a hybrid sparse–dense lookup fused by reciprocal rank.</strong> The diagnosis is turned into a query and a shortlist is pulled from the bank:</p>
+
+<div class="math-block">$$q_i = Q(T, D_i), \qquad C_i = \mathrm{Retrieve}_m(q_i, \mathcal{M}).$$</div>
+
+<p>The query carries task family, acceptance criteria, diagnosis labels, causal judgment, rewrite targets, and evidence snippets. Two rankings are produced — sparse matching, which catches explicit labels and verifier terms, and dense embedding matching, which catches semantically similar repair situations — and they are combined by weighted reciprocal rank fusion, a standard trick for merging two ranked lists without needing their scores to be on the same scale:</p>
+
+<div class="math-block">$$\mathrm{score}(p) = \frac{w_s}{\kappa + \mathrm{rank}_s(p)} + \frac{w_d}{\kappa + \mathrm{rank}_d(p)}.$$</div>
+
+<p>Appendix C fixes $w_s = w_d = 0.5$ and $\kappa = 60$, with dense scoring by <code>qwen/qwen3-embedding-4b</code> under metadata-dominant retrieval at content weight 0.05. The retrieval width $m$ is separate from the revision budget $B$: up to four principles are injected into the revision prompt and at most three may be selected.</p>
+
+<p><strong>Binding is where retrieval stops being a suggestion and becomes a constraint.</strong> Retrieval returns candidate principles, not final repair instructions; a second step keeps only those whose evidence requirements are actually satisfied by this diagnosis and whose transfer constraints are not violated:</p>
+
+<div class="math-block">$$P_i = \mathrm{Bind}(C_i, D_i).$$</div>
+
+<p>The revision prompt then requires the model to say, for each selected principle, why it applies, which failed check it addresses, what skill operation it induces, and what preserve constraint it protects. Principles that were retrieved and rejected are logged too, under <code>ignored_principles</code>, with a reason. Whatever else is true of this method, its audit trail is better than anything else in your corpus except WikiSkill's <code>skill-impact.md</code>.</p>
+
+<p class="eyebrow" id="operator">05</p>
+<h2>The Revision Operator, execution anchors, and the bounded loop</h2>
+
+<p><strong>The Revision Operator is the single local edit step, and it emits a trace alongside the edited skill.</strong> Given the current skill, the diagnosis, and the bound principles, it produces</p>
+
+<div class="math-block">$$(\hat{S}_{i+1},\, z_i) = \mathcal{R}_\phi(S_i, D_i, P_i),$$</div>
+
+<p>where $z_i$ is the evidence-to-edit mapping: applied principles, targeted spans in $S_i$, the verification and preservation constraints in force, expected acceptance signals, and execution anchors. Concretely $z_i$ is emitted as a <code>REVISION_TRACE_JSON</code> block with fields <code>verifier_contract</code>, <code>failure_ledger</code>, <code>preserve_ledger</code>, <code>selected_principles</code>, <code>ignored_principles</code>, <code>repeated_failure_escalation</code>, <code>execution_anchors</code> and <code>acceptance_signals</code>, followed by the revised skill in Markdown.</p>
+
+<p><strong>An execution anchor is the paper's mechanism for stopping edits from being advice.</strong> An anchor specifies how a textual edit should change executor behaviour: the action to perform, the artifact or evidence to inspect, and where in the skill's instruction set the wording should live. The paper's own example is an anchored JSON repair, which requires the executor to reload and parse the generated file, check required keys, and run local validation. Every rewrite must introduce or preserve at least one anchor. The intent is that you cannot satisfy the revision protocol by adding a sentence like "be careful with output formats" — you have to name a check someone could run.</p>
+
+<p><strong>The episode is bounded, and the standard setting is three rounds.</strong> Algorithm 1 in Appendix B.4 runs $i$ from $0$ to $B-1$ with $B = 3$, so at most three repair attempts are generated and the highest reachable version is $v_3$. Each round: construct $D_i$ from the current evidence; abstain and stop if $A_i$ does not support a skill-level defect; retrieve, bind, revise; re-execute the candidate on the same task; append it to $\mathcal{H}$; return immediately if it passes; otherwise update the fallback $S_{\text{fb}}$ only when measured utility improved, then set $S_{\text{cur}} \leftarrow \hat{S}_{i+1}$ and $e_i \leftarrow \hat{e}_{i+1}$ so the next diagnosis inspects the edited artifact.</p>
+
+<p>The protocol also has a repeated-failure escalation rule stated in the revision prompt: if the same failure recurs across attempts, escalate from local patching to method-level repair, meaning rewrite the procedure rather than patch the wording.</p>
+
+<p><strong>The paper also runs an optional memory-absorption path, and switches it off almost everywhere.</strong> A dashed arrow in Figure 2 allows successful revisions to be distilled back into Principle Memory. For the three verifier-driven benchmarks this is disabled: results use the fixed seven-principle bank, and test-task traces are never absorbed. Absorption is used in exactly one place — the ALFWorld study, where a separate 25-task calibration split builds a 10-principle bank before a held-out 100-task evaluation. When absorption is on it is filtered conservatively: candidate principles must be evidence-backed, skill-level, utility-improving and transferable, and filters strip task-specific constants, output paths, hidden answers and verifier-specific shortcuts.</p>
+
+<p class="eyebrow" id="selection">06</p>
+<h2>Selection: verifier first, utility only as a fallback</h2>
+
+<p><strong>Selection prioritises verifier success over every other signal, and only breaks ties among failures with a utility score.</strong> Let $\hat{\mathcal{S}}_{\le B}$ be all generated and evaluated candidates within budget; the observed set is $\mathcal{H}_{\le B} = \{S_0\} \cup \hat{\mathcal{S}}_{\le B}$, and $\mathcal{P}_{\le B} = \{S \in \mathcal{H}_{\le B} : \mathrm{succ}(S,T) = 1\}$ the passing subset. Then</p>
+
+<div class="math-block">$$S^*_{\le B} = \begin{cases} \arg\min_{S \in \mathcal{P}_{\le B}} \mathrm{idx}(S), & \mathcal{P}_{\le B} \neq \emptyset, \\[4pt] \arg\max_{S \in \mathcal{H}_{\le B}} U(S,T), & \mathcal{P}_{\le B} = \emptyset, \end{cases}$$</div>
+
+<p>where $\mathrm{idx}(S_j) = j$ is the version index. In words: the <em>earliest</em> version that passed wins. If the initial skill $v_0$ passes, the loop never runs at all. The consequence the paper draws explicitly is that raising the budget does not mean a newer rewrite gets deployed — it only enlarges the pool the selector may choose from, and earlier versions keep winning.</p>
+
+<p><strong>The utility function is only consulted when nothing passed, and its weights are never given.</strong> For the fallback case and for auxiliary analysis,</p>
+
+<div class="math-block">$$U(S,T) = \alpha\,\Delta_{\text{succ}}(S,T) + \beta\, g_{\text{succ}}(S,T)\,\Delta_{\text{eff}}(S,T) + \gamma\,\Delta_{\text{trans}}(S,\mathcal{F}) - \lambda\, C_{\text{intf}}(S,\mathcal{F}),$$</div>
+
+<p>with $\Delta_{\text{succ}}$, $\Delta_{\text{eff}}$ and $\Delta_{\text{trans}}$ the changes in task outcome, execution efficiency and transfer performance, and $C_{\text{intf}}$ the interference cost on other tasks.</p>
+
+<p>The gate $g_{\text{succ}}$ conditions efficiency credit on success, and for binary verifiers $g_{\text{succ}}(S,T) = \mathbb{1}[\mathrm{succ}(S,T) = 1]$, so a candidate cannot earn credit for being cheap by stopping early or skipping required work. The four weights $\alpha, \beta, \gamma, \lambda$ are described but never assigned numeric values anywhere in the paper or its appendices, which matters because the utility is what decides the returned artifact on every task where nothing passes — a large fraction of the benchmark. The one number that constrains them is in the Appendix F case study, where an outcome score of 1.0 corresponds to an overall utility of 1.042; that is consistent with $\alpha \approx 1$ and a small efficiency credit, but that is my inference from a single reported pair, not a stated setting.</p>
+
+<div class="callout example">
+<span class="label">Read the selection rule twice</span>
+<p>The selected artifact is the first candidate to pass <em>the same verifier that scores the reported result</em>, on <em>the same task instance</em>. Everything in section 8 about what the headline numbers mean follows from that sentence.</p>
+</div>
+
+<p class="eyebrow" id="walkthrough">07</p>
+<h2>The method end to end, on the digest agent</h2>
+
+<div class="walkthrough">
+
+<p>Priya has an agent that fetches new arXiv papers each morning, picks the most relevant one, and writes her a four-part digest. Its behaviour comes from a skill folder holding <code>SKILL.md</code>, a reference file on the arXiv API, and a Python script <code>fetch_arxiv.py</code> that fetches and parses the Atom feed into <code>papers.json</code>. We are going to run one SkillRevise episode on it, with the paper's real settings: $B = 3$, GPT-5.5 as both author and executor, the fixed seven-principle bank, retrieval width four, at most three principles selected.</p>
+
+<p class="beat">Beat 1 · The starting state and the observed failure</p>
+
+<p>First, the task has to be packaged the way the paper's harness expects (Appendix A.1): a task directory with <code>instruction.md</code>, <code>task.toml</code>, a verifier entrypoint under <code>tests/</code>, and assets under <code>environment/</code>. The verifier for "produce today's digest" asserts four things: a file exists at <code>digests/2026-09-07.md</code>; it contains the four required sections; the arXiv id it cites appears in the fetched <code>papers.json</code>; and that id does not appear in any digest from the previous seven days.</p>
+
+<p>The initial skill $S_0$ — version $v_0$ — is not hand-written. It is produced by SkillRevise's own authoring stage from the task family, source task and acceptance criteria, before any execution feedback exists. Appendix K gives that prompt, and it already asks for most of what the revision loop will later have to add by force:</p>
+
+<pre><code>Initial Skill Authoring Prompt
+Instruction. You are writing a task-family skill for an LLM agent. Use
+platform-agnostic skill-authoring constraints: write a reusable procedure,
+keep only behavior-changing guidance, make workflow order and checkpoints
+explicit, validate inputs/files/tools/assumptions before acting, ground
+actions in the current environment, include fallback handling, add strict
+constraints, and avoid hard-coded paths, versions, or commands unless they
+are verified invariants.
+Inputs. [TASK_FAMILY], [SOURCE_TASK], [ACCEPTANCE_CRITERIA], and
+optionally [RETRIEVED_PRINCIPLES].
+Output. Return only Markdown with sections # &lt;Skill Name&gt;, Purpose,
+When to Use, Procedure, and Constraints / Pitfalls.</code></pre>
+
+<p>What comes out is essentially our baseline skill with a Purpose and a Constraints heading bolted on. Its procedure is the familiar five steps:</p>
+
+<pre><code>## Procedure
+1. Call the arXiv API for papers submitted in the last 24 hours in
+   cs.AI, cs.LG, and cs.CL.
+2. Rank the results by how well they match the user's interests in
+   `interests.md`.
+3. Take the top paper. Fetch its abstract.
+4. Write a digest with four parts: the problem, what's new, why it
+   matters, one example.
+5. Append the digest to `digests/YYYY-MM-DD.md`.</code></pre>
+
+<p>The run fails, and it fails in the quiet way. The script's query string <code>cat:cs.AI OR cat:cs.LG</code> goes out without URL-encoding its spaces; arXiv answers HTTP 200 with an Atom feed containing zero <code>&lt;entry&gt;</code> elements. <code>papers.json</code> is written as an empty list. The agent, following step 3 literally, has no top paper, and writes a one-line file saying no new papers were posted. The verifier fails assertions two and three.</p>
+
+<p class="beat">Beat 2 · What the method ingests</p>
+
+<p>The episode's first input is $e_0 = \Phi(T, S_0, \pi_\theta)$, the four-part execution record. Compactly:</p>
+
+<pre><code>e_0.tau  : fetch_arxiv.py -&gt; HTTP 200, 0 entries -&gt; papers.json = []
+           read interests.md
+           write digests/2026-09-07.md  ("No new papers today.")
+e_0.v    : assert file exists            PASS
+           assert four sections          FAIL
+           assert cited id in papers.json FAIL (no id cited)
+           assert id not in last 7 days   PASS (vacuous)
+e_0.r    : outcome 0.25
+e_0.c    : 21 tool calls, 34.1k tokens, 288s</code></pre>
+
+<p>The diagnosis prompt also receives a matched <code>[NO_SKILL_TRACE]</code>: the same executor on the same task with no skill installed. That run happens to fetch with a correctly encoded query, gets 31 entries, and produces a digest — but with three sections instead of four, so it also fails, at outcome 0.5. This pairing is the input that lets attribution ask whether the skill made things worse rather than merely whether the run failed. Here it did: the no-skill run scored higher.</p>
+
+<p class="beat">Beat 3 · Diagnosis</p>
+
+<p>The diagnosis produces $D_0 = (V_0, A_0, \mathcal{K}_0)$ as JSON, using the fixed label vocabulary:</p>
+
+<pre><code>{ "labels": ["method", "incomplete execution", "false certainty"],
+  "evidence": [
+    {"source":"trace","snippet":"papers.json = []","reason":
+     "fetch returned 200 with zero entries; skill has no check for this"},
+    {"source":"verifier","snippet":"four sections FAIL","reason":
+     "skill permits terminating without producing the digest body"},
+    {"source":"no_skill_trace","snippet":"31 entries fetched","reason":
+     "same executor without the skill issued a valid query"}],
+  "causal_judgment":
+    "Skill-level defect. Step 1 states the query semantically and step 3
+     assumes a non-empty result; the executor followed both literally and
+     reported success on an empty feed.",
+  "rewrite_targets": ["Procedure step 1", "Procedure step 3"],
+  "summary": "No validation of fetch result; no fallback for an empty
+     feed; no requirement to verify the digest body before finishing." }</code></pre>
+
+<p>The preserve ledger $\mathcal{K}_0$ records what already worked and must survive editing: the output path <code>digests/YYYY-MM-DD.md</code> is correct and passed, and the reading of <code>interests.md</code> executed cleanly. And $A_0$ does support a skill-level defect, so the episode does <em>not</em> abstain and revision proceeds.</p>
+
+<p class="beat">Beat 4 · Retrieval, fusion, binding</p>
+
+<p>The query $q_0 = Q(T, D_0)$ carries the labels, the rewrite targets and the evidence snippets into the hybrid retriever. With only seven entries in the bank, the two rankings and their fused scores under $w_s = w_d = 0.5$, $\kappa = 60$ come out like this:</p>
+
+<div class="table-wrap">
+<table>
+<tr><th>Principle</th><th>$\mathrm{rank}_s$</th><th>$\mathrm{rank}_d$</th><th>$\mathrm{score}(p)$</th></tr>
+<tr><td>Fallback after tool failure</td><td>1</td><td>2</td><td>0.016262</td></tr>
+<tr><td>Workflow checkpointing</td><td>3</td><td>1</td><td>0.016134</td></tr>
+<tr><td>Verifier-contract alignment</td><td>2</td><td>4</td><td>0.015878</td></tr>
+<tr><td>Input schema validation</td><td>4</td><td>3</td><td>0.015750</td></tr>
+<tr><td>Environment-output grounding</td><td>5</td><td>5</td><td>0.015385</td></tr>
+</table>
+</div>
+
+<p>The top four are injected into the revision prompt. Binding then drops one: input schema validation's trigger is malformed fields or wrong types, and nothing here was malformed — the feed parsed correctly and was simply empty — so its evidence requirement is unsatisfied and it is logged under <code>ignored_principles</code> with that reason. Three principles bind, which is exactly the cap the protocol allows.</p>
+
+<p>The ranks in that table are my construction; the paper does not publish per-query retrieval traces. The fusion constants and the width are the paper's. What the arithmetic exposes is real and unflattering: the fused scores span 0.01539 to 0.01626, a spread of under 6%, because $\kappa = 60$ was designed to fuse lists of thousands and is being applied to a list of seven. Over a bank this small, a one-rank disagreement between the sparse and dense rankers reorders the shortlist, and the shortlist is four of seven items anyway.</p>
+
+<p class="beat">Beat 5 · The revision, with anchors</p>
+
+<p>The structured revision prompt requires the model to build the verifier contract, failure ledger and preserve ledger before touching the skill, then emit <code>REVISION_TRACE_JSON</code> followed by <code>REVISED_SKILL_MARKDOWN</code>. The diff it produces for version $v_1$:</p>
+
+<pre><code> ## Procedure
+-1. Call the arXiv API for papers submitted in the last 24 hours in
+-   cs.AI, cs.LG, and cs.CL.
++1. Call the arXiv API for papers submitted in the last 24 hours in
++   cs.AI, cs.LG, and cs.CL. Then open papers.json and assert it is a
++   list with at least one entry before continuing.
++1b. If papers.json is empty, do not conclude that nothing was posted.
++   Re-issue the request once with the category filter percent-encoded,
++   and widen the submission window to 72 hours. If it is still empty
++   after the retry, write the digest file with an explicit
++   "no candidates" body and stop.
+ 2. Rank the results ...
+ 3. Take the top paper. Fetch its abstract.
+ ## Constraints / Pitfalls
++- Before finishing, reopen digests/YYYY-MM-DD.md and confirm it
++  contains all four section headings and one arXiv id present in
++  papers.json. Do not report completion on an unread file.
++- Keep writing to digests/YYYY-MM-DD.md; that path already passes.</code></pre>
+
+<p>Each edit traces to a bound principle. Step 1's assertion and the final re-read come from verifier-contract alignment, restating the checker's conventions as pre-finalization checks. Step 1b is fallback after tool failure, and note the protocol's "one bounded fallback branch" — a single retry and a widened window, not an escalating cascade. The final constraint line is the preserve ledger being enforced as text. Each of these is an execution anchor in the paper's sense, because each names an action, an artifact to inspect, and a placement: "reopen the file, confirm four headings and an id from <code>papers.json</code>, in Constraints".</p>
+
+<p class="beat">Beat 6 · Re-execute, and the arithmetic when it fails</p>
+
+<p>Version $v_1$ is re-executed on the same task. The empty-feed bug is gone — the retry with the percent-encoded filter returns entries — but the 72-hour widening pulls in a paper that was cross-listed and already covered yesterday. The digest is written, has four sections, cites a real id, and fails the fourth assertion. Outcome 0.5.</p>
+
+<p>Since $\mathcal{P} = \emptyset$ so far, the loop consults the utility gate. With a graded outcome score, $\Delta_{\text{succ}} = 0.50 - 0.25 = +0.25$. The candidate failed, so $g_{\text{succ}} = 0$ and the entire efficiency term vanishes regardless of $\beta$ — a nice property, since $v_1$ costs more tool calls than $v_0$ and would otherwise be penalised for the checks that are the point of it. Within a single-task episode there are no sibling tasks to measure, so $\Delta_{\text{trans}}$ and $C_{\text{intf}}$ are both zero here; the paper computes those in offline analysis, not inside the loop. So</p>
+
+<div class="math-block">$$U(v_1, T) - U(v_0, T) = \alpha \cdot 0.25 > 0 \quad \text{for any } \alpha > 0,$$</div>
+
+<p>and the fallback updates to $S_{\text{fb}} \leftarrow v_1$. I want to be exact about what I just did: the paper never states $\alpha, \beta, \gamma, \lambda$, so I have shown that the gate's <em>decision</em> here is weight-independent rather than substituting invented numbers. On a task where two candidates trade success against efficiency, the decision would not be weight-independent, and the paper gives you nothing to reproduce it with.</p>
+
+<p>Then line 23 of the algorithm does something easy to miss: $S_{\text{cur}} \leftarrow v_1$ and $e_1 \leftarrow \hat{e}_1$ unconditionally. The search continues from the edited artifact whether or not it improved, so round two diagnoses $v_1$'s trace, not $v_0$'s.</p>
+
+<p class="beat">Beat 7 · Round two, and the loop closing</p>
+
+<p>The new diagnosis labels this <code>method</code> and <code>verification gap</code>. The failure is different from round one's, so <code>repeated_failure_escalation</code> is false and no method-level rewrite is triggered. The preserve ledger has grown: it now carries the non-empty-feed assertion and the four-section check, both of which passed, alongside the output path. Workflow checkpointing binds this time, and $v_2$ inserts a checkpoint between ranking and writing — read the last seven days of <code>digests/</code>, drop any candidate whose id already appears, and if that empties the list, fall through to the "no candidates" branch already added in $v_1$.</p>
+
+<p>Version $v_2$ re-executes and passes all four assertions. $\mathrm{succ} = 1$, so Algorithm 1 returns immediately at line 18 with $\hat{S}_2$ and the full candidate history $\mathcal{H} = \{v_0, v_1, v_2\}$. Selection is trivial because the passing set has one member; had $v_1$ also passed, $\arg\min \mathrm{idx}$ would have returned $v_1$ and $v_2$ would never have been generated. The third round of the budget goes unused.</p>
+
+<p class="beat">Beat 8 · What the baselines do with the same input</p>
+
+<p>The no-skill arm runs once, produces a three-section digest, and fails at 0.5 — and it never gets a second attempt, which is the comparison to keep in view. Skill-Creator authors one skill from the task description and installs it with no execution feedback at all; its skill would look much like $v_0$, since $v_0$ is itself a one-shot authored artifact, and it would hit the same empty feed and report the same false success.</p>
+
+<p>That is the paper's central empirical claim in miniature: the difference between $v_0$ and $v_2$ is not better authoring, it is having seen the trace. The two checks that fixed this task — assert the feed is non-empty, re-read the file before declaring completion — are things no author invents from a task description, and both were named by the verifier.</p>
+
+<p class="beat">Beat 9 · Where the method does not fit the digest agent</p>
+
+<p>Two mismatches matter more than the walkthrough's success does.</p>
+
+<p><strong>The bug was in Python and the loop can only write Markdown.</strong> The actual defect is one missing call to <code>urllib.parse.quote</code> in <code>fetch_arxiv.py</code>. The Revision Operator's output block is <code>REVISED_SKILL_MARKDOWN</code>, and the authoring prompt's output contract is Markdown with five named sections. So the repair is not "fix the encoding"; it is "instruct the executor to check for the empty result and retry with an encoded query", which leaves the broken script in place and makes every future run pay for a defensive retry. The paper never claims otherwise — its edits are skill-text edits by construction — but this is the boundary that decides whether the method transfers to a setting where a deterministic script does the load-bearing work.</p>
+
+<p><strong>Half of what Priya wants has no verifier.</strong> "Picked the most relevant paper" and "the digest is worth reading" are not assertions; the four checks cover file existence, structure, id validity and non-repetition. SkillRevise repairs what the verifier sees, and the paper's own limitations section says so: sparse or misaligned tests lead revision to overfit visible checks. On this task a revision that improved structural compliance while making the ranking worse would be selected, and nothing in the loop would notice.</p>
+
+<div class="callout fidelity">
+<span class="label">Fidelity note</span>
+<p><strong>The paper's:</strong> the task-directory interface (A.1), the authoring and revision prompt text (K), the seven principles (L), $B = 3$ with the loop bounds of Algorithm 1, retrieval width four with at most three selected, $w_s = w_d = 0.5$, $\kappa = 60$, the abstention check on $A_i$, the $g_{\text{succ}}$ gating, the earliest-passing selection rule, and the unconditional advance of $S_{\text{cur}}$.</p>
+<p><strong>Mine:</strong> the digest task and its four assertions, the two rank columns in the retrieval table, the outcome scores 0.25 and 0.50, and the specific diffs. The paper gives no per-query retrieval traces and no weights for $U$, which is why the utility step above is argued rather than computed.</p>
+<p><strong>Where it maps onto the paper:</strong> this arc is the pattern the paper labels $B = 0, C = 0, R = 1$ in Table 9 — no-skill fails, Skill-Creator fails, SkillRevise succeeds — which covers 13 of 86 SkillsBench tasks and whose representative case is <code>react-performance-debugging</code>. There, $v_0$ fails because the checkout path takes 916ms against a required 800ms threshold while the UI, bundle, cart and test-id checks all pass; diagnosis labels false certainty, over-specificity, context pollution and wrong abstraction level; and the selected $v_1$ passes with outcome score 1.0 and overall utility 1.042. My example is one round longer than that case, which is representative of the 13 tasks where the selector keeps $v_2$ under maxrev3 (Table 2).</p>
+</div>
+
+</div>
+
+<p class="eyebrow" id="results">08</p>
+<h2>What the numbers actually say</h2>
+
+<p><strong>The headline gains are large, consistent across five models, and heavily concentrated in one of the three benchmarks.</strong> Evaluation covers 206 tasks: 86 from SkillsBench, 50 from SkillLearnBench-Random, 70 from SWE-Skills-Bench-Hard. Across all 206, revision at three rounds beats no-skill execution for every executor — 79 to 115 for GPT-5.5, 55 to 100 for Opus-4.7, 47 to 86 for Kimi-2.6, 33 to 77 for Qwen-3.6-Plus, 49 to 95 for DeepSeek-V4-Pro. The abstract's 36.05% to 61.63% is the GPT-5.5 SkillsBench cell, 31/86 to 53/86, and it is the best cell in the table.</p>
+
+<p>The benchmark breakdown is where the shape appears. For GPT-5.5, SkillsBench moves +25.58pp, SkillLearnBench-Random +18.00pp, and SWE-Skills-Bench-Hard only +7.14pp (28/70 to 33/70). For Opus-4.7 the software-engineering suite goes the other way: 32/70 without any skill, 31/70 after three rounds of revision, a net loss of 1.43pp. The authors say plainly that repository-specific long-horizon failures are harder to repair through generic skill revision, which is the correct reading and also a warning about where the method's value comes from.</p>
+
+<p><strong>One-shot authoring is not merely weaker than revision — it is sometimes worse than nothing.</strong> Skill-Creator scores 78/206 for GPT-5.5 against 79/206 for no skill at all, ties overall for Kimi-2.6, and falls below no-skill on several cells including both adapted benchmarks. Appendix H.2 makes it concrete: the one-shot skill turns 9 of GPT-5.5's 31 no-skill SkillsBench successes into failures. The initial $v_0$ skill is not much better on its own — Opus-4.7 drops from 55/206 to 47/206 with $v_0$ installed. Revision at three rounds cuts that regression count to 2, and regresses 1 Skill-Creator success.</p>
+
+<p><strong>Most of the recovery arrives in the first round, and later rounds mostly widen the pool rather than replace the winner.</strong> Version $v_1$ improves over $v_0$ in every model–benchmark cell in Table 1: on SkillsBench, GPT-5.5 goes 40.7% to 54.7%, Opus-4.7 19.8% to 37.2%, Kimi-2.6 22.1% to 32.6%, Qwen-3.6-Plus 10.5% to 27.9%, DeepSeek-V4-Pro 26.7% to 39.5%. Table 2 then shows what selection does with a larger budget: under maxrev5, the selector still keeps $v_0$ on 37 tasks and $v_1$ on 20, with $v_4$ and $v_5$ accounting for 4 and 3. The budget sweep in Table 6 is correspondingly flat — 47, 51, 53, 55, 56 successes out of 86 at maxrev1 through maxrev5. Going from one round to five buys nine tasks.</p>
+
+<p><strong>The ablation table contains a result that undercuts the paper's own architecture, and the paper does not engage with it.</strong> On SkillsBench with GPT-5.5, against the full method's 53/86:</p>
+
+<div class="table-wrap">
+<table>
+<tr><th>Condition</th><th>Success</th><th>Drop</th></tr>
+<tr><td>No ablation</td><td>53/86</td><td>—</td></tr>
+<tr><td>w/o Diagnosis</td><td>28/86</td><td>29.07%</td></tr>
+<tr><td>w/o Preserve Ledger</td><td>42/86</td><td>12.79%</td></tr>
+<tr><td>w/o Execution Anchors</td><td>44/86</td><td>10.47%</td></tr>
+<tr><td>w/o Principles</td><td>45/86</td><td>9.30%</td></tr>
+<tr><td>Free-form Revision</td><td>52/86</td><td>1.16%</td></tr>
+</table>
+</div>
+
+<p>Removing diagnosis is catastrophic — 28/86 is <em>below</em> the 31/86 no-skill baseline, so revising a skill without execution evidence produces something worse than having no skill. That is the paper's strongest claim and it is well supported. But look at the last row. Free-form revision — the ablation prompt in Appendix K that hands the model the observed execution feedback and asks it to improve the skill, with no failure taxonomy, no structured trace, no preserve ledger, no anchors, no principles — scores 52/86. One task below the full method. Meanwhile removing the preserve ledger alone costs 11 tasks, removing anchors alone costs 9, removing principles alone costs 8. Removing all of them at once costs 1.</p>
+
+<p>The authors' reading is that the structured format "mainly serves to make revisions grounded, attributable, and inspectable rather than simply enabling rewrites", which is a fair description of what the numbers show but skips the tension: if the components are individually worth 8 to 11 tasks, their simultaneous removal should not be free.</p>
+
+<p>The more likely explanation is that the component ablations damage a structured prompt while leaving its scaffolding in place — a revision protocol demanding a preserve ledger it is then forbidden to produce is not the same intervention as a prompt that never asked for one. If that is right, the three middle rows measure prompt incoherence rather than component value, and the honest summary of this table is that execution evidence plus a bounded retry loop plus verifier-passing selection is doing essentially all of the work.</p>
+
+<p><strong>Cross-model transfer is real but is measured on a subset chosen for being easy.</strong> Table 7 takes the 57 SkillsBench tasks GPT-5.5 solved and gives four other executors the fixed GPT-5.5-produced skill. All four improve over their own no-skill execution — Opus-4.7 from 16/57 to 33/57, DeepSeek-V4-Pro 14/57 to 27/57, Kimi-2.6 16/57 to 19/57, Qwen-3.6-Plus 6/57 to 11/57. All four do better still with their own revisions, by 8, 11, 14 and 15 successes respectively. Conditioning on GPT-5.5's successes is the obvious confound, and the paper does not report the complement.</p>
+
+<p><strong>The ALFWorld study tests principle reuse rather than skill reuse, and lands well below the memory-free baselines.</strong> ALFWorld is a text-based household simulator where an agent issues commands like "go to drawer 1" and "heat mug with microwave"; success needs admissible action syntax and state tracking rather than file artifacts. From 25 calibration tasks the system absorbs a 10-principle bank, then evaluates on 100 held-out tasks with Qwen3-8B, solving 71 — 33/44 valid-seen and 38/56 valid-unseen. Table 4 puts that against Reflexion at 97.0, ReflAct at 93.3, GiGPO at 90.8 and constrained-context skills at 89.6. SkillRevise beats the memory baselines (SimpleMem+GRPO 62.5, Mem0 54.7, ExpeL 46.3) and loses to everything trained or multi-trial.</p>
+
+<p>The authors report this without spin. The selector keeps $v_0$, $v_1$ and $v_2$ on 62, 31 and 7 tasks, so the absorbed bank behaves as occasional targeted guidance, not a default trigger.</p>
+
+<p><strong>The cost accounting is honest and shows the loop is a factor of 1.6 on tokens and 1.6 on tool calls.</strong> Table 5: direct no-skill execution is 31/86 at 36.6k tokens, 21.0 tool calls, 492.4s; the final selected skill executed once is 53/86 at 36.6k tokens, 21.7 tool calls, 335.0s; the full maxrev3 selection process averages 1.42 revisions per task at 56.9k tokens, 33.6 tool calls, 484.5s. The deployed artifact costs no more to run than no skill and runs faster; producing it costs about 55% more tokens.</p>
+
+<p><strong>The failure taxonomy in Appendix H is the most reusable artifact in the paper.</strong> Across the 86 GPT-5.5 SkillsBench tasks the trace set holds 208 candidate-level diagnosis entries. The coarse labels are dominated by skill-form defects: <code>context_pollution</code> in 207 entries, <code>false_certainty</code> in 181, <code>over_specificity</code> and <code>wrong_abstraction_level</code> in 54 each, and <code>environment_mismatch</code> exactly once. The operational taxonomy in Table 12 covers 124 revision records: method or algorithmic workflow is primary in 46, verification gap in 18 (but a secondary mention in 66, the highest of any type), schema or data format in 11, constraint or efficiency cost in 11, data understanding in 8, overfit or hard-code in 2, and 27 are untyped.</p>
+
+<p>Two things fall out. First, verification gaps are pervasive but rarely the sole story — they accompany other defects. Second, since <code>environment_mismatch</code> is the label that would justify concluding the skill is not at fault, its single appearance in 208 entries suggests the abstention gate almost never fires; the paper does not report abstention counts directly, so read that as an inference from the label distribution rather than a stated result.</p>
+
+<p class="eyebrow" id="hostile">09</p>
+<h2>Where a hostile reviewer attacks first</h2>
+
+<div class="callout hostile">
+<span class="label">The objections, in the order I would raise them</span>
+
+<p><strong>The headline comparison gives one method four scored attempts and the baseline one, and never runs the control that would separate them.</strong> The selection rule takes the earliest of up to four candidates ($v_0$ through $v_3$) that passes the verifier scoring the result. No-skill execution gets a single run — Table 5 confirms it at 0.00 revisions. So "36.05% to 61.63%" compares best-of-four-with-feedback against one-shot, on the same instances, with no reported no-skill-repeated-four-times arm and no with-skill-rerun arm.</p>
+
+<p>Some of the gap is certainly real: the free-form ablation and the w/o-diagnosis collapse both show evidence matters. But the paper never bounds how much of it is retry. On a benchmark where an executor's success is stochastic, four bites is worth something, and the honest version of Table 1 would say how much.</p>
+
+<p><strong>Selection is in-sample by construction: the artifact is chosen by the same verifier, on the same instance, that then reports the score.</strong> There is no held-out instance anywhere in the three main benchmarks. Every skill is authored for its task, revised against its task's verifier, and scored on its task. The paper's own leakage audit (Appendix I) is a manual inspection of retained artifacts for memorised answers, and the authors concede it "cannot prove that every transient raw candidate was leakage-free" and that verifier-visible feedback can still encourage overfitting to observable checks. Manual inspection is not a substitute for a held-out split. The cross-model transfer study is the closest thing to out-of-sample evidence, and it is run on a subset defined by the source model's successes.</p>
+
+<p><strong>Nothing in the paper shows the revised skill helps a second instance of the same task family.</strong> The skills are described as task-family skills; the authoring prompt takes <code>[TASK_FAMILY]</code>; the principles carry transfer guards; and the guard on transfer-preserving repair explicitly requires usefulness for sibling tasks with different files or values. Yet the evaluation never runs a revised skill on a sibling instance. SkillLearnBench-Random would have made this possible and the paper deliberately went the other way: Appendix A.3 says sibling-instance transfer context was disabled so each selected instance is evaluated as a standalone task.</p>
+
+<p>That is a defensible choice for controlling the comparison, but it means the paper's most important structural claim — that revision produces reusable procedural knowledge rather than instance-specific patching — is supported only by cross-<em>model</em> transfer, not cross-<em>task</em> transfer.</p>
+
+<p><strong>The ablation table's internal inconsistency is unaddressed, and it is the table the architecture rests on.</strong> Three components are individually worth 8 to 11 tasks each, yet removing the entire structured apparatus costs one task. Either the component ablations are measuring the damage of an internally contradictory prompt rather than the value of the components, or the components are redundant with each other in a way that makes the individual numbers uninterpretable. The paper's Section 5.3 does not raise the question.</p>
+
+<p>And all six rows come from a single benchmark, a single model, and a single run of 86 tasks, with no seeds, no confidence intervals, and no significance test anywhere in the paper. An 8-task difference on 86 binary trials is roughly at the edge of what a single run can distinguish.</p>
+
+<p><strong>The utility function has four free weights and none of them is reported.</strong> $U(S,T)$ decides the returned artifact on every task where no candidate passes, which given a 61.63% best-case success rate is most tasks. Appendix C lists retrieval weights, the fusion constant, the embedding model, temperature, timeouts and retry delays, and omits $\alpha$, $\beta$, $\gamma$ and $\lambda$ entirely. The single reported utility value (1.042 against an outcome of 1.0) is one data point. As published, the fallback path is not reproducible.</p>
+
+<p><strong>The loop cannot decide that the skill was the problem, because it never falls back to no-skill execution.</strong> The candidate set is $\{S_0\} \cup \hat{\mathcal{S}}_{\le B}$ — every element is a skill. The abstention gate stops revision but does not uninstall the skill, and the limitations section says outright that maxrev3 does not fall back to no-skill execution, so skill conditioning can still hurt tasks better solved by direct exploration. Appendix H.2 quantifies the residue: 2 no-skill successes still become failures. Opus-4.7 on SWE-Skills-Bench-Hard is the same fact at benchmark scale — 31/70 after revision against 32/70 with nothing installed. Adding "no skill" to $\mathcal{H}$ is a two-line change and would have removed a whole class of regressions.</p>
+
+<p><strong>The abstention gate, the most interesting decision in the design, appears to be inert.</strong> Its job is to decline to edit when the failure is not the skill's fault. The one diagnosis label that would trigger it, <code>environment_mismatch</code>, occurs once across 208 entries, while <code>context_pollution</code> occurs 207 times. A diagnostic component that attributes a skill-level defect essentially always is not a gate; it is a formality. The paper reports no abstention counts, which is the measurement that would settle this.</p>
+
+<p><strong>Cost is charged to the baseline's advantage in the framing and to the method's in the table.</strong> Producing the artifact costs 56.9k tokens and 33.6 tool calls against no-skill's 36.6k and 21.0, and Appendix H notes that against Skill-Creator, maxrev3 wins on success for 20 tasks and ties on 65 — but by overall utility it wins 58, ties 2 and <em>loses 26</em>, because many revised skills solve the task while raising execution cost. That is a substantial finding buried in an appendix: on a quarter of tasks the revision made the agent more expensive without making it more successful.</p>
+</div>
+
+<p class="eyebrow" id="landing">10</p>
+<h2>What this means for AutoSkill</h2>
+
+<div class="callout landing">
+<span class="label">Landing it on the two objectives</span>
+
+<p><strong>The diagnosis triple is the adoptable pattern, and the preserve ledger is the part to adopt first.</strong> Splitting a failure analysis into verification specification, failure attribution and preservation constraints gives the editor an explicit statement of what must not change, and it is a regression control that costs nothing but prompt discipline. Our harness already computes the equivalent of $\mathcal{K}_i$ every night — the frozen-fixture assertions that passed — so populating a preserve ledger from fixture results is a data-plumbing job, not a research one.</p>
+
+<p>The ablation says removing it costs 11 of 86 tasks, which is the largest single-component effect in the table after diagnosis itself; treat that as suggestive rather than established, given the single-run caveat above.</p>
+
+<p><strong>The paired no-skill/with-skill trace belongs in the diagnosis input, not only in the admission decision.</strong> Design position 5 already commits us to paired runs as the outcome measure, and SkillGen's net effect is how we judge an edit. What SkillRevise adds is using the same pair as an <em>input</em>: the diagnosis prompt receives both traces and asks whether the skill caused the failure. For the three deployed skills this is nearly free, because the without-skill arm is already run for net-effect accounting. It is also the only mechanism in this paper that could catch the case your notes care most about — a skill directive that makes the agent worse than leaving it alone.</p>
+
+<p><strong>Do not adopt the utility fallback as an admission rule.</strong> Returning the best-scoring failed candidate is reasonable inside a research loop that has to return something. It is exactly wrong for a promotion gate: it admits a skill that did not pass, chosen by a function whose weights this paper does not publish, into a store that both agents read. Our equivalent decision should have three outcomes, not two — accept, reject-and-keep-current, and reject-and-run-without-skill. The third is what SkillRevise is missing and what its own Opus-4.7 SWE row and its 2 residual regressions argue for.</p>
+
+<p><strong>The Markdown-only boundary is the finding that bears most directly on whether this method can work here at all.</strong> The Revision Operator emits <code>REVISED_SKILL_MARKDOWN</code>; the authoring contract is five Markdown sections. Our skills are mostly deterministic Python that fetches from ATOM via MCP and aggregates into JSON, with the LLM confined to commentary and orchestration. When a nightly run breaks on a schema change, the fix usually lives in the script. SkillRevise can only express that fix as an instruction to the executor — and in our architecture the executor is not permitted to touch the numbers, so an execution anchor saying "recompute the metric and compare" is either a no-op or a violation of the position that keeps the LLM away from the arithmetic.</p>
+
+<p>The useful anchors for us are the ones that inspect: reopen the produced JSON, assert the required keys and shapes, confirm the figure count. Those are real and worth having. The repairs are not reachable.</p>
+
+<p><strong>Run it as the text-only arm of candidate A, with a retries-only control, and treat the control as the headline comparison.</strong> Concretely, the experiment note in <code>notes/experiments/</code> would set up: one constructed drift variant per deployed skill (schema rename, an added month-end column, a restatement that changes a prior period), the failing nightly run as $e_0$, the current <code>SKILL.md</code> as $S_0$, $B = 3$, and our fixture harness as $\Phi$. Four arms, not two:</p>
+<ul>
+<li>leave the skill alone and re-run the pipeline up to four times (the retry control this paper never ran);</li>
+<li>SkillRevise as published, Markdown edits only;</li>
+<li>the human commit that actually fixed the same drift, as the oracle edit;</li>
+<li>the same loop under a strict accept-only-on-held-out-improvement rule.</li>
+</ul>
+<p>The measurement is repairs minus regressions on frozen fixtures, reported separately, plus how many of the drift failures were reachable by a Markdown edit at all. That last count is the number that decides whether the text-editing branch of this literature is worth more of our time, and it is answerable in a week on constructed variants without waiting for real drift traces.</p>
+
+<p><strong>Against the ByteDance baseline, this paper supplies the rung the reviewer's assurance ladder cannot reach on its own.</strong> <code>skill-creator</code> already runs paired with-and-without subagent runs and grades LLM-checked assertions, which is the same instinct; what it lacks is a structured bridge from a failed run to a specific edit with a preserve constraint attached, and it iterates on human feedback rather than on a diagnosis. <code>skill-reviewer</code> is static by design and honest about it — <code>publish_candidate</code> at <code>static_only</code> assurance makes no runtime claim. SkillRevise's diagnosis label set (path, schema, method, verification gap, overfit or hardcode, context pollution, false certainty, wrong abstraction level) is a ready-made candidate vocabulary for the reviewer's rubric dimensions, and unlike the reviewer's current rubric it comes with a distribution measured over 208 real revision attempts. That is worth borrowing even if we never run the loop.</p>
+
+<p><strong>Four things would have to be validated before any of this is load-bearing.</strong></p>
+<ul>
+<li>That a diagnosis produced from a fixture failure attributes correctly on our traces — the label distribution here (207 of 208 entries mentioning context pollution) suggests the diagnoser is close to always blaming the skill, which on a near-deterministic pipeline would be wrong most of the time.</li>
+<li>That the abstention path can be made to fire. On drift failures the correct answer is often "the world moved; the skill is fine; fix the fixture", and a loop that never abstains will edit anyway.</li>
+<li>That the preserve ledger survives translation from prose to fixture assertions without becoming so long it crowds the context — SkillZip Pro's redundancy finding applies here.</li>
+<li>That anchored inspection steps do not simply raise token cost for nothing: Appendix H says maxrev3 loses to Skill-Creator on overall utility for 26 tasks, mostly because revised skills cost more to run.</li>
+</ul>
+
+<p><strong>The red flags, stated plainly.</strong></p>
+<ul>
+<li>In-sample selection: every headline number is best-of-four against the scoring verifier on the same instance. Do not cite the 36.05% to 61.63% figure without that qualifier.</li>
+<li>No cross-task evaluation, despite the "task-family skill" framing — sibling-instance context was deliberately disabled.</li>
+<li>No no-skill fallback in the candidate set, so the method structurally cannot recommend removing a skill.</li>
+<li>Unreported utility weights, on the path that decides most tasks.</li>
+<li>Single-run ablations on one model and one benchmark, with an internal inconsistency (free-form revision at 52/86) that the paper leaves unexamined.</li>
+<li>The gains are smallest exactly where our setting sits: repository-scale, long-horizon, script-mediated work (+7.14pp for GPT-5.5, −1.43pp for Opus-4.7 on SWE-Skills-Bench-Hard).</li>
+</ul>
+
+<p>Read against <code>DIRECTION.md</code>: for objective 1, the adoptable pieces are the diagnosis schema, the preserve ledger, and the revision trace as an audit artifact for the promotion PR. For objective 2, this is a lane-1 <code>try-it</code> whose value is mostly as a well-specified <em>baseline</em> — the simplest text-only revision loop with an explicit acceptance rule, against which a script-reaching method has to justify its extra machinery. Nothing here contradicts the direction; the SWE-Skills-Bench-Hard results sharpen the case that the text-only branch is a control arm rather than the candidate.</p>
+</div>
+
+<p class="fn">Yuxuan Liu, Zhaochen Su, Lingyun Xie, Yuhao Zhang, Qing Zong, Jiahe Guo, Zhongwei Xie, Yiyan Ji, Yauwai Yim, Hongyu Luo, Xiyu Ren, Ruan Chenyu, Haoran Li and Yangqiu Song. <em>SkillRevise: Improving LLM-Authored Agent Skills via Trace-Conditioned Skill Revision.</em> arXiv:2606.01139v3, 17 June 2026. Code at <code>github.com/HKUST-KnowComp/skillrevise</code>. Read in full including Appendices A–O; all figures, tables and prompt templates cited above were read from the PDF.</p>
+
+</div>
