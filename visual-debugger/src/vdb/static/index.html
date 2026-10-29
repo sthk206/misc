@@ -97,6 +97,18 @@ main { flex: 1; display: grid; grid-template-columns: 42% 6px 1fr; min-height: 0
 .badge { font-family: var(--sans); font-size: 10px; padding: 0 6px; border-radius: 9px; border: 1px solid var(--kind); color: var(--kind); }
 .obody { padding: 8px 10px; }
 .obj.changed .ohead { background: var(--changed); }
+.ohead { cursor: pointer; user-select: none; }
+.fold { color: var(--muted); width: 10px; flex: none; font-family: var(--sans); font-size: 10px; margin-left: -4px; }
+.fold:hover { color: var(--text); }
+.chip { display: inline-flex; align-items: center; gap: 4px; padding: 1px 6px; vertical-align: middle; white-space: nowrap; cursor: pointer;
+  color: var(--kind); font: 600 11px/1.35 var(--sans); font-variant-numeric: tabular-nums; border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--kind) 55%, transparent); background: color-mix(in srgb, var(--kind) 12%, var(--panel)); }
+.chip:hover { border-color: var(--kind); }
+.chip.changed { box-shadow: 0 0 0 2px var(--changed); }  /* a ring, so the kind's colour stays visible */
+.chip.hl { box-shadow: 0 0 0 2px var(--arrow-hl); }
+.chip svg { flex: none; }
+.chip .ctype { font: 600 11px var(--mono); }
+.chip.k-set { border-radius: 9px; } .chip.k-tuple { border-style: dashed; } .chip.k-instance { border-left-width: 3px; }
 .k-list { --kind: var(--k-list); } .k-tuple { --kind: var(--k-tuple); } .k-dict { --kind: var(--k-dict); }
 .k-set { --kind: var(--k-set); } .k-instance { --kind: var(--k-instance); } .k-dataframe, .k-series, .k-array { --kind: var(--k-table); }
 .k-opaque { --kind: var(--k-opaque); }
@@ -149,6 +161,7 @@ pre.opaque { margin: 0; white-space: pre-wrap; max-width: 420px; color: var(--mu
     <button data-action="step_over" title="Step over (F10 or n)">↷ Over</button>
     <button data-action="step_into" title="Step into (F11 or s)">↓ Into</button>
     <button data-action="step_out" title="Step out (Shift+F11 or o)">↑ Out</button>
+    <button data-action="restart" title="Run the program again from the start, keeping your breakpoints (r)">↻ Restart</button>
     <button data-action="quit" class="danger" title="Stop the program (q)">■ Stop</button>
   </div>
   <div class="group">
@@ -179,8 +192,27 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&
 
 const app = {
   session: null, version: 0, live: null, history: [], view: -1, selected: 0,
-  sources: new Map(), breakpoints: {}, disconnected: false,
+  sources: new Map(), breakpoints: {}, disconnected: false, restarting: false, restored: false,
+  folded: new Set(),  // keys of collapsed cards, see objKey and frameKey
+  foldPaths: new Map(),  // folded object key -> its path, saved so the fold survives a restart
+  pendingPaths: new Set(),  // saved paths not yet matched to an object in this run
 };
+
+// Kept in this tab across reloads, so breakpoints survive a restart or the next vdb run.
+const saved = {
+  get(key) { try { return JSON.parse(sessionStorage.getItem("vdb." + key)); } catch (e) { return null; } },
+  set(key, value) { try { sessionStorage.setItem("vdb." + key, JSON.stringify(value)); } catch (e) { /* storage blocked */ } },
+};
+const savedFolds = saved.get("folds") || {};
+app.folded = new Set(savedFolds.frames);
+app.pendingPaths = new Set(savedFolds.paths);
+
+function saveFolds() {
+  saved.set("folds", {
+    frames: [...app.folded].filter((k) => k.startsWith("f:")),
+    paths: [...new Set([...app.foldPaths.values(), ...app.pendingPaths])],
+  });
+}
 
 async function api(path, body) {
   const opts = { headers: { "X-VDB": "1" } };
@@ -228,6 +260,12 @@ async function waitForNextRun() {
 function receive(state) {
   app.live = state;
   if (state.breakpoints) app.breakpoints = state.breakpoints;
+  if (!app.restored && state.status === "paused") {
+    app.restored = true;
+    restoreBreakpoints();
+  } else if (app.restored && state.breakpoints) {
+    saved.set("breakpoints", state.breakpoints);
+  }
   if (state.snapshot) {
     const last = app.history[app.history.length - 1];
     if (!last || last.step !== state.step) {
@@ -240,12 +278,32 @@ function receive(state) {
   render();
 }
 
+// The first pause of a run: put back the breakpoints this tab had. After Restart, go straight to the first one.
+async function restoreBreakpoints() {
+  const breakpoints = saved.get("breakpoints") || {};
+  const restarted = saved.get("restart");
+  saved.set("restart", false);
+  if (!Object.keys(breakpoints).length) return;
+  await send("set_breakpoints", { breakpoints });
+  if (restarted) await send("continue");
+}
+
+const BREAKPOINT_ACTIONS = ["toggle_breakpoint", "set_breakpoints"];
+
+function allowed(action, status) {
+  if (status === "paused") return true;
+  if (status === "exception") return action === "quit" || action === "restart" || BREAKPOINT_ACTIONS.includes(action);
+  return status === "running" && action === "restart";
+}
+
 async function send(action, extra) {
   const live = app.live;
-  if (!live || app.disconnected) return;
-  const ok = live.status === "paused" || (live.status === "exception" && (action === "quit" || action === "toggle_breakpoint"));
-  if (!ok) return;
-  if (action !== "toggle_breakpoint") {
+  if (!live || app.disconnected || app.restarting || !allowed(action, live.status)) return;
+  if (action === "restart") {
+    app.restarting = true;
+    saved.set("restart", true);
+    render();
+  } else if (!BREAKPOINT_ACTIONS.includes(action)) {
     app.view = -1;
     app.live = { ...live, status: "running" };
     render();
@@ -276,11 +334,8 @@ function render() {
 }
 
 function renderToolbar(idx) {
-  const status = app.disconnected ? "disconnected" : (app.live ? app.live.status : "starting");
-  for (const b of document.querySelectorAll("[data-action]")) {
-    const a = b.dataset.action;
-    b.disabled = !(status === "paused" || (status === "exception" && a === "quit"));
-  }
+  const status = app.restarting ? "restarting" : app.disconnected ? "disconnected" : (app.live ? app.live.status : "starting");
+  for (const b of document.querySelectorAll("[data-action]")) b.disabled = !allowed(b.dataset.action, status);
   const n = app.history.length;
   const label = $("hist-label");
   label.textContent = n ? `step ${idx + 1} of ${n}` : "no steps yet";
@@ -294,13 +349,14 @@ function renderToolbar(idx) {
   el.className = "status " + status;
   el.textContent = {
     starting: "Starting…",
+    restarting: "Restarting…",
     paused: where ? `Paused · ${baseName(where.file)}:${where.line}` : "Paused",
     running: "Running…",
     exception: "Stopped on an uncaught exception",
     finished: app.live && app.live.stopped ? "Stopped" : `Finished · exit code ${app.live && app.live.exit_code}`,
     disconnected: app.live && app.live.status === "finished"
-      ? `${app.live.stopped ? "Stopped" : `Finished · exit code ${app.live.exit_code}`} · this tab reloads on your next vdb run`
-      : "Disconnected · this tab reloads on your next vdb run",
+      ? `${app.live.stopped ? "Stopped" : `Finished · exit code ${app.live.exit_code}`} · this tab reloads, with your breakpoints, on your next vdb run`
+      : "Disconnected · this tab reloads, with your breakpoints, on your next vdb run",
   }[status] || status;
 }
 
@@ -314,7 +370,7 @@ function renderBanner(entry) {
   } else if (app.view !== -1) {
     banner.className = "banner";
     banner.textContent = "You are looking at an earlier step. Press ] or Live to return; stepping always continues from the live step.";
-  } else if (status === "running" && !app.disconnected) {
+  } else if (status === "running" && !app.disconnected && !app.restarting) {
     banner.className = "banner";
     banner.textContent = "Running. If the program is waiting for input, type it in the terminal.";
   } else {
@@ -382,23 +438,54 @@ async function renderSource(frame, entry) {
 
 // ---- The object graph
 
-function childRefs(o) {
+// [label, value] for each reference an object holds; the labels make paths like main/cart[items][0].
+function children(o) {
   if (!o) return [];
   switch (o.kind) {
-    case "list": case "tuple": case "set": return o.items;
-    case "dict": return o.entries.flat();
-    case "instance": return o.attrs.map((a) => a[1]);
+    case "list": case "tuple": case "set": return o.items.map((v, i) => [`[${i}]`, v]);
+    case "dict": return o.entries.flatMap(([k, v], i) => [[`{${i}}`, k], [k.p !== undefined ? `[${k.p}]` : `[#${i}]`, v]]);
+    case "instance": return o.attrs.map(([name, v]) => [`.${name}`, v]);
     default: return [];
   }
 }
+const childRefs = (o) => children(o).map(([, v]) => v);
 
+// Fold keys outlive a step: an object keeps its id while it lives, a frame its depth and name.
+const objKey = (snap, id) => `o:${id}:${snap.objects[id].type}`;
+const frameKey = (snap, i) => `f:${snap.frames.length - 1 - i}:${snap.frames[i].name}`;
+
+// Every object reachable from refs, folded or not.
+function reachable(snap, refs) {
+  const seen = new Set(), order = [];
+  const add = (v) => { if (v && v.r !== undefined && snap.objects[v.r] && !seen.has(v.r)) { seen.add(v.r); order.push(v.r); } };
+  refs.forEach(add);
+  for (let i = 0; i < order.length; i++) childRefs(snap.objects[order[i]]).forEach(add);
+  return order;
+}
+
+// The first path that reaches each object: how a fold finds its object again in a fresh run.
+function objectPaths(snap) {
+  const paths = new Map(), order = [];
+  const add = (v, path) => { if (v && v.r !== undefined && snap.objects[v.r] && !paths.has(v.r)) { paths.set(v.r, path); order.push(v.r); } };
+  snap.frames.forEach((f, i) => f.locals.forEach(([name, v]) => add(v, `${frameKey(snap, i)}/${name}`)));
+  for (const id of order) children(snap.objects[id]).forEach(([label, v]) => add(v, paths.get(id) + label));
+  return paths;
+}
+
+// Folded objects are drawn inside the cards that reference them, so they and everything
+// only reachable through them get no card of their own.
 function assignColumns(snap) {
   const depth = new Map();
   const order = [];
   const visit = (v, d) => {
-    if (v && v.r !== undefined && snap.objects[v.r] && !depth.has(v.r)) { depth.set(v.r, d); order.push(v.r); }
+    if (v && v.r !== undefined && snap.objects[v.r] && !depth.has(v.r) && !app.folded.has(objKey(snap, v.r))) {
+      depth.set(v.r, d);
+      order.push(v.r);
+    }
   };
-  for (const f of snap.frames) for (const [, v] of f.locals) visit(v, 1);
+  snap.frames.forEach((f, i) => {
+    if (!app.folded.has(frameKey(snap, i))) for (const [, v] of f.locals) visit(v, 1);
+  });
   for (let i = 0; i < order.length; i++) {
     for (const child of childRefs(snap.objects[order[i]])) visit(child, depth.get(order[i]) + 1);
   }
@@ -407,9 +494,14 @@ function assignColumns(snap) {
   return columns;
 }
 
+let graph = null;  // { snap, changed(id) } while renderGraph draws
+
 function val(v) {
   if (!v) return "";
-  if (v.r !== undefined) return `<span class="ptr" data-target="${v.r}"></span>`;
+  if (v.r !== undefined) {
+    const o = graph.snap.objects[v.r];
+    return o && app.folded.has(objKey(graph.snap, v.r)) ? chip(v.r, o) : `<span class="ptr" data-target="${v.r}"></span>`;
+  }
   return `<span class="v v-${v.t}">${esc(v.p)}</span>`;
 }
 
@@ -462,10 +554,46 @@ function objectMeta(o) {
   }
 }
 
+// Tiny pictures of each shape for folded objects, drawn in the kind's colour.
+const GLYPHS = {
+  list: `<rect x=".5" y="2.5" width="17" height="7" rx="1"/><path d="M6.2 2.5v7M11.8 2.5v7"/>`,
+  tuple: `<rect x=".5" y="2.5" width="17" height="7" rx="3" stroke-dasharray="2 1.4"/><path d="M6.2 4v4M11.8 4v4"/>`,
+  dict: `<rect x=".5" y=".5" width="17" height="11" rx="1"/><path d="M.5 6h17M7 .5v11"/><path d="M2.5 3.2h2.5M2.5 8.8h2.5" stroke-width="1.6"/>`,
+  set: `<circle cx="3.3" cy="6" r="2.6"/><circle cx="9" cy="6" r="2.6"/><circle cx="14.7" cy="6" r="2.6"/>`,
+  instance: `<rect x="2.5" y=".5" width="13" height="11" rx="2"/><path d="M2.5 3.8h13" stroke-width="2"/><path d="M5 7h8M5 9.3h5"/>`,
+  table: `<rect x=".5" y=".5" width="17" height="11" rx="1"/><path d="M.5 4.2h17M.5 7.8h17M6.2 .5v11M11.8 .5v11"/>`,
+  opaque: `<rect x=".5" y="2.5" width="17" height="7" rx="3.5"/><path d="M5.5 6h.01M9 6h.01M12.5 6h.01" stroke-width="2" stroke-linecap="round"/>`,
+};
+const glyphFor = (kind) => GLYPHS[kind] || (["dataframe", "series", "array"].includes(kind) ? GLYPHS.table : GLYPHS.opaque);
+
+// No count for instances: "Node 2" would read like a value.
+function foldedCount(o) {
+  switch (o.kind) {
+    case "list": case "tuple": case "set": case "dict": case "series": return String(o.len);
+    case "dataframe": return `${o.shape[0]}×${o.shape[1]}`;
+    case "array": return o.shape.join("×");
+    default: return "";
+  }
+}
+
+// A folded object, drawn where it is referenced: its shape, its type unless that is plain list/dict/..., its size.
+const PLAIN_TYPES = { list: "list", tuple: "tuple", dict: "dict", set: "set" };
+
+function chip(id, o) {
+  const name = PLAIN_TYPES[o.kind] === o.type ? "" : `<span class="ctype">${esc(o.type)}</span>`;
+  const count = foldedCount(o);
+  return `<span class="chip k-${o.kind}${graph.changed(id) ? " changed" : ""}" data-target="${id}" title="${esc(o.type)}: click to expand">`
+    + `<svg width="15" height="10" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.2">${glyphFor(o.kind)}</svg>`
+    + `${name}${count ? `<span>${count}</span>` : ""}</span>`;
+}
+
+const foldButton = (open) => `<span class="fold" data-fold title="${open ? "Collapse" : "Expand"} just this card">${open ? "▼" : "▶"}</span>`;
+const HEAD_TITLE = "Click to collapse everything this points to into this card (again to expand). The arrow collapses just this card.";
+
 function objectHTML(id, o, changed) {
   const badge = o.badge ? `<span class="badge">${esc(o.badge)}</span>` : "";
   return `<div class="obj k-${o.kind}${changed ? " changed" : ""}" id="obj-${id}" data-id="${id}">
-    <div class="ohead"><span class="otype">${esc(o.type)}</span>${badge}<span class="ometa">${objectMeta(o)}</span></div>
+    <div class="ohead" title="${HEAD_TITLE}">${foldButton(true)}<span class="otype">${esc(o.type)}</span>${badge}<span class="ometa">${objectMeta(o)}</span></div>
     <div class="obody">${objectBody(o)}</div></div>`;
 }
 
@@ -479,6 +607,14 @@ function matchingPrevFrame(snap, prevSnap, i) {
 
 function renderGraph(snap, prevSnap) {
   const objChanged = (id) => !!prevSnap && JSON.stringify(prevSnap.objects[id]) !== JSON.stringify(snap.objects[id]);
+  graph = { snap, changed: objChanged };
+  if (app.pendingPaths.size) {
+    for (const [id, path] of objectPaths(snap)) {
+      if (!app.pendingPaths.delete(path)) continue;
+      app.folded.add(objKey(snap, id));
+      app.foldPaths.set(objKey(snap, id), path);
+    }
+  }
   let html = `<div class="col"><div class="col-title">Frames</div>`;
   snap.frames.forEach((f, i) => {
     const pf = matchingPrevFrame(snap, prevSnap, i);
@@ -488,9 +624,11 @@ function renderGraph(snap, prevSnap) {
       return `<tr class="${changed ? "changed" : ""}"><td class="k name">${esc(name)}</td><td>${val(v)}</td></tr>`;
     }).join("");
     if (f.hidden_below) html += `<div class="frame-gap">… ${plural(f.hidden_below, "library frame")}</div>`;
-    html += `<div class="frame${i === app.selected ? " selected" : ""}" data-frame="${i}">
-      <div class="ohead"><span class="otype">${esc(f.name)}</span><span class="ometa">line ${f.line}</span></div>
-      <div class="obody">${rows ? `<table class="kv">${rows}</table>` : `<div class="empty">no variables</div>`}</div></div>`;
+    const key = frameKey(snap, i), open = !app.folded.has(key);
+    const meta = open ? `line ${f.line}` : `${plural(f.locals.length, "variable")} · line ${f.line}`;
+    html += `<div class="frame${i === app.selected ? " selected" : ""}${open ? "" : " folded"}" data-frame="${i}" data-key="${esc(key)}">
+      <div class="ohead" title="${open ? HEAD_TITLE : "Click to expand"}">${foldButton(open)}<span class="otype">${esc(f.name)}</span><span class="ometa">${meta}</span></div>
+      ${open ? `<div class="obody">${rows ? `<table class="kv">${rows}</table>` : `<div class="empty">no variables</div>`}</div>` : ""}</div>`;
   });
   html += `</div>`;
   for (const column of assignColumns(snap)) {
@@ -538,7 +676,7 @@ function highlightTarget(id) {
     p.classList.add("hl");
     p.setAttribute("marker-end", "url(#head-hl)");
   }
-  for (const dot of document.querySelectorAll(`.ptr[data-target="${id}"]`)) dot.classList.add("hl");
+  for (const dot of document.querySelectorAll(`.ptr[data-target="${id}"], .chip[data-target="${id}"]`)) dot.classList.add("hl");
 }
 
 // ---- Interaction
@@ -569,13 +707,54 @@ $("stack").addEventListener("click", (e) => {
   if (li) { app.selected = Number(li.dataset.frame); render(); }
 });
 
+function toggleFrame(key) {
+  if (!app.folded.delete(key)) app.folded.add(key);
+  saveFolds();
+  render();
+}
+
+function foldObjects(snap, ids, fold) {
+  const paths = objectPaths(snap);
+  for (const id of ids) {
+    const key = objKey(snap, id);
+    if (fold) {
+      app.folded.add(key);
+      if (paths.has(id)) app.foldPaths.set(key, paths.get(id));
+    } else {
+      app.folded.delete(key);
+      app.pendingPaths.delete(app.foldPaths.get(key));
+      app.foldPaths.delete(key);
+    }
+  }
+  saveFolds();
+  render();
+}
+
+// Folds every object the clicked card points to, directly or not; if they are all folded already, unfolds them.
+function foldWithin(snap, card) {
+  const refs = card.dataset.frame !== undefined
+    ? snap.frames[Number(card.dataset.frame)].locals.map(([, v]) => v)
+    : childRefs(snap.objects[card.dataset.id]);
+  const ids = reachable(snap, refs).filter((id) => id !== card.dataset.id);
+  foldObjects(snap, ids, ids.some((id) => !app.folded.has(objKey(snap, id))));
+}
+
 $("viz").addEventListener("click", (e) => {
+  const entry = app.history[currentIndex()];
+  if (!entry) return;
+  const chipEl = e.target.closest(".chip");
+  if (chipEl) return foldObjects(entry.snapshot, [chipEl.dataset.target], false);
+  const card = e.target.closest(".obj, .frame");
+  if (card && (card.classList.contains("folded") || e.target.closest("[data-fold]"))) {
+    return card.dataset.id ? foldObjects(entry.snapshot, [card.dataset.id], true) : toggleFrame(card.dataset.key);
+  }
+  if (card && e.target.closest(".ohead")) return foldWithin(entry.snapshot, card);
   const fr = e.target.closest(".frame[data-frame]");
   if (fr && !e.target.closest(".ptr")) { app.selected = Number(fr.dataset.frame); render(); }
 });
 
 $("viz").addEventListener("mouseover", (e) => {
-  const ptr = e.target.closest(".ptr");
+  const ptr = e.target.closest(".ptr, .chip");
   const obj = e.target.closest(".obj");
   highlightTarget(ptr ? ptr.dataset.target : obj ? obj.dataset.id : null);
 });
@@ -583,7 +762,7 @@ $("viz").addEventListener("mouseleave", () => highlightTarget(null));
 
 document.addEventListener("keydown", (e) => {
   if (e.metaKey || e.ctrlKey || e.altKey) return;
-  const keys = { F5: "continue", F10: "step_over", F11: e.shiftKey ? "step_out" : "step_into", c: "continue", n: "step_over", s: "step_into", o: "step_out", q: "quit" };
+  const keys = { F5: "continue", F10: "step_over", F11: e.shiftKey ? "step_out" : "step_into", c: "continue", n: "step_over", s: "step_into", o: "step_out", q: "quit", r: "restart" };
   if (e.key === "[") { goBack(); return; }
   if (e.key === "]") { goForward(); return; }
   const action = keys[e.key];

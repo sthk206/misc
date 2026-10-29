@@ -7,7 +7,8 @@ import sys
 import traceback
 import webbrowser
 
-from .debugger import VisualDebugger
+from .debugger import VisualDebugger, flush_output
+from .launch import bootstrap_command
 from .server import DebugServer, Session
 
 USAGE = """\
@@ -67,7 +68,19 @@ def exit_code_of(exc):
     return 1
 
 
+def restart(argv, port, cwd, env):
+    """Run the same command again in this process's place. The open tab reconnects by itself."""
+    print("vdb: restarting", file=sys.stderr)
+    flush_output()
+    split = next((i for i, a in enumerate(argv) if not a.startswith("--")), len(argv))
+    options = [a for a in argv[:split] if a != "--no-browser" and not a.startswith("--port=")]
+    os.chdir(cwd)
+    command = bootstrap_command(sys.executable, [*options, "--no-browser", f"--port={port}", *argv[split:]])
+    os.execve(sys.executable, command, env)
+
+
 def main(argv):
+    cwd, env = os.getcwd(), dict(os.environ)  # as they were before the program could change them
     try:
         options, (mode, target, args) = parse(argv)
     except UsageError as exc:
@@ -87,6 +100,7 @@ def main(argv):
     session = Session()
     server = DebugServer(session, options["port"])
     server.start()
+    session.on_restart = lambda: restart(argv, server.server_address[1], cwd, env)
     print(f"vdb: debugging at {server.url}", file=sys.stderr)
     # A tab left open from an earlier run reconnects by itself within a second.
     if options["browser"] and not session.client_seen.wait(1.5):

@@ -160,6 +160,34 @@ class EndToEndTest(unittest.TestCase):
             self.assertEqual(code, 1)
             self.assertIn("KeyError", err)
 
+    def test_restart_runs_the_program_again_in_the_same_process(self):
+        run = Run(SHAPES)
+        run.wait("paused")
+        session = run._request("/api/hello")["session"]
+        chain_line = line_of(SHAPES, 'print("chain starts at"')
+        run.command("toggle_breakpoint", until=("paused",), file=SHAPES, line=chain_line)
+        run.command("continue")  # prints the total, then pauses
+        run._request("/api/command", {"action": "restart"})
+        while True:  # same port, new session, once the fresh process is listening
+            try:
+                if run._request("/api/hello")["session"] != session:
+                    break
+            except (OSError, ValueError):
+                pass
+        run.version = 0
+        state = run.wait("paused")
+        self.assertEqual((top(state)["line"], state["breakpoints"]), (1, {}), "a fresh run; the page restores breakpoints")
+
+        state = run.command("set_breakpoints", until=("paused",), breakpoints={SHAPES: [chain_line, 99999]})
+        self.assertEqual(state["breakpoints"], {SHAPES: [chain_line]}, "lines that no longer exist are dropped")
+        state = run.command("continue")
+        self.assertEqual(top(state)["line"], chain_line)
+        run.command("continue")
+        code, out, err = run.finish()
+        self.assertEqual(code, 0)
+        self.assertEqual(out.count("total 3.95"), 2, "output from before the restart is kept")
+        self.assertIn("vdb: restarting", err)
+
     def test_stop_ends_the_process_even_if_the_program_catches_everything(self):
         with tempfile.TemporaryDirectory() as tmp:
             script = os.path.join(tmp, "stubborn.py")

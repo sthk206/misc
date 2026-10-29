@@ -40,13 +40,19 @@ interpreter as the first argument to override. Python 3.10+.
 | Step over | ↷ Over | `F10` or `n` |
 | Step into | ↓ Into | `F11` or `s` |
 | Step out | ↑ Out | `Shift+F11` or `o` |
+| Run again from the start, then continue to your first breakpoint | ↻ Restart | `r` |
 | Stop the program | ■ Stop | `q` |
 | Look at the previous / next step | ◀ ▶ | `[` and `]` |
 
-- Click a line number to toggle a breakpoint.
+- Click a line number to toggle a breakpoint. The tab remembers your breakpoints across restarts and later `vdb` runs.
+- Restart works while paused, running or stopped on an exception. Once the program has finished, run `vdb` again instead.
 - `breakpoint()` in your code pauses there too.
 - Click a frame (in the call stack or the graph) to see its source line.
 - Hover an object or a dot to highlight every arrow pointing at it.
+- Click a card's title to collapse every object it points to (click again to expand them). The ▼ arrow collapses just that card.
+- A collapsed object has no card or arrow: it is drawn inside the card that holds it as a small chip in its kind's colour,
+  with a picture of its shape (list, dict, set, ...) and its size. Click the chip to expand it.
+- Collapsed cards stay collapsed as you step, after a restart and on your next `vdb` run in the same tab.
 - Variables and objects that changed since the previous step are highlighted.
 - On an uncaught exception, vdb stays paused on the failing line so you can inspect it; press Stop to exit.
 - The browser tab stays open between runs and reloads itself on the next `vdb` run.

@@ -43,14 +43,19 @@ def project_python(args):
     return shutil.which("python3") or shutil.which("python") or "python3", args
 
 
+def bootstrap_command(python, args):
+    """The command line that starts `python` with vdb loaded and runs `vdb args`."""
+    code = BOOTSTRAP.format(init=str(PACKAGE_DIR / "__init__.py"), package=str(PACKAGE_DIR))
+    return [python, "-c", code, *args]
+
+
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     split = next((i for i, a in enumerate(argv) if not a.startswith("--")), len(argv))
     options, rest = argv[:split], argv[split:]
     python, rest = project_python(rest)
-    code = BOOTSTRAP.format(init=str(PACKAGE_DIR / "__init__.py"), package=str(PACKAGE_DIR))
     try:
-        os.execvp(python, [python, "-c", code, *options, *rest])
+        os.execvp(python, bootstrap_command(python, [*options, *rest]))
     except FileNotFoundError:
         print(f"vdb: cannot find the Python interpreter {python!r}", file=sys.stderr)
         return 2

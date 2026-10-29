@@ -25,6 +25,7 @@ class Session:
         self.id = secrets.token_hex(8)
         self.client_seen = threading.Event()
         self.readable_files = set()
+        self.on_restart = None  # set by cli: replaces this process with a fresh run
         self._cond = threading.Condition()
         self._version = 0
         self._delivered = 0
@@ -111,7 +112,13 @@ class Handler(BaseHTTPRequestHandler):
         if urlsplit(self.path).path != "/api/command":
             return self._send(404, b"not found", "text/plain")
         length = int(self.headers.get("Content-Length", "0"))
-        self.server.session.post_command(json.loads(self.rfile.read(length) or b"{}"))
+        command = json.loads(self.rfile.read(length) or b"{}")
+        session = self.server.session
+        # Restart is handled here, not by the debugger, so it also works while the program is running.
+        if command.get("action") == "restart" and session.on_restart:
+            self._json({"ok": True})
+            return session.on_restart()
+        session.post_command(command)
         return self._json({"ok": True})
 
     def _host_allowed(self):

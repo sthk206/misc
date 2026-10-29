@@ -13,6 +13,14 @@ LIBRARY_DIRS = ("site-packages", "dist-packages", ".venv", "venv", ".tox", ".nox
 VDB_DIR = os.path.dirname(os.path.realpath(__file__)) + os.sep
 
 
+def flush_output():
+    for stream in (sys.stdout, sys.stderr, sys.__stdout__, sys.__stderr__):
+        try:
+            stream.flush()
+        except Exception:
+            pass
+
+
 class VisualDebugger(bdb.Bdb):
     def __init__(self, session, roots):
         super().__init__()
@@ -115,8 +123,11 @@ class VisualDebugger(bdb.Bdb):
         while True:
             command = self.session.next_command()
             action = command.get("action")
-            if action == "toggle_breakpoint":
-                self._toggle_breakpoint(command["file"], int(command["line"]))
+            if action in ("toggle_breakpoint", "set_breakpoints"):
+                if action == "toggle_breakpoint":
+                    self._toggle_breakpoint(command["file"], int(command["line"]))
+                else:
+                    self._set_breakpoints(command["breakpoints"])
                 state = dict(state, breakpoints=self._breakpoints())
                 self.session.publish(state)
                 continue
@@ -143,11 +154,7 @@ class VisualDebugger(bdb.Bdb):
     def _stop_process(self):
         """Stop means stop: pytest and web frameworks would catch BdbQuit and keep going."""
         print("vdb: stopped", file=sys.stderr)
-        for stream in (sys.stdout, sys.stderr, sys.__stdout__, sys.__stderr__):
-            try:
-                stream.flush()
-            except Exception:
-                pass
+        flush_output()
         self.session.publish({"status": "finished", "exit_code": 1, "stopped": True})
         self.session.wait_until_delivered(timeout=2)
         os._exit(1)
@@ -158,6 +165,13 @@ class VisualDebugger(bdb.Bdb):
             self.clear_break(filename, line)
         else:
             self.set_break(filename, line)
+
+    def _set_breakpoints(self, breakpoints):
+        """Replace every breakpoint: the page restores its saved ones this way after a restart."""
+        self.clear_all_breaks()
+        for filename, lines in breakpoints.items():
+            for line in lines:
+                self.set_break(self.canonic(filename), int(line))  # a line that no longer exists is skipped
 
     def _step_out(self, frame):
         caller = frame.f_back
