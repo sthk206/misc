@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visual Debugger</title>
+<style>
+:root {
+  --bg: #f6f6f3; --panel: #ffffff; --panel-2: #f0f0ec; --border: #d9d9d2; --text: #1d1d1b; --muted: #6d6d67;
+  --accent: #2f6fde; --current: #fff1b8; --current-edge: #d9a400; --caller: #e4ecfb; --error: #c62828; --error-bg: #fde8e8;
+  --changed: #ffe27a; --bp: #d93b3b;
+  --k-list: #2f6fde; --k-tuple: #737a86; --k-dict: #b86e00; --k-set: #0f8a62; --k-instance: #7a4bd0;
+  --k-table: #0d7a6b; --k-opaque: #8a8a83; --k-frame: #4a4a44;
+  --t-str: #1a7f37; --t-num: #1f5fbf; --t-kw: #a3218f; --t-const: #8250df; --t-com: #8b8b84; --t-fn: #6f42c1; --t-builtin: #0b6e99;
+  --arrow: #6a7a99; --arrow-hl: #e0531f;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17181b; --panel: #1f2024; --panel-2: #26272c; --border: #3a3b42; --text: #e6e6e3; --muted: #9a9a95;
+    --accent: #6ea2ff; --current: #4a3f12; --current-edge: #e3b52d; --caller: #22314f; --error: #ff7b72; --error-bg: #3d1d1d;
+    --changed: #6b5a12; --bp: #ff5f56;
+    --k-list: #6ea2ff; --k-tuple: #9aa1ad; --k-dict: #e3a03d; --k-set: #3cc395; --k-instance: #b18cff;
+    --k-table: #3ec4b0; --k-opaque: #8f8f89; --k-frame: #b9b9b3;
+    --t-str: #7ee787; --t-num: #79c0ff; --t-kw: #ff7bd5; --t-const: #d2a8ff; --t-com: #8b949e; --t-fn: #d2a8ff; --t-builtin: #6cc7f0;
+    --arrow: #8592ad; --arrow-hl: #ff8a4c;
+  }
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--text); font: 13px/1.4 var(--sans); display: flex; flex-direction: column; overflow: hidden; }
+button { font: inherit; color: inherit; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer; white-space: nowrap; }
+button:hover:not(:disabled) { border-color: var(--accent); }
+button:disabled { opacity: .4; cursor: default; }
+button.danger:not(:disabled) { color: var(--error); }
+kbd { font: 11px var(--mono); color: var(--muted); }
+
+.toolbar { display: flex; align-items: center; gap: 16px; padding: 8px 14px; background: var(--panel); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.brand { font-weight: 700; letter-spacing: .02em; }
+.group { display: flex; gap: 6px; align-items: center; }
+.status { margin-left: auto; color: var(--muted); }
+.status.paused { color: var(--text); }
+.status.exception { color: var(--error); }
+#hist-label { min-width: 120px; text-align: center; color: var(--muted); font-variant-numeric: tabular-nums; }
+#hist-label.past { color: var(--accent); font-weight: 600; }
+
+main { flex: 1; display: grid; grid-template-columns: 42% 6px 1fr; min-height: 0; }
+.left { display: flex; flex-direction: column; min-width: 0; min-height: 0; border-right: 1px solid var(--border); }
+.right { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.divider { cursor: col-resize; background: var(--bg); }
+.divider:hover { background: var(--border); }
+.pane-title { padding: 6px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: var(--panel-2); border-bottom: 1px solid var(--border); display: flex; gap: 8px; }
+.pane-title .path { text-transform: none; letter-spacing: 0; font-family: var(--mono); color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.source { flex: 1; overflow: auto; background: var(--panel); font: 12.5px/1.6 var(--mono); tab-size: 4; padding: 4px 0; }
+.line { display: flex; white-space: pre; }
+.gutter { flex: 0 0 56px; text-align: right; padding-right: 14px; color: var(--muted); cursor: pointer; user-select: none; position: relative; }
+.gutter:hover::before { content: ""; position: absolute; left: 8px; top: 50%; width: 9px; height: 9px; margin-top: -4.5px; border-radius: 50%; background: var(--bp); opacity: .35; }
+.line.bp .gutter::before { content: ""; position: absolute; left: 8px; top: 50%; width: 9px; height: 9px; margin-top: -4.5px; border-radius: 50%; background: var(--bp); opacity: 1; }
+.code { flex: 1; padding-right: 16px; }
+.line.current { background: var(--current); box-shadow: inset 3px 0 var(--current-edge); }
+.line.caller { background: var(--caller); box-shadow: inset 3px 0 var(--accent); }
+.line.error { background: var(--error-bg); box-shadow: inset 3px 0 var(--error); }
+.tk { color: var(--t-kw); } .ts { color: var(--t-str); } .tn { color: var(--t-num); } .tc { color: var(--t-com); font-style: italic; }
+.tf { color: var(--t-fn); font-weight: 600; } .tb { color: var(--t-builtin); }
+
+.stack { margin: 0; padding: 4px 0; list-style: none; max-height: 30%; min-height: 64px; overflow: auto; background: var(--panel); }
+.stack li { padding: 3px 12px; display: flex; gap: 10px; cursor: pointer; font-family: var(--mono); font-size: 12px; }
+.stack li:hover { background: var(--panel-2); }
+.stack li.selected { background: var(--caller); }
+.stack li.top .fn::before { content: "▶ "; color: var(--current-edge); }
+.stack li.hidden { color: var(--muted); cursor: default; font-family: var(--sans); font-style: italic; }
+.stack .loc { color: var(--muted); margin-left: auto; }
+
+.banner { padding: 8px 14px; border-bottom: 1px solid var(--border); background: var(--panel-2); }
+.banner.error { background: var(--error-bg); color: var(--error); }
+.banner.error pre { color: var(--text); font: 12px/1.45 var(--mono); white-space: pre-wrap; max-height: 220px; overflow: auto; }
+.banner.hidden { display: none; }
+.viz { flex: 1; overflow: auto; }
+.viz-inner { position: relative; display: inline-block; min-width: 100%; min-height: 100%; }
+#arrows { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; z-index: 2; }
+#arrows path { fill: none; stroke: var(--arrow); stroke-width: 1.5; opacity: .85; }
+#arrows path.hl { stroke: var(--arrow-hl); stroke-width: 2.25; opacity: 1; }
+#arrows .head { fill: var(--arrow); }
+#arrows .head-hl { fill: var(--arrow-hl); }
+.cols { display: flex; gap: 64px; align-items: flex-start; padding: 18px 64px 40px 18px; }
+.col { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+.col-title { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.empty-state { padding: 32px; color: var(--muted); }
+
+.obj, .frame { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; font-family: var(--mono); font-size: 12px; transition: box-shadow .15s; }
+.obj.hl, .frame.hl { box-shadow: 0 0 0 2px var(--arrow-hl); }
+.ohead { display: flex; gap: 8px; white-space: nowrap; align-items: baseline; padding: 4px 10px; border-top: 3px solid var(--kind); background: var(--panel-2); }
+.otype { font-weight: 700; color: var(--kind); }
+.ometa { color: var(--muted); font-family: var(--sans); font-size: 11px; margin-left: auto; padding-left: 12px; }
+.badge { font-family: var(--sans); font-size: 10px; padding: 0 6px; border-radius: 9px; border: 1px solid var(--kind); color: var(--kind); }
+.obody { padding: 8px 10px; }
+.obj.changed .ohead { background: var(--changed); }
+.k-list { --kind: var(--k-list); } .k-tuple { --kind: var(--k-tuple); } .k-dict { --kind: var(--k-dict); }
+.k-set { --kind: var(--k-set); } .k-instance { --kind: var(--k-instance); } .k-dataframe, .k-series, .k-array { --kind: var(--k-table); }
+.k-opaque { --kind: var(--k-opaque); }
+
+.cells { display: flex; flex-wrap: wrap; max-width: 520px; }
+.cell { border: 1px solid var(--border); margin: -1px 0 0 -1px; min-width: 34px; text-align: center; }
+.cell .idx { font-size: 10px; color: var(--muted); padding: 1px 6px 0; }
+.cell .cv { padding: 2px 8px 4px; }
+.k-tuple .cells { border-radius: 6px; } .k-tuple .cell { border-style: dashed; background: var(--panel-2); }
+.k-set .cells { gap: 6px; } .k-set .cell { border-radius: 14px; margin: 0; padding: 2px 4px; }
+.more { color: var(--muted); font-family: var(--sans); font-size: 11px; padding: 4px 8px; align-self: center; }
+.empty { color: var(--muted); font-family: var(--sans); font-style: italic; font-size: 11px; }
+
+table { border-collapse: collapse; }
+.kv td { padding: 3px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.kv tr:last-child td { border-bottom: none; }
+.kv td.k { border-right: 1px solid var(--border); }
+.kv td.attr { color: var(--muted); }
+.frame { --kind: var(--k-frame); min-width: 160px; }
+.frame.selected { border-color: var(--current-edge); }
+.frame .ohead { border-top-color: var(--kind); }
+.frame.selected .ohead { border-top-color: var(--current-edge); }
+.frame td.name { color: var(--text); font-weight: 600; }
+.frame tr.changed td { background: var(--changed); }
+.frame-gap { font: italic 11px var(--sans); color: var(--muted); padding-left: 6px; }
+
+.grid td, .grid th { border: 1px solid var(--border); padding: 2px 7px; text-align: right; white-space: nowrap; }
+.grid th { background: var(--panel-2); font-weight: 600; }
+.grid th .dtype { display: block; font-weight: 400; font-size: 10px; color: var(--muted); }
+.grid td.ix, .grid th.ix { color: var(--muted); text-align: left; background: var(--panel-2); }
+pre.opaque { margin: 0; white-space: pre-wrap; max-width: 420px; color: var(--muted); }
+
+.ptr { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--arrow); vertical-align: middle; cursor: pointer; }
+.ptr.hl { background: var(--arrow-hl); }
+.v-str { color: var(--t-str); } .v-num { color: var(--t-num); } .v-bool, .v-none, .v-enum { color: var(--t-const); }
+.v-code { color: var(--t-fn); font-style: italic; } .v-more { color: var(--muted); font-style: italic; } .v-value, .v-bytes { color: var(--t-builtin); }
+
+@media (max-width: 800px) {
+  main { grid-template-columns: 1fr; grid-template-rows: 45% 0 1fr; }
+  .divider { display: none; }
+  .toolbar { gap: 8px; padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+<header class="toolbar">
+  <span class="brand">vdb</span>
+  <div class="group">
+    <button data-action="continue" title="Continue to the next breakpoint (F5 or c)">▶ Continue</button>
+    <button data-action="step_over" title="Step over (F10 or n)">↷ Over</button>
+    <button data-action="step_into" title="Step into (F11 or s)">↓ Into</button>
+    <button data-action="step_out" title="Step out (Shift+F11 or o)">↑ Out</button>
+    <button data-action="quit" class="danger" title="Stop the program (q)">■ Stop</button>
+  </div>
+  <div class="group">
+    <button id="hist-back" title="Look at the previous step ([)">◀</button>
+    <span id="hist-label">no steps yet</span>
+    <button id="hist-fwd" title="Look at the next step (])">▶</button>
+    <button id="hist-live" title="Back to the live step">Live</button>
+  </div>
+  <span id="status" class="status">Connecting…</span>
+</header>
+<main id="main">
+  <section class="left">
+    <div class="pane-title"><span>Source</span><span id="file-name" class="path"></span></div>
+    <div id="source" class="source"></div>
+    <div class="pane-title">Call stack</div>
+    <ol id="stack" class="stack"></ol>
+  </section>
+  <div id="divider" class="divider"></div>
+  <section class="right">
+    <div id="banner" class="banner hidden"></div>
+    <div id="viz" class="viz"><div id="viz-inner" class="viz-inner"><svg id="arrows"></svg><div id="cols" class="cols"></div></div></div>
+  </section>
+</main>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const app = {
+  session: null, version: 0, live: null, history: [], view: -1, selected: 0,
+  sources: new Map(), breakpoints: {}, disconnected: false,
+};
+
+async function api(path, body) {
+  const opts = { headers: { "X-VDB": "1" } };
+  if (body !== undefined) {
+    opts.method = "POST";
+    opts.headers["Content-Type"] = "application/json";
+    opts.body = JSON.stringify(body);
+  }
+  const res = await fetch(path, opts);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// ---- Connection: long-poll the state; after the program exits, wait for the next run and reload.
+
+async function connect() {
+  app.session = (await api("/api/hello")).session;
+  while (true) {
+    let msg;
+    try {
+      msg = await api(`/api/state?since=${app.version}`);
+    } catch (e) {
+      app.disconnected = true;
+      render();
+      return waitForNextRun();
+    }
+    if (msg.version > app.version) {
+      app.version = msg.version;
+      receive(msg.state);
+    }
+  }
+}
+
+async function waitForNextRun() {
+  while (true) {
+    await sleep(800);
+    try {
+      const { session } = await api("/api/hello");
+      if (session !== app.session) location.reload();
+    } catch (e) { /* not running yet */ }
+  }
+}
+
+function receive(state) {
+  app.live = state;
+  if (state.breakpoints) app.breakpoints = state.breakpoints;
+  if (state.snapshot) {
+    const last = app.history[app.history.length - 1];
+    if (!last || last.step !== state.step) {
+      app.history.push({ step: state.step, status: state.status, snapshot: state.snapshot, exception: state.exception, root: state.root });
+      if (app.history.length > 500) app.history.shift();
+      app.view = -1;
+      app.selected = 0;
+    }
+  }
+  render();
+}
+
+async function send(action, extra) {
+  const live = app.live;
+  if (!live || app.disconnected) return;
+  const ok = live.status === "paused" || (live.status === "exception" && (action === "quit" || action === "toggle_breakpoint"));
+  if (!ok) return;
+  if (action !== "toggle_breakpoint") {
+    app.view = -1;
+    app.live = { ...live, status: "running" };
+    render();
+  }
+  try { await api("/api/command", { action, ...extra }); } catch (e) { /* the poll loop will notice */ }
+}
+
+// ---- Rendering
+
+function currentIndex() { return app.view === -1 ? app.history.length - 1 : app.view; }
+
+function render() {
+  const idx = currentIndex();
+  const entry = app.history[idx];
+  const prev = idx > 0 ? app.history[idx - 1] : null;
+  renderToolbar(idx);
+  renderBanner(entry);
+  if (!entry) {
+    $("cols").innerHTML = `<div class="empty-state">${app.disconnected ? "The program exited before reaching your code." : "Waiting for the program to reach your code…"}</div>`;
+    $("arrows").innerHTML = "";
+    return;
+  }
+  const frames = entry.snapshot.frames;
+  if (app.selected >= frames.length) app.selected = 0;
+  renderStack(entry.snapshot);
+  renderSource(frames[app.selected], entry);
+  renderGraph(entry.snapshot, prev && prev.snapshot);
+}
+
+function renderToolbar(idx) {
+  const status = app.disconnected ? "disconnected" : (app.live ? app.live.status : "starting");
+  for (const b of document.querySelectorAll("[data-action]")) {
+    const a = b.dataset.action;
+    b.disabled = !(status === "paused" || (status === "exception" && a === "quit"));
+  }
+  const n = app.history.length;
+  const label = $("hist-label");
+  label.textContent = n ? `step ${idx + 1} of ${n}` : "no steps yet";
+  label.classList.toggle("past", app.view !== -1);
+  $("hist-back").disabled = idx <= 0;
+  $("hist-fwd").disabled = app.view === -1;
+  $("hist-live").disabled = app.view === -1;
+  const el = $("status");
+  const entry = app.history[n - 1];
+  const where = entry && entry.snapshot.frames[0];
+  el.className = "status " + status;
+  el.textContent = {
+    starting: "Starting…",
+    paused: where ? `Paused · ${baseName(where.file)}:${where.line}` : "Paused",
+    running: "Running…",
+    exception: "Stopped on an uncaught exception",
+    finished: app.live && app.live.stopped ? "Stopped" : `Finished · exit code ${app.live && app.live.exit_code}`,
+    disconnected: app.live && app.live.status === "finished"
+      ? `${app.live.stopped ? "Stopped" : `Finished · exit code ${app.live.exit_code}`} · this tab reloads on your next vdb run`
+      : "Disconnected · this tab reloads on your next vdb run",
+  }[status] || status;
+}
+
+function renderBanner(entry) {
+  const banner = $("banner");
+  const status = app.live && app.live.status;
+  if (entry && entry.exception) {
+    const ex = entry.exception;
+    banner.className = "banner error";
+    banner.innerHTML = `<strong>${esc(ex.type)}</strong>: ${esc(ex.message)}<details><summary>Traceback</summary><pre>${esc(ex.traceback)}</pre></details>`;
+  } else if (app.view !== -1) {
+    banner.className = "banner";
+    banner.textContent = "You are looking at an earlier step. Press ] or Live to return; stepping always continues from the live step.";
+  } else if (status === "running" && !app.disconnected) {
+    banner.className = "banner";
+    banner.textContent = "Running. If the program is waiting for input, type it in the terminal.";
+  } else {
+    banner.className = "banner hidden";
+  }
+}
+
+function baseName(path) { return path.split(/[\\/]/).pop(); }
+function relPath(path, root) { return root && path.startsWith(root) ? path.slice(root.length) : path; }
+
+function renderStack(snap) {
+  const ol = $("stack");
+  ol.innerHTML = "";
+  const gap = (n) => n ? `<li class="hidden">… ${n} library frame${n === 1 ? "" : "s"}</li>` : "";
+  let html = "";
+  snap.frames.forEach((f, i) => {
+    html += gap(f.hidden_below);
+    html += `<li data-frame="${i}" class="${i === app.selected ? "selected " : ""}${i === 0 ? "top" : ""}"><span class="fn">${esc(f.name)}</span><span class="loc">${esc(baseName(f.file))}:${f.line}</span></li>`;
+  });
+  ol.innerHTML = html + gap(snap.hidden_outer);
+}
+
+let shownFile = null;
+let lineEls = [];
+let sourceRenderId = 0;
+
+function loadSource(file) {
+  if (!app.sources.has(file)) {
+    app.sources.set(file, api(`/api/source?file=${encodeURIComponent(file)}`).then((r) => r.lines).catch(() => null));
+  }
+  return app.sources.get(file);
+}
+
+async function renderSource(frame, entry) {
+  const id = ++sourceRenderId;
+  $("file-name").textContent = relPath(frame.file, entry.root);
+  const lines = await loadSource(frame.file);
+  if (id !== sourceRenderId) return;
+  const box = $("source");
+  if (shownFile !== frame.file) {
+    shownFile = frame.file;
+    box.innerHTML = "";
+    lineEls = [];
+    const frag = document.createDocumentFragment();
+    (lines || ["(source unavailable)"]).forEach((html, i) => {
+      const row = document.createElement("div");
+      row.className = "line";
+      row.innerHTML = `<span class="gutter" data-line="${i + 1}">${i + 1}</span><span class="code">${html || " "}</span>`;
+      frag.appendChild(row);
+      lineEls.push(row);
+    });
+    box.appendChild(frag);
+  }
+  const bps = new Set(app.breakpoints[frame.file] || []);
+  lineEls.forEach((row, i) => {
+    row.classList.toggle("bp", bps.has(i + 1));
+    row.classList.remove("current", "caller", "error");
+  });
+  const row = lineEls[frame.line - 1];
+  if (!row) return;
+  row.classList.add(entry.exception && app.selected === 0 ? "error" : app.selected === 0 ? "current" : "caller");
+  const r = row.getBoundingClientRect(), b = box.getBoundingClientRect();
+  if (r.top < b.top + 20 || r.bottom > b.bottom - 20) row.scrollIntoView({ block: "center" });
+}
+
+// ---- The object graph
+
+function childRefs(o) {
+  if (!o) return [];
+  switch (o.kind) {
+    case "list": case "tuple": case "set": return o.items;
+    case "dict": return o.entries.flat();
+    case "instance": return o.attrs.map((a) => a[1]);
+    default: return [];
+  }
+}
+
+function assignColumns(snap) {
+  const depth = new Map();
+  const order = [];
+  const visit = (v, d) => {
+    if (v && v.r !== undefined && snap.objects[v.r] && !depth.has(v.r)) { depth.set(v.r, d); order.push(v.r); }
+  };
+  for (const f of snap.frames) for (const [, v] of f.locals) visit(v, 1);
+  for (let i = 0; i < order.length; i++) {
+    for (const child of childRefs(snap.objects[order[i]])) visit(child, depth.get(order[i]) + 1);
+  }
+  const columns = [];
+  for (const id of order) (columns[depth.get(id) - 1] ||= []).push(id);
+  return columns;
+}
+
+function val(v) {
+  if (!v) return "";
+  if (v.r !== undefined) return `<span class="ptr" data-target="${v.r}"></span>`;
+  return `<span class="v v-${v.t}">${esc(v.p)}</span>`;
+}
+
+const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+const moreNote = (shown, total) => total > shown ? `<div class="more">+ ${total - shown} more</div>` : "";
+
+function objectBody(o) {
+  switch (o.kind) {
+    case "list": case "tuple": case "set": {
+      if (!o.items.length) return `<div class="empty">empty</div>`;
+      const showIdx = o.kind !== "set";
+      return `<div class="cells">${o.items.map((v, i) =>
+        `<div class="cell">${showIdx ? `<div class="idx">${i}</div>` : ""}<div class="cv">${val(v)}</div></div>`).join("")}${moreNote(o.items.length, o.len)}</div>`;
+    }
+    case "dict":
+      if (!o.entries.length) return `<div class="empty">empty</div>`;
+      return `<table class="kv">${o.entries.map(([k, v]) => `<tr><td class="k">${val(k)}</td><td>${val(v)}</td></tr>`).join("")}</table>${moreNote(o.entries.length, o.len)}`;
+    case "instance":
+      if (!o.attrs.length) return `<div class="empty">no attributes</div>`;
+      return `<table class="kv">${o.attrs.map(([k, v]) => `<tr><td class="k attr">.${esc(k)}</td><td>${val(v)}</td></tr>`).join("")}</table>`;
+    case "dataframe": {
+      const head = `<tr><th class="ix"></th>${o.columns.map((c, i) => `<th>${esc(c)}<span class="dtype">${esc(o.dtypes[i])}</span></th>`).join("")}</tr>`;
+      const rows = o.rows.map((r, i) => `<tr><td class="ix">${esc(o.index[i])}</td>${r.map((c) => `<td>${esc(c)}</td>`).join("")}</tr>`).join("");
+      const hidden = [];
+      if (o.shape[0] > o.rows.length) hidden.push(plural(o.shape[0] - o.rows.length, "more row"));
+      if (o.shape[1] > o.columns.length) hidden.push(plural(o.shape[1] - o.columns.length, "more column"));
+      return `<table class="grid">${head}${rows}</table>${hidden.length ? `<div class="more">${hidden.join(", ")}</div>` : ""}`;
+    }
+    case "series": {
+      const rows = o.values.map((v, i) => `<tr><td class="ix">${esc(o.index[i])}</td><td>${esc(v)}</td></tr>`).join("");
+      return `<table class="grid">${rows}</table>${moreNote(o.values.length, o.len)}`;
+    }
+    case "array":
+      if (o.items) return `<div class="cells">${o.items.map((v, i) => `<div class="cell"><div class="idx">${i}</div><div class="cv v-num">${esc(v)}</div></div>`).join("")}${moreNote(o.items.length, o.len)}</div>`;
+      if (o.rows) return `<table class="grid">${o.rows.map((r) => `<tr>${r.map((c) => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</table>`;
+      return `<pre class="opaque">${esc(o.text)}</pre>`;
+    default:
+      return `<pre class="opaque">${esc(o.text)}</pre>`;
+  }
+}
+
+function objectMeta(o) {
+  switch (o.kind) {
+    case "list": case "tuple": case "set": return plural(o.len, "item");
+    case "dict": return plural(o.len, "key");
+    case "dataframe": return `${o.shape[0]} × ${o.shape[1]}`;
+    case "series": return `${o.name !== "None" ? esc(o.name) + " · " : ""}${esc(o.dtype)} · ${o.len}`;
+    case "array": return `${esc(o.dtype)} · (${o.shape.join(", ")})`;
+    default: return "";
+  }
+}
+
+function objectHTML(id, o, changed) {
+  const badge = o.badge ? `<span class="badge">${esc(o.badge)}</span>` : "";
+  return `<div class="obj k-${o.kind}${changed ? " changed" : ""}" id="obj-${id}" data-id="${id}">
+    <div class="ohead"><span class="otype">${esc(o.type)}</span>${badge}<span class="ometa">${objectMeta(o)}</span></div>
+    <div class="obody">${objectBody(o)}</div></div>`;
+}
+
+function matchingPrevFrame(snap, prevSnap, i) {
+  if (!prevSnap) return null;
+  const fromBottom = snap.frames.length - 1 - i;
+  const pf = prevSnap.frames[prevSnap.frames.length - 1 - fromBottom];
+  const f = snap.frames[i];
+  return pf && pf.name === f.name && pf.file === f.file ? pf : null;
+}
+
+function renderGraph(snap, prevSnap) {
+  const objChanged = (id) => !!prevSnap && JSON.stringify(prevSnap.objects[id]) !== JSON.stringify(snap.objects[id]);
+  let html = `<div class="col"><div class="col-title">Frames</div>`;
+  snap.frames.forEach((f, i) => {
+    const pf = matchingPrevFrame(snap, prevSnap, i);
+    const before = pf ? new Map(pf.locals.map(([n, v]) => [n, JSON.stringify(v)])) : null;
+    const rows = f.locals.map(([name, v]) => {
+      const changed = before && before.get(name) !== JSON.stringify(v);
+      return `<tr class="${changed ? "changed" : ""}"><td class="k name">${esc(name)}</td><td>${val(v)}</td></tr>`;
+    }).join("");
+    if (f.hidden_below) html += `<div class="frame-gap">… ${plural(f.hidden_below, "library frame")}</div>`;
+    html += `<div class="frame${i === app.selected ? " selected" : ""}" data-frame="${i}">
+      <div class="ohead"><span class="otype">${esc(f.name)}</span><span class="ometa">line ${f.line}</span></div>
+      <div class="obody">${rows ? `<table class="kv">${rows}</table>` : `<div class="empty">no variables</div>`}</div></div>`;
+  });
+  html += `</div>`;
+  for (const column of assignColumns(snap)) {
+    html += `<div class="col">${column.map((id) => objectHTML(id, snap.objects[id], objChanged(id))).join("")}</div>`;
+  }
+  $("cols").innerHTML = html;
+  requestAnimationFrame(drawArrows);
+}
+
+function drawArrows() {
+  const inner = $("viz-inner"), svg = $("arrows");
+  const base = inner.getBoundingClientRect();
+  svg.setAttribute("width", inner.scrollWidth);
+  svg.setAttribute("height", inner.scrollHeight);
+  let paths = "";
+  for (const dot of inner.querySelectorAll(".ptr")) {
+    const target = document.getElementById("obj-" + dot.dataset.target);
+    if (!target) continue;
+    const a = dot.getBoundingClientRect(), b = target.getBoundingClientRect();
+    const x1 = a.left + a.width / 2 - base.left, y1 = a.top + a.height / 2 - base.top;
+    const y2 = b.top - base.top + 14;
+    let d;
+    if (b.left - base.left > x1 + 12) {
+      const x2 = b.left - base.left - 2, dx = Math.max(24, (x2 - x1) / 2);
+      d = `M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}`;
+    } else {
+      // Points back to an object at or left of the pointer: loop around and enter from the right.
+      const x2 = b.right - base.left + 2, reach = Math.max(x1, x2) + 48;
+      d = `M${x1},${y1} C${reach},${y1} ${reach},${y2} ${x2},${y2}`;
+    }
+    paths += `<path d="${d}" data-target="${dot.dataset.target}" marker-end="url(#head)"/>`;
+  }
+  svg.innerHTML = `<defs>
+    <marker id="head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
+    <marker id="head-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="head-hl"/></marker>
+  </defs>${paths}`;
+}
+
+function highlightTarget(id) {
+  for (const el of document.querySelectorAll(".hl")) el.classList.remove("hl");
+  for (const p of $("arrows").querySelectorAll("path[data-target]")) p.setAttribute("marker-end", "url(#head)");
+  if (!id) return;
+  document.getElementById("obj-" + id)?.classList.add("hl");
+  for (const p of $("arrows").querySelectorAll(`path[data-target="${id}"]`)) {
+    p.classList.add("hl");
+    p.setAttribute("marker-end", "url(#head-hl)");
+  }
+  for (const dot of document.querySelectorAll(`.ptr[data-target="${id}"]`)) dot.classList.add("hl");
+}
+
+// ---- Interaction
+
+document.querySelectorAll("[data-action]").forEach((b) => b.addEventListener("click", () => send(b.dataset.action)));
+
+function goBack() {
+  const idx = currentIndex();
+  if (idx > 0) { app.view = idx - 1; app.selected = 0; render(); }
+}
+function goForward() {
+  if (app.view === -1) return;
+  app.view = app.view + 1 >= app.history.length - 1 ? -1 : app.view + 1;
+  app.selected = 0;
+  render();
+}
+$("hist-back").onclick = goBack;
+$("hist-fwd").onclick = goForward;
+$("hist-live").onclick = () => { app.view = -1; app.selected = 0; render(); };
+
+$("source").addEventListener("click", (e) => {
+  const g = e.target.closest(".gutter");
+  if (g && shownFile) send("toggle_breakpoint", { file: shownFile, line: Number(g.dataset.line) });
+});
+
+$("stack").addEventListener("click", (e) => {
+  const li = e.target.closest("li[data-frame]");
+  if (li) { app.selected = Number(li.dataset.frame); render(); }
+});
+
+$("viz").addEventListener("click", (e) => {
+  const fr = e.target.closest(".frame[data-frame]");
+  if (fr && !e.target.closest(".ptr")) { app.selected = Number(fr.dataset.frame); render(); }
+});
+
+$("viz").addEventListener("mouseover", (e) => {
+  const ptr = e.target.closest(".ptr");
+  const obj = e.target.closest(".obj");
+  highlightTarget(ptr ? ptr.dataset.target : obj ? obj.dataset.id : null);
+});
+$("viz").addEventListener("mouseleave", () => highlightTarget(null));
+
+document.addEventListener("keydown", (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const keys = { F5: "continue", F10: "step_over", F11: e.shiftKey ? "step_out" : "step_into", c: "continue", n: "step_over", s: "step_into", o: "step_out", q: "quit" };
+  if (e.key === "[") { goBack(); return; }
+  if (e.key === "]") { goForward(); return; }
+  const action = keys[e.key];
+  if (action) { e.preventDefault(); send(action); }
+});
+
+window.addEventListener("resize", () => requestAnimationFrame(drawArrows));
+
+const divider = $("divider");
+divider.addEventListener("pointerdown", (e) => {
+  divider.setPointerCapture(e.pointerId);
+  divider.onpointermove = (ev) => {
+    const pct = Math.min(75, Math.max(20, (ev.clientX / window.innerWidth) * 100));
+    $("main").style.gridTemplateColumns = `${pct}% 6px 1fr`;
+    requestAnimationFrame(drawArrows);
+  };
+  divider.onpointerup = () => { divider.onpointermove = null; };
+});
+
+connect().catch(() => { app.disconnected = true; render(); waitForNextRun(); });
+</script>
+</body>
+</html>

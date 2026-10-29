@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# vdb: visual Python debugger. Symlink this file onto your PATH; `git pull` in the clone updates it.
+here="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
+exec python3 "$here/src/vdb/launch.py" "$@"
